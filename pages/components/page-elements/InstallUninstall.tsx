@@ -37,10 +37,6 @@ const InstallUninstall = () => {
               <Link href={"/instructions"}>
                 <Button className="flex bg-neutral-300 hover:bg-white transition-colors duration-300 text-black font-normal">
                   How to install
-                  <img
-                    src="images/icons/play-circle.svg"
-                    className="w-4 h-4 my-auto ml-1 mb-1"
-                  />
                 </Button>
               </Link>
             </div>

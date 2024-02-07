@@ -1,9 +1,8 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import dynamic from "next/dynamic";
-import NextImageWithGradient from "../effects/ImageGradient";
 import Button from "../ui/Button";
+import Icons from "../ui/Icons";
 
 const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
   ssr: false,
@@ -23,7 +22,7 @@ const NextStep = () => {
         </TextWrapper>
         <TextWrapper>
           <p className="mb-4 text-xl font-medium leading-11 text-neutral-500">
-            Cinesuit is bridging the gap between photo and cinema lenses. —
+            Cinesuit is bridging the gap between photo and cinema lenses.
             Embrace the art of precision and design, as Cinesuit seamlessly
             melds with your Sigma ART lenses.
           </p>
@@ -36,10 +35,12 @@ const NextStep = () => {
           >
             <Button className="flex bg-neutral-300 hover:bg-white transition-colors duration-300 text-black font-normal">
               Watch Launch Film
-              <img
-                src="images/icons/play-circle.svg"
-                className="w-4 h-4 my-auto ml-1 mb-1"
-              />
+              <Icons
+                icon="player-play-filled"
+                width="18"
+                height="18"
+                className="my-auto ml-1"
+              ></Icons>
             </Button>
           </Link>
         </div>
@@ -50,7 +51,7 @@ const NextStep = () => {
           className="w-[325px] lg:w-[1000px] xl:w-[1400px] lg:pr-6 mx-auto"
           width={1800}
           height={800}
-          alt="Descriptive Alt Text"
+          alt="Image for Mobile of Sigma 18-35 with Cinesuit"
         />
       </div>
       <div className="hidden md:block overflow-hidden px-20">
@@ -59,7 +60,7 @@ const NextStep = () => {
           className="w-[660px] lg:w-[1000px] xl:w-[1800px] lg:pr-6 mx-auto"
           width={1800}
           height={800}
-          alt="Descriptive Alt Text"
+          alt="Image of Sigma 18-35 with Cinesuit"
         />
       </div>
     </div>

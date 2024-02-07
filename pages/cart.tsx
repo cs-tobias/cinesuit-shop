@@ -297,7 +297,7 @@ const CartPage = () => {
                 <ul className="ulpolicy lipolicy">
                   <li>
                     <span className="font-medium text-black">Warranty:</span>{" "}
-                    Installing Cinesuit may void Sigma's lens warranty.
+                    Installing Cinesuit may void Sigma&apos;s lens warranty.
                   </li>
                   <li>
                     <span className="font-medium text-black">

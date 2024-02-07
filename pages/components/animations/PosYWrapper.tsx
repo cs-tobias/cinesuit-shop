@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const PosYWrapper = ({ children }) => {
+interface PosYWrapperProps {
+  children: ReactNode;
+}
+
+const PosYWrapper: React.FC<PosYWrapperProps> = ({ children }) => {
   const [hasMounted, setHasMounted] = useState(false);
   const image = React.useRef(null);
 

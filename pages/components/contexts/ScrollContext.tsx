@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface ScrollContextProps {
   scrollPositions: Record<string, number>;
@@ -9,7 +9,9 @@ const ScrollContext = createContext<ScrollContextProps>(null!);
 
 export const useScroll = () => useContext(ScrollContext);
 
-export const ScrollProvider: React.FC = ({ children }) => {
+export const ScrollProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [scrollPositions, setScrollPositions] = useState<
     Record<string, number>
   >({});

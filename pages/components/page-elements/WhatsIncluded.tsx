@@ -1,6 +1,3 @@
-import dynamic from "next/dynamic";
-import Image from "next/image";
-
 const WhatsIncluded = () => {
   return (
     <div className="bg-neutral-200 w-full py-6 pt-16 pb-10">

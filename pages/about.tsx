@@ -87,8 +87,8 @@ const Instructions = () => {
             <Tooltip>
               <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500">
                 Sigma ART lenses are some of the best lenses on the market. Both
-                in image, build, price — and with Cinesuit, they're practically
-                perfect. Cinesuit does not{" "}
+                in image, build, price — and with Cinesuit, they&apos;re
+                practically perfect. Cinesuit does not{" "}
                 <TooltipTrigger asChild>
                   <span className="font-serif text-neutral-300 hover:text-neutral-50 transition-colors duration-300">
                     yet

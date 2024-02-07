@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const TextWrapper = ({ children }) => {
+interface TextWrapperProps {
+  children: ReactNode;
+}
+
+const TextWrapper: React.FC<TextWrapperProps> = ({ children }) => {
   const [hasMounted, setHasMounted] = useState(false);
   const text = React.useRef(null);
 

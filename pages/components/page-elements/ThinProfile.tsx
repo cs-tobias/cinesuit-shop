@@ -35,7 +35,7 @@ const ThinProfile = () => {
           width={1675}
           height={774}
           className="w-full mx-auto"
-          alt="Descriptive Alt Text"
+          alt="Sigma 18-35 image"
         />
       </div>
     </div>

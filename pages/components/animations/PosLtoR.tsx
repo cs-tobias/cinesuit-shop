@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const PosLtoR = ({ children }) => {
+interface PosLtoRProps {
+  children: ReactNode;
+}
+
+const PosLtoR: React.FC<PosLtoRProps> = ({ children }) => {
   const [hasMounted, setHasMounted] = useState(false);
   const image = React.useRef(null);
 

@@ -27,8 +27,8 @@ const Privacy = () => {
                 </li>
                 <li>
                   Condition: To be eligible for a return, items must be in the
-                  same condition that you received them 'as new', undamaged, and
-                  with all original packaging.
+                  same condition that you received them &quot;as new&quot;,
+                  undamaged, and with all original packaging.
                 </li>
               </ul>
               <p>
@@ -50,7 +50,7 @@ const Privacy = () => {
               <h5 className="section-title">3. Purchasing and Payments</h5>
               <p>
                 Payment Methods: We accept various secure payment methods via
-                Shopify's platform.
+                Shopify&apos;s platform.
               </p>
               <p>
                 Pricing: $99 for a single focus ring and $169 for a set,
@@ -68,7 +68,7 @@ const Privacy = () => {
                 purely descriptive.
               </p>
               <p>
-                Use at Own Risk: Using Cinesuit products may affect Sigma's
+                Use at Own Risk: Using Cinesuit products may affect Sigma&apos;s
                 warranty terms. Customers should use our products understanding
                 these implications.
               </p>

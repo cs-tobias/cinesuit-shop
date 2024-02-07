@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Button from "./Button";
 import { useCart } from "../contexts/CartContext";
+import Icons from "./Icons";
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
@@ -87,15 +88,14 @@ const Navbar = () => {
           <div className="pl-1 mt-0.5 pr-1 pb-1 pt-[1.8px] rounded-md cursor-pointer opacity-75 hover:opacity-100 transition-opacity duration-300">
             <Link href="/cart" passHref>
               <div>
-                <Image
-                  src="/images/icons/bag-c.svg"
-                  width={14}
-                  height={14}
-                  alt="Basket"
-                  className=""
-                />
+                <Icons
+                  icon="shopping-cart"
+                  width="22"
+                  height="22"
+                  strokeWidth="1.2"
+                ></Icons>
                 {cartItemCount > 0 && (
-                  <span className="absolute top-7 ml-1 rounded-full bg-white text-black text-[9px] px-1">
+                  <span className="absolute top-7 ml-3 rounded-full bg-white text-black text-[9px] px-1">
                     {cartItemCount}
                   </span>
                 )}

@@ -112,7 +112,7 @@ const ShopComponent = () => {
 
               <div>
                 <p className="text-[22px] font-semibold md:font-medium">
-                  ${product.variants[0].price.amount.slice(0, -2)}
+                  ${product.variants[0].priceV2.amount.slice(0, -2)}
                 </p>
               </div>
 

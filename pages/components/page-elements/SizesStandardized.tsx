@@ -36,7 +36,7 @@ const SizesStandardized = () => {
             className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
             width={1920}
             height={760}
-            alt="Descriptive Alt Text"
+            alt="Standard-Sizes-Image"
           />
         </div>
       </RotWrapper>

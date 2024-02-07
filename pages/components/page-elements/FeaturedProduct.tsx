@@ -1,10 +1,27 @@
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import Carousel from "../carousel/Carousel";
-import Button from "../ui/Button";
 import Link from "next/link";
+import {
+  JSXElementConstructor,
+  Key,
+  PromiseLikeOfReactNode,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
+import Button from "../ui/Button";
 
-const FeaturedProduct = ({ featuredProduct }) => {
+interface FeaturedProductProps {
+  featuredProduct: {
+    productType: string;
+    title: string;
+    handle: string;
+  };
+}
+
+const FeaturedProduct: React.FC<FeaturedProductProps> = ({
+  featuredProduct,
+}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -42,11 +59,25 @@ const FeaturedProduct = ({ featuredProduct }) => {
             {featuredProduct.title
               .split(" ")
               .slice(0, 4)
-              .map((word, index) => (
-                <span key={index}>
-                  {word} {index === 1 ? <br /> : " "}
-                </span>
-              ))}
+              .map(
+                (
+                  word:
+                    | string
+                    | number
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>
+                    | Iterable<ReactNode>
+                    | ReactPortal
+                    | PromiseLikeOfReactNode
+                    | null
+                    | undefined,
+                  index: Key | null | undefined
+                ) => (
+                  <span key={index}>
+                    {word} {index === 1 ? <br /> : " "}
+                  </span>
+                )
+              )}
           </h1>
           <div className="text-center my-3">
             <Link href={`/shop/${featuredProduct.handle}`}>

@@ -1,6 +1,10 @@
-// CartContext.tsx
-
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  ReactNode,
+} from "react";
 import { client } from "@/utils/shopifyClient";
 
 // Define a type for your product and cart item
@@ -21,12 +25,18 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (product: Product, quantity: number) => void;
   updateQuantity: (productId: string, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  redirectToCheckout: () => void;
+  getCartItemCount: () => number;
 }
 
 const CartContext = createContext<CartContextType>({
   cart: [],
   addToCart: () => {},
   updateQuantity: () => {},
+  removeFromCart: () => {},
+  redirectToCheckout: () => {},
+  getCartItemCount: () => 0,
 });
 
 export const useCart = () => {
@@ -37,7 +47,9 @@ export const useCart = () => {
   return context;
 };
 
-export const CartProvider: React.FC = ({ children }) => {
+export const CartProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -56,7 +68,7 @@ export const CartProvider: React.FC = ({ children }) => {
   }, [cart, isMounted]);
 
   const addToCart = (product: Product, quantity: number) => {
-    console.log("Current cart state before update:", cart); // Log cart state before update
+    console.log("Current cart state before update:", cart);
 
     const existingCartItemIndex = cart.findIndex(
       (item) => item.product.id === product.id
@@ -67,30 +79,42 @@ export const CartProvider: React.FC = ({ children }) => {
       newCart = [...cart];
       newCart[existingCartItemIndex] = {
         ...newCart[existingCartItemIndex],
-        quantity: newCart[existingCartItemIndex].quantity + quantity,
+        variants: [
+          {
+            ...newCart[existingCartItemIndex].variants[0],
+            quantity:
+              newCart[existingCartItemIndex].variants[0].quantity + quantity,
+          },
+        ],
       };
     } else {
-      newCart = [...cart, { product, quantity }];
+      newCart = [
+        ...cart,
+        { product, variants: [{ id: product.variants[0].id, quantity }] },
+      ];
     }
 
     setCart(newCart);
-    console.log("New cart state after update:", newCart); // Log new cart state
+    console.log("New cart state after update:", newCart);
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
     setCart(
       cart.map((item) =>
-        item.product.id === productId ? { ...item, quantity: quantity } : item
+        item.product.id === productId
+          ? { ...item, variants: [{ ...item.variants[0], quantity }] }
+          : item
       )
     );
   };
+
   const removeFromCart = (productId: string) => {
     const updatedCart = cart.filter((item) => item.product.id !== productId);
     setCart(updatedCart);
   };
 
   const getCartItemCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart.reduce((total, item) => total + item.variants[0].quantity, 0);
   };
 
   const redirectToCheckout = async () => {
@@ -101,7 +125,7 @@ export const CartProvider: React.FC = ({ children }) => {
 
     const lineItems = cart.map((item) => ({
       variantId: item.product.variants[0].id,
-      quantity: item.quantity,
+      quantity: item.variants[0].quantity,
     }));
 
     console.log("Line items for checkout:", lineItems);
@@ -115,7 +139,7 @@ export const CartProvider: React.FC = ({ children }) => {
       } else {
         console.log("Checkout response is invalid", checkout);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error during checkout:", error);
       console.log(
         "Error details:",

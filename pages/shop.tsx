@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import ShopComponent from "./components/page-elements/ShopComponent";
 import { client } from "@/utils/shopifyClient";
-import NavbarLight from "./components/ui/NavbarLight";
-import FeaturedProduct from "./components/page-elements/FeaturedProduct";
 import dynamic from "next/dynamic";
-import ShopTitle from "./components/page-elements/ShopTitle";
-import ShopTitle2 from "./components/page-elements/ShopTitle2";
+import { useEffect, useRef, useState } from "react";
+import FeaturedProduct from "./components/page-elements/FeaturedProduct";
 import Footer from "./components/page-elements/Footer";
+import ShopComponent from "./components/page-elements/ShopComponent";
+import ShopTitle2 from "./components/page-elements/ShopTitle2";
 import Navbar from "./components/ui/Navbar";
+import NavbarLight from "./components/ui/NavbarLight";
 
 const TextWrapper = dynamic(
   () => import("./components/animations/TextWrapper"),
@@ -18,18 +17,28 @@ const TextWrapper = dynamic(
 
 export default function Shop({ products, featuredProduct }) {
   const [isLightNavbar, setIsLightNavbar] = useState<boolean>(false);
+  // Introduce a state to manage screen width
+  const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const shopTitle2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Function to update the state based on window width
+    const checkMobileView = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    // Call once to set initial state correctly in client-side
+    checkMobileView();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkMobileView);
+
     const handleScroll = () => {
       if (shopTitle2Ref.current) {
-        // Adjust the position check to account for 10px from the top
         const shopTitle2Position =
           shopTitle2Ref.current.getBoundingClientRect().top +
           window.scrollY -
           60;
-
-        // Determine if ShopTitle2 is at or less than 10px from the top of the viewport
         if (window.scrollY >= shopTitle2Position) {
           setIsLightNavbar(true);
         } else {
@@ -39,12 +48,17 @@ export default function Shop({ products, featuredProduct }) {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Cleanup function to remove event listeners
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobileView);
+    };
   }, []);
 
   return (
     <>
-      {isLightNavbar ? <NavbarLight /> : <Navbar />}
+      {isLightNavbar || isMobileView ? <NavbarLight /> : <Navbar />}
       <div className="hidden md:block">
         <FeaturedProduct featuredProduct={featuredProduct} />
       </div>

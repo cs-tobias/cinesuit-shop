@@ -1,20 +1,12 @@
 import "@/styles/globals.css";
+import { NextUIProvider } from "@nextui-org/react";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import { Inter } from "next/font/google";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { CartProvider } from "./components/contexts/CartContext";
 import { ScrollProvider, useScroll } from "./components/contexts/ScrollContext";
-import Footer from "./components/page-elements/Footer";
-import { Toaster } from "./components/sonner";
-import Navbar from "./components/ui/Navbar";
-import CookieConsentBanner from "./components/page-elements/CookieConsentBanner";
-import Script from "next/script";
-import { GA_TRACKING_ID } from "@/utils/gtag";
-import { getCookieConsentValue } from "react-cookie-consent";
-import { NextUIProvider } from "@nextui-org/react";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,7 +44,13 @@ const ScrollManager: React.FC = ({ children }) => {
       router.events.off("routeChangeStart", handleRouteChangeStart);
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
     };
-  }, [router.events, setScrollPosition, scrollPositions, isBackNavigation]);
+  }, [
+    router.asPath,
+    router.events,
+    setScrollPosition,
+    scrollPositions,
+    isBackNavigation,
+  ]);
 
   return <>{children}</>;
 };

@@ -15,8 +15,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/ui/accordion";
-import Lightbox from "../components/page-elements/Lightbox";
+import Lightbox from "../components/ui/Lightbox";
 import Icons from "../components/ui/Icons";
+import WhatsIncluded from "../components/page-elements/WhatsIncluded";
 
 const Product = ({
   mainProduct,
@@ -379,7 +380,9 @@ const Product = ({
           </div>
         </div>
       </div>
-      <div className="w-full h-[1px] py-8 bg-neutral-100"></div>
+
+      <div className="w-full h-[1px] py-12 bg-neutral-100"></div>
+      <WhatsIncluded />
       <div className="">
         <Footer />
       </div>
