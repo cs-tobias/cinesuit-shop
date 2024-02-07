@@ -7,10 +7,16 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CartProvider } from "./components/contexts/CartContext";
 import { ScrollProvider, useScroll } from "./components/contexts/ScrollContext";
+import React from "react";
+
+// Define the type for the props
+interface ScrollManagerProps {
+  children: React.ReactNode;
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
-const ScrollManager: React.FC = ({ children }) => {
+const ScrollManager: React.FC<ScrollManagerProps> = ({ children }) => {
   const router = useRouter();
   const { setScrollPosition, scrollPositions } = useScroll();
   const [isBackNavigation, setIsBackNavigation] = useState(false);
