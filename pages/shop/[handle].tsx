@@ -276,7 +276,7 @@ const Product = ({
                       <ul className="font-medium text-neutral-500">
                         <li>
                           <span className="text-black">
-                            1. Remove your lens' rubber rings
+                            1. Remove your lens&apos; rubber rings
                           </span>
                           , either by hand or with the included rubber removal
                           tool.

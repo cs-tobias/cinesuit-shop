@@ -85,8 +85,8 @@ const Privacy = () => {
             <section className="disclaimer-warranties">
               <h5 className="section-title">6. Disclaimer of Warranties</h5>
               <p>
-                As Is: Products are provided "as is" without warranties of any
-                kind, either express or implied.
+                As Is: Products are provided &quot;as is&quot; without
+                warranties of any kind, either express or implied.
               </p>
             </section>
 

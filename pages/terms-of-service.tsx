@@ -47,7 +47,7 @@ const Privacy = () => {
               <h5 className="section-title">3. Purchasing and Payments</h5>
               <p>
                 Payment Methods: We accept various secure payment methods via
-                Shopify's platform.
+                Shopify&apos;s platform.
               </p>
               <p>
                 Pricing: $99 for a single focus ring and $169 for a set,
@@ -65,7 +65,7 @@ const Privacy = () => {
                 purely descriptive.
               </p>
               <p>
-                Use at Own Risk: Using Cinesuit products may affect Sigma's
+                Use at Own Risk: Using Cinesuit products may affect Sigma&apos;s
                 warranty terms. Customers should use our products understanding
                 these implications.
               </p>
@@ -82,8 +82,8 @@ const Privacy = () => {
             <section className="disclaimer-warranties">
               <h5 className="section-title">6. Disclaimer of Warranties</h5>
               <p>
-                As Is: Products are provided "as is" without warranties of any
-                kind, either express or implied.
+                As Is: Products are provided &quot;as is&quot; without
+                warranties of any kind, either express or implied.
               </p>
             </section>
 
