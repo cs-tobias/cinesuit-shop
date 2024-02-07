@@ -1,27 +1,434 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+ 
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+[class^="number-slide"],
+[class*=" number-slide"] {
+  background: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  color: #fff;
+  font-weight: 500;
+  height: 300px;
+  max-height: 100vh;
+}
+
+.number-slide1 {
+  background: rgb(64, 175, 255);
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    128deg,
+    rgba(64, 175, 255, 1) 0%,
+    rgba(63, 97, 255, 1) 100%
+  );
+}
+
+.number-slide2 {
+  background: rgb(255, 75, 64);
+  background: linear-gradient(
+    128deg,
+    rgba(255, 154, 63, 1) 0%,
+    rgba(255, 75, 64, 1) 100%
+  );
+}
+
+.number-slide3 {
+  background: rgb(182, 255, 64);
+  background: linear-gradient(
+    128deg,
+    rgba(182, 255, 64, 1) 0%,
+    rgba(63, 255, 71, 1) 100%
+  );
+  background: linear-gradient(
+    128deg,
+    rgba(189, 255, 83, 1) 0%,
+    rgba(43, 250, 82, 1) 100%
+  );
+}
+
+.number-slide4 {
+  background: rgb(64, 255, 242);
+  background: linear-gradient(
+    128deg,
+    rgba(64, 255, 242, 1) 0%,
+    rgba(63, 188, 255, 1) 100%
+  );
+}
+
+.number-slide5 {
+  background: rgb(255, 64, 156);
+  background: linear-gradient(
+    128deg,
+    rgba(255, 64, 156, 1) 0%,
+    rgba(255, 63, 63, 1) 100%
+  );
+}
+
+.number-slide6 {
+  background: rgb(64, 76, 255);
+  background: linear-gradient(
+    128deg,
+    rgba(64, 76, 255, 1) 0%,
+    rgba(174, 63, 255, 1) 100%
+  );
+}
+
+.navigation-wrapper {
+  position: relative;
+}
+
+.dots {
+  display: flex;
+  padding: 10px 0;
+  justify-content: center;
+}
+
+.dot {
+  border: none;
+  width: 10px;
+  height: 10px;
+  background: #c5c5c5;
+  border-radius: 50%;
+  margin: 0 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.dot:focus {
+  outline: none;
+}
+
+.dot.active {
+  background: #000;
+}
+
+.arrow {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  fill: #fff;
+  cursor: pointer;
+}
+
+.arrow--left {
+  left: 5px;
+}
+
+.arrow--right {
+  left: auto;
+  right: 5px;
+}
+
+.arrow--disabled {
+  fill: rgba(255, 255, 255, 0.5);
+}
+
+.thumbnail .keen-slider__slide {
+  font-size: 30px;
+  margin-top: 10px;
+  height: 100px;
+}
+.thumbnail .keen-slider__slide {
+  cursor: pointer;
+}
+.thumbnail .keen-slider__slide.active {
+  border: 2px dashed black;
+}
+
+
+.flipimage {
+  transform: scaleY(-1);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+
+.quantity-dropdown {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.quantity-dropdown:focus {
+  outline: none;
+  border-color: #aaa;
+}
+
+
+
+
+
+
+
+/* Wrapper for the entire carousel */
+.carousel-wrapper {
+  @apply sticky top-0 z-10 w-full h-screen flex justify-center items-center overflow-hidden;
+  
+}
+
+/* Container for the carousel, positioning it in the center */
+.carousel-center {
+  @apply relative w-[750px] h-[70vh];
+
+}
+
+/* Container for the carousel items */
+.carousel-container {
+  @apply absolute top-1/2 left-1/2 w-full h-full;
+  transform: translate(-50%, -50%);
+  background-color: 
+  
+
+}
+
+/* Container for each carousel item */
+.carousel-item {
+  @apply absolute w-full h-[70vh] flex items-center justify-center transition-all duration-700 ease-in-out;
+  backface-visibility: hidden; /* For smoother 3D transitions */
+ 
+}
+
+
+
+
+
+/* Styles for the navigation buttons */
+.carousel-btn {
+  @apply  h-9 w-9 cursor-pointer items-center rounded-full border-2 bg-neutral-50 text-2xl opacity-50 transition duration-300 hover:opacity-75 md:h-12 md:w-12;
+}
+
+/* Positioning for the right navigation button */
+.carousel-btn-switch-card-right {
+  @apply absolute top-1/2 -translate-x-[100%] -translate-y-1/2 -left-4;
+}
+
+/* Positioning for the left navigation button */
+.carousel-btn-switch-card-left {
+  @apply absolute top-1/2 translate-x-[100%] -translate-y-1/2 -scale-x-100 -right-4;
+}
+
+
+/* Custom CSS for gradient overlay */
+.gradient-overlay::after {
+  content: '';
+  position: absolute;
+  top: 50%;  /* Adjust as needed */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+  pointer-events: none; /* Ensures clicks pass through the overlay */
+}
+
+
+/* Custom CSS for gradient overlay */
+.gradient-overlay-top::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50%;  /* Adjust as needed */
+  background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgb(0, 0, 0) 300%);
+  pointer-events: none; /* Ensures clicks pass through the overlay */
+}
+
+
+
+
+
+.privacy-policy {
+  background-color: #000; /* Black background */
+  color: #999999; /* Neutral text color */
+}
+
+.content-container {
+  padding-top: 24px;
+  margin: auto;
+  max-width: 295px;
+  text-align: left;
+}
+
+.content-container.md-text-center {
+  max-width: 600px;
+}
+
+.section-title {
+  color: #000; /* White color for section titles */
+  font-size: 20px; /* 2xl text size */
+  margin-bottom: 5px;
+  margin-top: 40px;
+  font-weight: 600;
+}
+
+.ulpolicy {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.ulpolicy .lipolicy {
+  margin-bottom: 5px;
+}
+
+
+.hover-scale-subtle {
+  transition: transform 0.5s;
+}
+.hover-scale-subtle:hover {
+  transform: scale(1.02);  /* Subtle scale up by 2% */
+}
+
+
+
+  /* Style to hide scrollbar but allow scrolling */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
+.image-container {
+  flex-direction: column;
+}
+
+.aspect-ratio-container {
+  position: relative;
+  width: 100%; /* Set the desired width of the container */
+  padding-top: 133.33%; /* 1500 / 1000 = 1.3333 (Aspect ratio 3:4) */
+  overflow: hidden;
+}
+
+.aspect-ratio-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Crop the image to fit within the container */
+}
+
+.no-hover:hover {
+  border-color: initial; /* or any style you want for the selected item */
+}
+
+
+/* Custom class for disabled button */
+.disabled-button {
+  opacity: 0.5; /* Example: adding transparency */
+  color: black !important; /* Ensuring the text color is black */
+  background-color: #ddd;
+}
+
+.no-extra-breaks {
+  white-space: nowrap; /* Prevents automatic line breaks */   /* Hides overflow text */
+ 
+}
+
+.navbar-transition {
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+.no-select {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.no-drag {
+  pointer-events: none; /* Prevents clicking, dragging, and any pointer events */
 }
