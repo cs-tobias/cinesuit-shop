@@ -7,6 +7,7 @@ import ShopComponent from "./components/page-elements/ShopComponent";
 import ShopTitle2 from "./components/page-elements/ShopTitle2";
 import Navbar from "./components/ui/Navbar";
 import NavbarLight from "./components/ui/NavbarLight";
+import { Product } from "@/types/Types";
 
 const TextWrapper = dynamic(
   () => import("./components/animations/TextWrapper"),
@@ -14,8 +15,13 @@ const TextWrapper = dynamic(
     ssr: false,
   }
 );
+// Define the props type for Shop component
+interface ShopProps {
+  featuredProduct: Product; // Adjust based on your actual Product type
+}
 
-export default function Shop({ products, featuredProduct }) {
+// Use the ShopProps type to type the props parameter
+export default function Shop({ featuredProduct }: ShopProps) {
   const [isLightNavbar, setIsLightNavbar] = useState<boolean>(false);
   // Introduce a state to manage screen width
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
@@ -64,7 +70,7 @@ export default function Shop({ products, featuredProduct }) {
       </div>
       <div className="w-full h-10 md:hidden"></div>
       <ShopTitle2 ref={shopTitle2Ref} />
-      <ShopComponent products={products} />
+      <ShopComponent />
       <Footer />
     </>
   );

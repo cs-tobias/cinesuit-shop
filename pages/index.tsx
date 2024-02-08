@@ -12,7 +12,13 @@ import UpgradeLens from "./components/page-elements/UpgradeLens";
 import Navbar from "./components/ui/Navbar";
 import { Product } from "@/types/Types";
 
-export default function Home({ products }) {
+// Define a type for the props expected by the Home component
+interface HomeProps {
+  products: Product[];
+}
+
+// Use the HomeProps type to type the props parameter
+export default function Home({ products }: HomeProps) {
   return (
     <>
       <Navbar />
@@ -24,7 +30,7 @@ export default function Home({ products }) {
       <SizesStandardized />
       <InstallUninstall />
       <ShopTitle />
-      <ShopComponent products={products} />
+      <ShopComponent />
       <Footer />
     </>
   );
@@ -32,8 +38,7 @@ export default function Home({ products }) {
 
 export async function getServerSideProps() {
   const products = await client.product.fetchAll();
-  // Ensure the structure of products matches what ShopComponent expects
   return {
     props: { products: JSON.parse(JSON.stringify(products)) as Product[] },
-  }; // Make sure the cast is correct based on your types
+  };
 }
