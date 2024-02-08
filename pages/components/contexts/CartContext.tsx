@@ -17,6 +17,7 @@ interface Product {
 }
 
 interface CartItem {
+  quantity: number;
   product: Product;
   variants: Array<{ id: string; quantity: number }>;
 }

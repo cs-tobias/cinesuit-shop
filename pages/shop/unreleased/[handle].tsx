@@ -1,5 +1,7 @@
 import FooterDark from "@/pages/components/page-elements/FooterDark";
 import GalleryPage from "@/pages/components/page-elements/ImageGallery";
+import { ReactNode } from "react";
+import { Product } from "@/types/Types";
 import Navbar from "@/pages/components/ui/Navbar";
 import { client } from "@/utils/shopifyClient";
 import Link from "next/link";
@@ -7,11 +9,20 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Button from "@/pages/components/ui/Button";
 
-const UnreleasedProductPage = ({ product, imagePaths }) => {
+// Define the props interface
+interface UnreleasedProductPageProps {
+  product: Product; // Use the Product interface
+  imagePaths: string[];
+}
+
+const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
+  product,
+  imagePaths,
+}) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0); // Add state to manage selected image index
 
-  const navigateCarousel = (direction) => {
+  const navigateCarousel = (direction: string) => {
     // Function to navigate through images
     if (direction === "left") {
       setSelectedIndex(
@@ -58,7 +69,7 @@ const UnreleasedProductPage = ({ product, imagePaths }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: { params: { handle: any } }) {
   const { handle } = context.params;
   const product = await client.product.fetchByHandle(handle);
 

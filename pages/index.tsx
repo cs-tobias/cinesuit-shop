@@ -8,9 +8,9 @@ import ShopComponent from "./components/page-elements/ShopComponent";
 import ShopTitle from "./components/page-elements/ShopTitle";
 import SizesStandardized from "./components/page-elements/SizesStandardized";
 import ThinProfile from "./components/page-elements/ThinProfile";
-import ThisIs from "./components/page-elements/ThisIs";
 import UpgradeLens from "./components/page-elements/UpgradeLens";
 import Navbar from "./components/ui/Navbar";
+import { Product } from "@/types/Types";
 
 export default function Home({ products }) {
   return (
@@ -18,7 +18,6 @@ export default function Home({ products }) {
       <Navbar />
       <Hero />
       <NextStep />
-      <ThisIs />
       <UpgradeLens />
       <ThinProfile />
       <LessExpensive />
@@ -33,5 +32,8 @@ export default function Home({ products }) {
 
 export async function getServerSideProps() {
   const products = await client.product.fetchAll();
-  return { props: { products: JSON.parse(JSON.stringify(products)) } };
+  // Ensure the structure of products matches what ShopComponent expects
+  return {
+    props: { products: JSON.parse(JSON.stringify(products)) as Product[] },
+  }; // Make sure the cast is correct based on your types
 }

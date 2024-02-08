@@ -11,7 +11,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-export function AlertDialogComponent({ isOpen, onClose }) {
+// Props interface
+interface AlertDialogComponentProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+// Apply the interface to your component
+export function AlertDialogComponent({
+  isOpen,
+  onClose,
+}: AlertDialogComponentProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>

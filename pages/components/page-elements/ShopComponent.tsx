@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "../contexts/CartContext";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const ShopComponent = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -25,7 +24,16 @@ const ShopComponent = () => {
               : a.availableForSale
               ? -1
               : 1
-          );
+          )
+          .map((product) => ({
+            ...product, // Spread other product properties as needed
+            images: product.images.map(({ id, src }) => ({
+              id: id ?? undefined, // Ensure id is either string or undefined
+              src,
+            })),
+            // Apply other transformations as needed to match your Product type
+          })) as unknown as Product[]; // Cast to your Product type
+
         setProducts(sortedProducts);
         setLoading(false);
       })
@@ -34,26 +42,6 @@ const ShopComponent = () => {
         setLoading(false);
       });
   }, []);
-
-  if (loading) {
-    return (
-      <div className="container max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div
-            key={index}
-            className="bg-neutral-50 text-black flex flex-col p-6 rounded-xl"
-          >
-            <Skeleton className="h-[300px] w-full rounded-xl" /> {/* Image */}
-            <Skeleton className="h-8 mt-4 w-3/4" /> {/* Title */}
-            <Skeleton className="h-6 w-1/4 mt-2" /> {/* Price */}
-            <Skeleton className="h-6 w-full mt-2" /> {/* Description Line 1 */}
-            <Skeleton className="h-6 w-5/6 mt-2" /> {/* Description Line 2 */}
-            <Skeleton className="h-10 mt-4 w-full" /> {/* Button */}
-          </div>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <>
@@ -69,8 +57,16 @@ const ShopComponent = () => {
               <Link
                 href={
                   product.productType === "unreleased"
-                    ? `/shop/unreleased/${product.handle}`
+                    ? "https://www.facebook.com/tobias.eek"
                     : `/shop/${product.handle}`
+                }
+                target={
+                  product.productType === "unreleased" ? "_blank" : undefined
+                }
+                rel={
+                  product.productType === "unreleased"
+                    ? "noopener noreferrer"
+                    : undefined
                 }
                 className="cursor-pointer hover:opacity-95 transition-opacity duration-300 justify-center"
               >
@@ -111,8 +107,8 @@ const ShopComponent = () => {
               </div>
 
               <div>
-                <p className="text-[22px] font-semibold md:font-medium">
-                  ${product.variants[0].priceV2.amount.slice(0, -2)}
+                <p className="text-[22px] font-medium">
+                  ${product.variants[0].price.amount.toString().slice(0, -2)}
                 </p>
               </div>
 
@@ -124,7 +120,8 @@ const ShopComponent = () => {
                 {product.productType === "unreleased" ? (
                   <div className="py-4">
                     <Link
-                      href={`/shop/unreleased/${product.handle}`}
+                      href="https://www.facebook.com/tobias.eek"
+                      target="_blank"
                       className="w-full flex justify-center bg-neutral-200 border-neutral-300 border-2 hover:border-neutral-400 transition-colors duration-300 text-black py-1.5 rounded-lg"
                     >
                       Learn more

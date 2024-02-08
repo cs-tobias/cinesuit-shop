@@ -1,26 +1,5 @@
 "use client";
 
-import { client } from "@/utils/shopifyClient";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useCart } from "./components/contexts/CartContext";
-import FeaturedProduct from "./components/page-elements/FeaturedProduct";
-import Footer from "./components/page-elements/Footer";
-import ShopComponent from "./components/page-elements/ShopComponent";
-import ShopTitle2 from "./components/page-elements/ShopTitle2";
-import Button from "./components/ui/Button";
-import Link from "next/link";
-import NavbarLight from "./components/ui/NavbarLight";
-import QuantitySelector from "./components/ui/QuantitySelector";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./components/ui/accordionCustom";
-import { Separator } from "./components/ui/separator";
-import { Checkbox } from "@/components/ui/checkbox";
-import { AlertDialogComponent } from "./components/ui/AlertDialogComponent";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,24 +10,48 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { client } from "@/utils/shopifyClient";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/Types"; // Adjust the import path as necessary
+import { useCart } from "./components/contexts/CartContext";
+import FeaturedProduct from "./components/page-elements/FeaturedProduct";
+import Footer from "./components/page-elements/Footer";
+import ShopComponent from "./components/page-elements/ShopComponent";
+import ShopTitle2 from "./components/page-elements/ShopTitle2";
+import Button from "./components/ui/Button";
+import NavbarLight from "./components/ui/NavbarLight";
+import QuantitySelector from "./components/ui/QuantitySelector";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./components/ui/accordionCustom";
+import { Separator } from "./components/ui/separator";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, redirectToCheckout } =
     useCart();
   const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [featuredProduct, setFeaturedProduct] = useState(null);
+  // Explicitly define the type for products as an array of Product
+  const [products, setProducts] = useState<Product[]>([]);
+  // Define the type for featuredProduct as Product or null
+  const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null);
   const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false); // Assuming you have this state as well
+
   const handleAgreeAction = () => {
     setIsTermsChecked(true);
     setIsAlertDialogOpen(false);
   };
-  const handleLabelClick = (event) => {
+  const handleLabelClick = (event: { stopPropagation: () => void }) => {
     // Prevent the event from reaching the checkbox
     event.stopPropagation();
     setIsAlertDialogOpen(true);
   };
-  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 
   const handleOverlayClick = () => {
     if (!isTermsChecked) {
@@ -59,12 +62,27 @@ const CartPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const fetchedProducts = await client.product.fetchAll();
-      const FEATURED_PRODUCT_ID = "gid://shopify/Product/7638832218270";
-      const featured = fetchedProducts.find(
-        (product) => product.id === FEATURED_PRODUCT_ID
-      );
 
-      setProducts(fetchedProducts);
+      // Adjust fetchedProducts to match the Product type
+      const adjustedProducts = fetchedProducts.map((product) => ({
+        ...product,
+        images: product.images.map(({ id, src }) => ({
+          id: id ?? undefined, // Explicitly set id to undefined if it's not present
+          src,
+        })),
+        variants: product.variants.map((variant) => ({
+          ...variant,
+          price: { amount: variant.price.amount.toString() }, // Assuming you need to convert amount to string based on your Product type
+        })),
+      })) as unknown as Product[]; // Adjust based on your Product type definition
+
+      const FEATURED_PRODUCT_ID = "gid://shopify/Product/7638832218270";
+      const featured =
+        adjustedProducts.find(
+          (product) => product.id === FEATURED_PRODUCT_ID
+        ) ?? null; // Ensure featured is either a Product or null
+
+      setProducts(adjustedProducts);
       setFeaturedProduct(featured);
     };
 
@@ -92,7 +110,7 @@ const CartPage = () => {
 
   const total = cart.reduce(
     (acc, item) =>
-      acc + item.quantity * parseFloat(item.product.variants[0].priceV2.amount),
+      acc + item.quantity * parseFloat(item.product.variants[0].price.amount),
     0
   );
 
@@ -100,9 +118,11 @@ const CartPage = () => {
     return (
       <>
         <NavbarLight />
-        <FeaturedProduct featuredProduct={featuredProduct} />
+        {featuredProduct && (
+          <FeaturedProduct featuredProduct={featuredProduct} />
+        )}
         <ShopTitle2 />
-        <ShopComponent products={products} />
+        <ShopComponent />
         <Footer />
       </>
     );
@@ -163,7 +183,7 @@ const CartPage = () => {
 
                 <div className="ml-auto pl-8 text-right">
                   <h1 className="text-3xl font-medium">
-                    ${item.product.variants[0].priceV2.amount}
+                    ${item.product.variants[0].price.amount}
                   </h1>
                 </div>
               </section>
@@ -254,7 +274,15 @@ const CartPage = () => {
                 <Checkbox
                   id="terms1"
                   checked={isTermsChecked}
-                  onCheckedChange={(checked) => setIsTermsChecked(checked)}
+                  onCheckedChange={(checked) => {
+                    // Handle the case where checked might be "indeterminate"
+                    if (checked === "indeterminate") {
+                      // Decide how you want to handle the "indeterminate" state
+                      setIsTermsChecked(false); // or true, based on your needs
+                    } else {
+                      setIsTermsChecked(checked);
+                    }
+                  }}
                 />
               </div>
               <div className="relative" onClick={handleOverlayClick}>
@@ -279,9 +307,11 @@ const CartPage = () => {
               </div>
 
               <AlertDialog
-                isOpen={isAlertDialogOpen}
-                onClose={() => setIsAlertDialogOpen(false)}
-              />
+                open={isAlertDialogOpen}
+                onOpenChange={() => setIsAlertDialogOpen(!isAlertDialogOpen)} // Assuming a prop like this exists for handling open state changes
+              >
+                {/* Dialog content */}
+              </AlertDialog>
             </div>
           </section>
         </div>

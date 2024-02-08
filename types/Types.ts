@@ -8,12 +8,12 @@ export interface Product {
   title: string;
   description: string;
   images: Array<{
-    id: string;
+    id: string | undefined; // Allow 'id' to be 'undefined'
     src: string;
   }>;
   variants: Array<{
     id: string;
-    priceV2: { amount: string };
+    price: { amount: number };
   }>;
 }
 
@@ -22,6 +22,8 @@ export interface Product {
 export interface ProductProps {
   mainProduct: Product;
   associatedProducts: Product[];
+  imagePaths: string[]; // Add this line
+  smImagePaths: string[]; // Add this line
 }
 
   export interface ProductImage {

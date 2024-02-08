@@ -1,13 +1,15 @@
-import { ProductProps } from "@/types/Types";
+import type { Product as ProductType, ProductProps } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../components/contexts/CartContext";
 import Footer from "../components/page-elements/Footer";
+import WhatsIncluded from "../components/page-elements/WhatsIncluded";
 import Button from "../components/ui/Button";
+import Lightbox from "../components/ui/Lightbox";
 import NavbarLight from "../components/ui/NavbarLight";
 import {
   Accordion,
@@ -15,9 +17,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/ui/accordion";
-import Lightbox from "../components/ui/Lightbox";
-import Icons from "../components/ui/Icons";
-import WhatsIncluded from "../components/page-elements/WhatsIncluded";
 
 const Product = ({
   mainProduct,
@@ -25,7 +24,7 @@ const Product = ({
   imagePaths,
   smImagePaths,
 }: ProductProps) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     mainProduct
   );
   // State to manage lightbox visibility
@@ -54,19 +53,39 @@ const Product = ({
     };
   }, [selectedIndex]); // This effect depends on selectedIndex, so it runs before and after it changes
 
-  const handleProductSelection = (product: Product) => {
+  const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
   };
 
   const handleAddToCart = () => {
     if (selectedProduct) {
-      addToCart(selectedProduct, 1); // Assuming a quantity of 1
-      // Redirect to the cart page
-      router.push("/cart"); // Replace '/cart' with your cart page's path
+      const productForCart = {
+        ...selectedProduct,
+        variants: selectedProduct.variants.map((variant) => ({
+          ...variant,
+          price: {
+            ...variant.price,
+            amount: variant.price.amount.toString(), // Convert amount to string
+          },
+        })),
+        // Filter out images without an id or assign a default id
+        images: selectedProduct.images
+          .map(({ id, src }) => ({
+            id: id ?? "default-id", // Assign a default id if undefined
+            src,
+          }))
+          .filter((image) => image.id !== "default-id"), // Optional: filter out if you don't want images with default ids
+      };
+
+      addToCart(productForCart, 1);
+      router.push("/cart");
     }
   };
 
-  const navigateCarousel = (direction, event) => {
+  const navigateCarousel = (
+    direction: string,
+    event: { preventDefault: () => void }
+  ) => {
     event.preventDefault(); // Prevent default action
 
     if (direction === "left") {
@@ -200,10 +219,9 @@ const Product = ({
                     </h3>
                     <span>
                       $
-                      {associatedProduct.variants[0].priceV2.amount.slice(
-                        0,
-                        -2
-                      )}
+                      {associatedProduct.variants[0].price.amount
+                        .toString()
+                        .slice(0, -2)}
                     </span>
                   </div>
                 </div>
@@ -222,7 +240,10 @@ const Product = ({
                     {associatedProducts.length > 0 ? "Focus & Zoom" : "Focus"}
                   </h3>
                   <span>
-                    ${mainProduct.variants[0].priceV2.amount.slice(0, -2)}
+                    $
+                    {mainProduct.variants[0].price.amount
+                      .toString()
+                      .slice(0, -2)}
                   </span>
                 </div>
               </div>
@@ -235,7 +256,7 @@ const Product = ({
                     <p>
                       $
                       {selectedProduct
-                        ? selectedProduct.variants[0].priceV2.amount
+                        ? selectedProduct.variants[0].price.amount
                         : "0.00"}
                     </p>
                   </div>
@@ -390,14 +411,14 @@ const Product = ({
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: { params: { handle: any } }) {
   const handle = context.params.handle;
   const fetchedMainProduct = await client.product.fetchByHandle(handle);
   const associatedProductType = `${fetchedMainProduct.title}_bundle`;
 
   const productsWithSpecificType = await client.product.fetchQuery({
     query: `productType:${associatedProductType}`,
-    limit: 3,
+    first: 3,
   });
 
   const imageCount = 3; // Adjust this number based on how many images you expect per product
