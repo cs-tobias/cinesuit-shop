@@ -4,7 +4,7 @@ import { client } from "@/utils/shopifyClient";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useCart } from "../contexts/CartContext";
+import { useCart } from "../../../components/contexts/CartContext";
 
 const ShopComponent = () => {
   const [products, setProducts] = useState<Product[]>([]);

@@ -1,13 +1,19 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ImageProps } from "../interfaces/ImageProps";
+import { ImageProps } from "../../../components/interfaces/ImageProps";
 
-const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
-  ssr: false,
-});
-const MoveWrapper1 = dynamic(() => import("../animations/MoveWrapper1"), {
-  ssr: false,
-});
+const TextWrapper = dynamic(
+  () => import("../../../components/animations/TextWrapper"),
+  {
+    ssr: false,
+  }
+);
+const MoveWrapper1 = dynamic(
+  () => import("../../../components/animations/MoveWrapper1"),
+  {
+    ssr: false,
+  }
+);
 
 const GalleryPage = () => {
   const images: ImageProps[] = [

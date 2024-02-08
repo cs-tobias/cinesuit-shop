@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Navbar from "./components/ui/Navbar";
+import Navbar from "../components/ui/Navbar";
 import Footer from "./components/page-elements/Footer";
-import { Separator } from "./components/ui/separator";
+import { Separator } from "../components/ui/separator";
 import Image from "next/image";
-import NavbarLight from "./components/ui/NavbarLight";
+import NavbarLight from "../components/ui/NavbarLight";
 
 const Privacy = () => {
   return (

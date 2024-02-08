@@ -2,12 +2,12 @@ import FooterDark from "@/pages/components/page-elements/FooterDark";
 import GalleryPage from "@/pages/components/page-elements/ImageGallery";
 import { ReactNode } from "react";
 import { Product } from "@/types/Types";
-import Navbar from "@/pages/components/ui/Navbar";
+import Navbar from "@/components/ui/Navbar";
 import { client } from "@/utils/shopifyClient";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Button from "@/pages/components/ui/Button";
+import Button from "@/components/Button";
 
 // Define the props interface
 interface UnreleasedProductPageProps {

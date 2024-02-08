@@ -16,21 +16,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/Types"; // Adjust the import path as necessary
-import { useCart } from "./components/contexts/CartContext";
+import { useCart } from "../components/contexts/CartContext";
 import FeaturedProduct from "./components/page-elements/FeaturedProduct";
 import Footer from "./components/page-elements/Footer";
 import ShopComponent from "./components/page-elements/ShopComponent";
 import ShopTitle2 from "./components/page-elements/ShopTitle2";
-import Button from "./components/ui/Button";
-import NavbarLight from "./components/ui/NavbarLight";
-import QuantitySelector from "./components/ui/QuantitySelector";
+import Button from "../components/Button";
+import NavbarLight from "../components/ui/NavbarLight";
+import QuantitySelector from "../components/ui/QuantitySelector";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./components/ui/accordionCustom";
-import { Separator } from "./components/ui/separator";
+} from "../components/ui/accordionCustom";
+import { Separator } from "../components/ui/separator";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, redirectToCheckout } =

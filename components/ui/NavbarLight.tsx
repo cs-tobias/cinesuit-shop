@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Button from "./Button";
+import Button from "../Button";
 import { useCart } from "../contexts/CartContext";
 import Icons from "./Icons";
 
@@ -33,10 +33,10 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-black fixed top-0 z-50 w-full py-2 bg-opacity-85 backdrop-filter backdrop-blur text-white border-b border-neutral-900">
+      <div className="bg-neutral-50 fixed top-0 z-50 w-full py-2 bg-opacity-85 backdrop-filter backdrop-blur text-black border-b border-neutral-200">
         <div className="flex justify-between items-center px-6 p-1 mx-auto max-w-5xl">
           {/* Logo */}
-          <div className="mt-0.5 hover:text-neutral-300 transition-colors duration-300 cursor-pointer">
+          <div className="mt-0.5 hover:text-neutral-600 transition-colors duration-300 cursor-pointer">
             <Link href="/" passHref>
               <div>
                 <p className="text-2xl font-semibold tracking-tight">
@@ -47,22 +47,21 @@ const Navbar = () => {
           </div>
           <div className="md:block flex items-center gap-1 ml-auto"></div>
           <div className=" hidden md:block">
-            <ul className="flex flex-row gap-8 mr-6 text-[14px] text-neutral-400">
+            <ul className="flex flex-row gap-8 mr-6 text-[14px] text-neutral-700">
               <li>
                 <Link href={"/instructions"}>
-                  <p className="hover:text-white transition-colors duration-300">
+                  <p className="hover:text-black transition-colors duration-300">
                     Instructions
                   </p>
                 </Link>
               </li>
               <li>
                 <Link href={"/about"}>
-                  <p className="hover:text-white transition-colors duration-300">
+                  <p className="hover:text-black transition-colors duration-300">
                     About
                   </p>
                 </Link>
               </li>
-
               <li>
                 <Link href={"/shop"}>
                   <Button
@@ -93,9 +92,10 @@ const Navbar = () => {
                   width="22"
                   height="22"
                   strokeWidth="1.2"
+                  className=""
                 ></Icons>
                 {cartItemCount > 0 && (
-                  <span className="absolute top-7 ml-3 rounded-full bg-white text-black text-[9px] px-1">
+                  <span className="absolute top-7 ml-3 rounded-full bg-black text-white text-[9px] px-1">
                     {cartItemCount}
                   </span>
                 )}
@@ -110,12 +110,12 @@ const Navbar = () => {
             onClick={handleToggle}
           >
             <div
-              className={`bg-white w-[18px] h-[1px] transition-transform duration-200 ${
+              className={`bg-black w-[18px] h-[1px] transition-transform duration-200 ${
                 isActive ? "rotate-45 translate-y-[5px]" : ""
               }`}
             ></div>
             <div
-              className={`bg-white w-[18px] h-[1px] transition-transform duration-200 ${
+              className={`bg-black w-[18px] h-[1px] transition-transform duration-200 ${
                 isActive ? "-rotate-45 -translate-y-1" : ""
               }`}
             ></div>
@@ -125,27 +125,27 @@ const Navbar = () => {
 
       {/* Full-Screen Menu Content */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-85 backdrop-filter backdrop-blur text-white transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-neutral-50 backdrop-filter backdrop-blur text-black transition-opacity duration-300 ${
           isActive ? "opacity-100" : "opacity-0 pointer-events-none"
         } z-40`}
       >
         <div className="flex flex-col items-center justify-center h-screen">
-          <ul className="flex flex-col items-center gap-8 text-4xl font-medium text-neutral-400">
+          <ul className="flex flex-col items-center gap-8 text-4xl font-medium text-neutral-600">
             {/* ... menu items ... */}
             <li
               onClick={closeMenu}
-              className="hover:text-white transition-colors duration-200"
+              className="hover:text-black transition-colors duration-200"
             >
               <Link href={"/shop"}>
                 <p>Shop</p>
               </Link>
             </li>
-            <li className="hover:text-white hover:cursor-pointer">
+            <li className="hover:text-black hover:cursor-pointer">
               <Link href={"/instructions"}>
                 <p>Instructions</p>
               </Link>
             </li>
-            <li className="hover:text-white">
+            <li className="hover:text-black">
               <Link href={"/about"}>
                 <p>About</p>
               </Link>

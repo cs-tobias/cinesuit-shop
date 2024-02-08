@@ -1,6 +1,6 @@
 import Link from "next/link";
 import FooterDark from "./components/page-elements/FooterDark";
-import Navbar from "./components/ui/Navbar";
+import Navbar from "../components/ui/Navbar";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import {
@@ -11,20 +11,23 @@ import {
 } from "@/components/ui/tooltip";
 
 const TextWrapper = dynamic(
-  () => import("./components/animations/TextWrapper"),
+  () => import("../components/animations/TextWrapper"),
   {
     ssr: false,
   }
 );
-const PosLtoR = dynamic(() => import("./components/animations/PosLtoR"), {
+const PosLtoR = dynamic(() => import("../components/animations/PosLtoR"), {
   ssr: false,
 });
-const PosRtoL = dynamic(() => import("./components/animations/PosRtoL"), {
+const PosRtoL = dynamic(() => import("../components/animations/PosRtoL"), {
   ssr: false,
 });
-const RotWrapper = dynamic(() => import("./components/animations/RotWrapper"), {
-  ssr: false,
-});
+const RotWrapper = dynamic(
+  () => import("../components/animations/RotWrapper"),
+  {
+    ssr: false,
+  }
+);
 
 const Instructions = () => {
   return (

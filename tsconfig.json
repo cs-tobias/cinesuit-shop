@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/shopifyClient.ts", "pages/components/contexts/CartContext.tsx", "utils/fetchProduct.ts", "utils/gtag.ts", "pages/components/page-elements/data.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/shopifyClient.ts", "components/contexts/CartContext.tsx", "utils/fetchProduct.ts", "utils/gtag.ts", "pages/components/page-elements/data.js"],
   "exclude": ["node_modules"]
 }

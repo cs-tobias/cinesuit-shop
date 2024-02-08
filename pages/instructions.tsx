@@ -2,16 +2,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import FooterDark from "./components/page-elements/FooterDark";
-import Navbar from "./components/ui/Navbar";
-import RotWrapper from "./components/animations/RotWrapper";
+import Navbar from "../components/ui/Navbar";
+import RotWrapper from "../components/animations/RotWrapper";
 
 const TextWrapper = dynamic(
-  () => import("./components/animations/TextWrapper"),
+  () => import("../components/animations/TextWrapper"),
   {
     ssr: false,
   }
 );
-const PosLtoR = dynamic(() => import("./components/animations/RotWrapper"), {
+const PosLtoR = dynamic(() => import("../components/animations/RotWrapper"), {
   ssr: false,
 });
 

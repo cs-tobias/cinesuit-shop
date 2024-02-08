@@ -9,7 +9,7 @@ import ShopTitle from "./components/page-elements/ShopTitle";
 import SizesStandardized from "./components/page-elements/SizesStandardized";
 import ThinProfile from "./components/page-elements/ThinProfile";
 import UpgradeLens from "./components/page-elements/UpgradeLens";
-import Navbar from "./components/ui/Navbar";
+import Navbar from "../components/ui/Navbar";
 import { Product } from "@/types/Types";
 
 // Define a type for the props expected by the Home component

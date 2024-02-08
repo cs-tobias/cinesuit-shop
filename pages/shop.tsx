@@ -5,12 +5,12 @@ import FeaturedProduct from "./components/page-elements/FeaturedProduct";
 import Footer from "./components/page-elements/Footer";
 import ShopComponent from "./components/page-elements/ShopComponent";
 import ShopTitle2 from "./components/page-elements/ShopTitle2";
-import Navbar from "./components/ui/Navbar";
-import NavbarLight from "./components/ui/NavbarLight";
+import Navbar from "../components/ui/Navbar";
+import NavbarLight from "../components/ui/NavbarLight";
 import { Product } from "@/types/Types";
 
 const TextWrapper = dynamic(
-  () => import("./components/animations/TextWrapper"),
+  () => import("../components/animations/TextWrapper"),
   {
     ssr: false,
   }

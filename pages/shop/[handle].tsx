@@ -5,18 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useCart } from "../components/contexts/CartContext";
+import { useCart } from "../../components/contexts/CartContext";
 import Footer from "../components/page-elements/Footer";
 import WhatsIncluded from "../components/page-elements/WhatsIncluded";
-import Button from "../components/ui/Button";
-import Lightbox from "../components/ui/Lightbox";
-import NavbarLight from "../components/ui/NavbarLight";
+import Button from "../../components/Button";
+import Lightbox from "../../components/ui/Lightbox";
+import NavbarLight from "../../components/ui/NavbarLight";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../components/ui/accordion";
+} from "../../components/ui/accordion";
 
 const Product = ({
   mainProduct,
@@ -98,13 +98,13 @@ const Product = ({
   };
 
   const TextWrapper = dynamic(
-    () => import("../components/animations/TextWrapper"),
+    () => import("../../components/animations/TextWrapper"),
     {
       ssr: false,
     }
   );
   const RotWrapper = dynamic(
-    () => import("../components/animations/RotWrapper"),
+    () => import("../../components/animations/RotWrapper"),
     {
       ssr: false,
     }

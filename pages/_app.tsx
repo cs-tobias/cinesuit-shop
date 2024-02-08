@@ -5,8 +5,11 @@ import { Inter } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { CartProvider } from "./components/contexts/CartContext";
-import { ScrollProvider, useScroll } from "./components/contexts/ScrollContext";
+import { CartProvider } from "../components/contexts/CartContext";
+import {
+  ScrollProvider,
+  useScroll,
+} from "../components/contexts/ScrollContext";
 import React from "react";
 
 // Define the type for the props
