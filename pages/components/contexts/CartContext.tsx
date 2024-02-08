@@ -16,18 +16,23 @@ interface Product {
   description: string;
 }
 
-interface CartItem {
+interface Variant {
+  id: string;
   quantity: number;
-  product: Product;
-  variants: Array<{ id: string; quantity: number }>;
+  // Add other necessary fields for a variant, like price, name, etc.
+}
+
+interface CartItem {
+  product: Product; // Assuming Product type is defined elsewhere and includes a list of variants
+  variants: Variant[]; // Array of selected variants with quantities
 }
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, quantity: number) => void;
+  addToCart: (product: Product, variantId: string, quantity: number) => void; // Updated signature
   updateQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;
-  redirectToCheckout: () => void;
+  redirectToCheckout: () => Promise<void>;
   getCartItemCount: () => number;
 }
 
@@ -36,7 +41,9 @@ const CartContext = createContext<CartContextType>({
   addToCart: () => {},
   updateQuantity: () => {},
   removeFromCart: () => {},
-  redirectToCheckout: () => {},
+  redirectToCheckout: async () => {
+    /* This function now correctly matches the expected return type */
+  },
   getCartItemCount: () => 0,
 });
 
@@ -68,35 +75,32 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [cart, isMounted]);
 
-  const addToCart = (product: Product, quantity: number) => {
-    console.log("Current cart state before update:", cart);
-
-    const existingCartItemIndex = cart.findIndex(
+  const addToCart = (product: Product, variantId: string, quantity: number) => {
+    const existingItemIndex = cart.findIndex(
       (item) => item.product.id === product.id
     );
 
-    let newCart;
-    if (existingCartItemIndex !== -1) {
-      newCart = [...cart];
-      newCart[existingCartItemIndex] = {
-        ...newCart[existingCartItemIndex],
-        variants: [
-          {
-            ...newCart[existingCartItemIndex].variants[0],
-            quantity:
-              newCart[existingCartItemIndex].variants[0].quantity + quantity,
-          },
-        ],
-      };
+    if (existingItemIndex >= 0) {
+      // Product exists, check if the variant exists
+      const existingVariantIndex = cart[existingItemIndex].variants.findIndex(
+        (v) => v.id === variantId
+      );
+      if (existingVariantIndex >= 0) {
+        // Variant exists, update its quantity
+        let newCart = [...cart];
+        newCart[existingItemIndex].variants[existingVariantIndex].quantity +=
+          quantity;
+        setCart(newCart);
+      } else {
+        // Variant doesn't exist, add new variant to the item
+        let newCart = [...cart];
+        newCart[existingItemIndex].variants.push({ id: variantId, quantity });
+        setCart(newCart);
+      }
     } else {
-      newCart = [
-        ...cart,
-        { product, variants: [{ id: product.variants[0].id, quantity }] },
-      ];
+      // Product doesn't exist, add new item with this variant
+      setCart([...cart, { product, variants: [{ id: variantId, quantity }] }]);
     }
-
-    setCart(newCart);
-    console.log("New cart state after update:", newCart);
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
