@@ -59,25 +59,25 @@ const Product = ({
 
   const handleAddToCart = () => {
     if (selectedProduct) {
-      const productForCart = {
+      const variantId = selectedProduct.variants[0].id; // Assuming you want to add the first variant
+      const quantity = 1; // The quantity you want to add to the cart
+      const productWithCorrectedAmount = {
         ...selectedProduct,
         variants: selectedProduct.variants.map((variant) => ({
           ...variant,
           price: {
             ...variant.price,
-            amount: variant.price.amount.toString(), // Convert amount to string
+            amount: variant.price.amount.toString(), // Ensure amount is a string
           },
         })),
-        // Filter out images without an id or assign a default id
-        images: selectedProduct.images
-          .map(({ id, src }) => ({
-            id: id ?? "default-id", // Assign a default id if undefined
-            src,
-          }))
-          .filter((image) => image.id !== "default-id"), // Optional: filter out if you don't want images with default ids
+        images: selectedProduct.images.map(({ id, src }) => ({
+          id: id ?? "default-id", // Provide a default id if undefined
+          src,
+        })),
       };
 
-      addToCart(productForCart, 1);
+      // Now call addToCart with the required three arguments
+      addToCart(productWithCorrectedAmount, variantId, quantity);
       router.push("/cart");
     }
   };
