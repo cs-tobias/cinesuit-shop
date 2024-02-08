@@ -23,6 +23,7 @@ interface Variant {
 }
 
 interface CartItem {
+  quantity: number;
   product: Product; // Assuming Product type is defined elsewhere and includes a list of variants
   variants: Variant[]; // Array of selected variants with quantities
 }
@@ -76,30 +77,54 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   }, [cart, isMounted]);
 
   const addToCart = (product: Product, variantId: string, quantity: number) => {
+    // Find if the product already exists in the cart
     const existingItemIndex = cart.findIndex(
       (item) => item.product.id === product.id
     );
 
     if (existingItemIndex >= 0) {
-      // Product exists, check if the variant exists
-      const existingVariantIndex = cart[existingItemIndex].variants.findIndex(
+      // Product exists in the cart, update it
+      const existingProduct = cart[existingItemIndex];
+      const existingVariantIndex = existingProduct.variants.findIndex(
         (v) => v.id === variantId
       );
+
       if (existingVariantIndex >= 0) {
-        // Variant exists, update its quantity
-        let newCart = [...cart];
-        newCart[existingItemIndex].variants[existingVariantIndex].quantity +=
-          quantity;
-        setCart(newCart);
+        // Variant exists, update quantity
+        let updatedVariants = [...existingProduct.variants];
+        updatedVariants[existingVariantIndex] = {
+          ...updatedVariants[existingVariantIndex],
+          quantity: updatedVariants[existingVariantIndex].quantity + quantity,
+        };
+        let updatedCart = [...cart];
+        updatedCart[existingItemIndex] = {
+          ...existingProduct,
+          variants: updatedVariants,
+        };
+        setCart(updatedCart);
       } else {
-        // Variant doesn't exist, add new variant to the item
-        let newCart = [...cart];
-        newCart[existingItemIndex].variants.push({ id: variantId, quantity });
-        setCart(newCart);
+        // Variant does not exist, add new variant
+        let updatedVariants = [
+          ...existingProduct.variants,
+          { id: variantId, quantity },
+        ];
+        let updatedCart = [...cart];
+        updatedCart[existingItemIndex] = {
+          ...existingProduct,
+          variants: updatedVariants,
+        };
+        setCart(updatedCart);
       }
     } else {
-      // Product doesn't exist, add new item with this variant
-      setCart([...cart, { product, variants: [{ id: variantId, quantity }] }]);
+      // Product does not exist in the cart, add new product with the variant
+      setCart([
+        ...cart,
+        {
+          product,
+          quantity: 1, // Assuming you want a default quantity for the product itself
+          variants: [{ id: variantId, quantity }],
+        },
+      ]);
     }
   };
 
@@ -123,33 +148,34 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const redirectToCheckout = async () => {
+    console.log("[redirectToCheckout] Cart content:", cart);
+
     if (cart.length === 0) {
-      console.log("Cart is empty");
+      console.warn("[redirectToCheckout] Cart is empty. Aborting checkout.");
       return;
     }
 
-    const lineItems = cart.map((item) => ({
-      variantId: item.product.variants[0].id,
-      quantity: item.variants[0].quantity,
-    }));
-
-    console.log("Line items for checkout:", lineItems);
-
     try {
+      const lineItems = cart.map((item) => ({
+        variantId: item.product.variants[0].id,
+        quantity: item.variants[0].quantity,
+      }));
+
+      console.log("[redirectToCheckout] Line items for checkout:", lineItems);
+
       const checkout = await client.checkout.create({ lineItems });
-      console.log("Checkout created:", checkout);
+      console.log("[redirectToCheckout] Checkout created:", checkout);
 
       if (checkout && checkout.webUrl) {
+        console.log("[redirectToCheckout] Redirecting to:", checkout.webUrl);
         window.location.href = checkout.webUrl;
       } else {
-        console.log("Checkout response is invalid", checkout);
+        console.error(
+          "[redirectToCheckout] Checkout creation failed or missing webUrl."
+        );
       }
-    } catch (error: any) {
-      console.error("Error during checkout:", error);
-      console.log(
-        "Error details:",
-        error.response ? error.response.data : error
-      );
+    } catch (error) {
+      console.error("[redirectToCheckout] Error during checkout:", error);
     }
   };
 
