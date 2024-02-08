@@ -108,11 +108,18 @@ const CartPage = () => {
     }
   };
 
-  const total = cart.reduce(
-    (acc, item) =>
-      acc + item.quantity * parseFloat(item.product.variants[0].price.amount),
-    0
-  );
+  const total = cart.reduce((acc, item) => {
+    // Assuming each item has one or more variants and you want to sum up all variants' totals
+    const itemTotal = item.variants.reduce((variantAcc, variant) => {
+      // Find the variant's price from the product's variants
+      const variantPrice = item.product.variants.find(
+        (v) => v.id === variant.id
+      )?.price.amount;
+      return variantAcc + variant.quantity * parseFloat(variantPrice || "0");
+    }, 0);
+
+    return acc + itemTotal;
+  }, 0);
 
   if (cart.length === 0) {
     return (
