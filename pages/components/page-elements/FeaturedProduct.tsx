@@ -22,6 +22,11 @@ interface FeaturedProductProps {
 const FeaturedProduct: React.FC<FeaturedProductProps> = ({
   featuredProduct,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    // Assuming video loads quickly, otherwise consider more robust load detection
+    setIsLoaded(true);
+  }, []);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -46,7 +51,9 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
             autoPlay
             muted
             loop
-            className="opacity-75 absolute top-0 left-1/2 transform -translate-x-1/2 min-h-full min-w-full object-cover"
+            className={`opacity-75 absolute top-0 left-1/2 transform -translate-x-1/2 min-h-full min-w-full object-cover ${
+              isLoaded ? "animate-fadeIn" : ""
+            }`}
           ></video>
         )}
 
