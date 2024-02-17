@@ -11,17 +11,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Product } from "@/types/Types"; // Adjust the import path as necessary
 import { client } from "@/utils/shopifyClient";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Product } from "@/types/Types"; // Adjust the import path as necessary
-import { useCart } from "../components/contexts/CartContext";
-import FeaturedProduct from "./components/page-elements/FeaturedProduct";
-import Footer from "./components/page-elements/Footer";
-import ShopComponent from "./components/page-elements/ShopComponent";
-import ShopTitle2 from "./components/page-elements/ShopTitle2";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../components/Button";
+import { useCart } from "../components/contexts/CartContext";
 import NavbarLight from "../components/ui/NavbarLight";
 import QuantitySelector from "../components/ui/QuantitySelector";
 import {
@@ -31,67 +27,57 @@ import {
   AccordionTrigger,
 } from "../components/ui/accordionCustom";
 import { Separator } from "../components/ui/separator";
+import Footer from "./components/page-elements/Footer";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, redirectToCheckout } =
     useCart();
   const [isLoading, setIsLoading] = useState(false);
-  // Explicitly define the type for products as an array of Product
-  const [products, setProducts] = useState<Product[]>([]);
-  // Define the type for featuredProduct as Product or null
-  const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null);
   const [isTermsChecked, setIsTermsChecked] = useState(false);
-  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false); // Assuming you have this state as well
-
-  const handleAgreeAction = () => {
-    setIsTermsChecked(true);
-    setIsAlertDialogOpen(false);
-  };
-  const handleLabelClick = (event: { stopPropagation: () => void }) => {
-    // Prevent the event from reaching the checkbox
-    event.stopPropagation();
-    setIsAlertDialogOpen(true);
-  };
-
-  const handleOverlayClick = () => {
-    if (!isTermsChecked) {
-      setIsAlertDialogOpen(true);
-    }
-  };
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const fetchedProducts = await client.product.fetchAll();
-
-      // Adjust fetchedProducts to match the Product type
       const adjustedProducts = fetchedProducts.map((product) => ({
         ...product,
         images: product.images.map(({ id, src }) => ({
-          id: id ?? undefined, // Explicitly set id to undefined if it's not present
+          id: id ?? undefined,
           src,
         })),
         variants: product.variants.map((variant) => ({
           ...variant,
-          price: { amount: variant.price.amount.toString() }, // Assuming you need to convert amount to string based on your Product type
+          price: { amount: variant.price.amount.toString() },
         })),
-      })) as unknown as Product[]; // Adjust based on your Product type definition
-
-      const FEATURED_PRODUCT_ID = "gid://shopify/Product/7638832218270";
-      const featured =
-        adjustedProducts.find(
-          (product) => product.id === FEATURED_PRODUCT_ID
-        ) ?? null; // Ensure featured is either a Product or null
-
-      setProducts(adjustedProducts);
-      setFeaturedProduct(featured);
+      })) as unknown as Product[];
     };
 
     fetchProducts();
   }, []);
 
-  const handleQuantityChange = (productId: string, newQuantity: number) => {
-    updateQuantity(productId, newQuantity);
+  const handleQuantityChange = async (
+    productId: string,
+    newQuantity: number
+  ) => {
+    console.log(`Updating product ${productId} to quantity ${newQuantity}`);
+    await updateQuantity(productId, newQuantity);
+    // No need to manually update cart state here if updateQuantity does it
   };
+
+  const total = useMemo(() => {
+    return cart.reduce((acc, item) => {
+      // Sum quantities of all variants within the item
+      const itemTotalQuantity = item.variants.reduce(
+        (variantAcc, variant) => variantAcc + variant.quantity,
+        0
+      );
+      // Assume item.product.variants[0].price.amount is the price for simplicity
+      return (
+        acc +
+        itemTotalQuantity * parseFloat(item.product.variants[0].price.amount)
+      );
+    }, 0);
+  }, [cart]);
 
   const handleRemoveItem = (productId: string) => {
     removeFromCart(productId);
@@ -108,37 +94,26 @@ const CartPage = () => {
     }
   };
 
-  const total = cart.reduce((acc, item) => {
-    // Assuming each item has one or more variants and you want to sum up all variants' totals
-    const itemTotal = item.variants.reduce((variantAcc, variant) => {
-      // Find the variant's price from the product's variants
-      const variantPrice = item.product.variants.find(
-        (v) => v.id === variant.id
-      )?.price.amount;
-      return variantAcc + variant.quantity * parseFloat(variantPrice || "0");
-    }, 0);
+  const handleAgreeAction = () => {
+    setIsTermsChecked(true);
+    setIsAlertDialogOpen(false);
+  };
 
-    return acc + itemTotal;
-  }, 0);
+  const handleLabelClick = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    setIsAlertDialogOpen(true);
+  };
 
-  if (cart.length === 0) {
-    return (
-      <>
-        <NavbarLight />
-        {featuredProduct && (
-          <FeaturedProduct featuredProduct={featuredProduct} />
-        )}
-        <ShopTitle2 />
-        <ShopComponent />
-        <Footer />
-      </>
-    );
-  }
+  const handleOverlayClick = () => {
+    if (!isTermsChecked) {
+      setIsAlertDialogOpen(true);
+    }
+  };
 
   return (
     <>
       <NavbarLight />
-      <div className=" lg:w-full md:h-screen pb-10 md:pb-0 bg-neutral-50">
+      <div className="lg:w-full md:min-h-screen pb-10 md:pb-0 bg-neutral-50">
         <div className="mx-auto container md:max-w-[700px] tracking-tight lg:max-w-5xl lg:px-6">
           <section className="pt-24 md:pt-28 md:pb-12 flex-col">
             <h1 className="text-5xl tracking-tighter font-semibold mb-4 text-left">
@@ -181,10 +156,11 @@ const CartPage = () => {
 
                 <div className="text-2xl mx-auto w-full md:w-16">
                   <QuantitySelector
-                    productId={item.product.id}
-                    quantity={item.quantity}
-                    maxQuantity={10} // Or any maximum limit you have
-                    onQuantityChange={handleQuantityChange}
+                    initialQuantity={item.quantity}
+                    maxQuantity={10} // Or any logical limit
+                    onQuantityChange={(newQuantity) =>
+                      handleQuantityChange(item.product.id, newQuantity)
+                    }
                   />
                 </div>
 
@@ -382,7 +358,7 @@ const CartPage = () => {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      <div className="md:bottom-0 absolute w-full">
+      <div className="w-full">
         <Footer />
       </div>
     </>
@@ -390,18 +366,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
-export async function getServerSideProps() {
-  const products = await client.product.fetchAll();
-  const FEATURED_PRODUCT_ID = "gid://shopify/Product/7638832218270";
-  const featuredProduct = products.find(
-    (product) => product.id === FEATURED_PRODUCT_ID
-  );
-
-  return {
-    props: {
-      products: JSON.parse(JSON.stringify(products)),
-      featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
-    },
-  };
-}
