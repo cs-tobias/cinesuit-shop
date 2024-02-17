@@ -9,6 +9,7 @@ import { client } from "@/utils/shopifyClient";
 
 // Define a type for your product and cart item
 interface Product {
+  handle: any;
   id: string;
   title: string;
   variants: Array<{ id: string; price: { amount: string } }>;
@@ -128,14 +129,29 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
-    setCart(
-      cart.map((item) =>
-        item.product.id === productId
-          ? { ...item, variants: [{ ...item.variants[0], quantity }] }
-          : item
-      )
-    );
+  const updateQuantity = (productId: string, newQuantity: any) => {
+    setCart((currentCart) => {
+      // Map over the current cart to find the item to update
+      const updatedCart = currentCart.map((item) => {
+        if (item.product.id === productId) {
+          // Found the item, update its quantity
+          return {
+            ...item,
+            quantity: newQuantity, // Assuming a flat structure where quantity is directly on the item
+            variants: item.variants.map((variant) => ({
+              ...variant,
+              quantity: newQuantity, // If the quantity should be updated per variant
+            })),
+          };
+        }
+        return item; // For items not being updated, return them as they are
+      });
+
+      // After updating the cart, persist the new state to localStorage or your chosen storage solution
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      return updatedCart; // Return the updated cart to update the state
+    });
   };
 
   const removeFromCart = (productId: string) => {

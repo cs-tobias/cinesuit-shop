@@ -62,19 +62,16 @@ const ShopComponent = () => {
                 }
                 className="cursor-pointer hover:opacity-95 transition-opacity duration-300 justify-center"
               >
-                {product.images && product.images.length > 0 && (
-                  <Image
-                    key={product.images[0].id}
-                    src={product.images[0].src}
-                    alt="Product Image"
-                    width={400}
-                    height={300}
-                    loading="lazy"
-                    className={`w-full ${
-                      product.productType === "unreleased" ? "opacity-75" : ""
-                    }`}
-                  />
-                )}
+                <Image
+                  src={`/images/${product.handle}/sm/image0.png`} // Adjusted src
+                  alt="Product Image"
+                  width={400}
+                  height={300}
+                  loading="lazy"
+                  className={`w-full ${
+                    product.productType === "unreleased" ? "opacity-75" : ""
+                  }`}
+                />
               </Link>
 
               {/* Product label based on productType */}

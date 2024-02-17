@@ -142,16 +142,13 @@ const CartPage = () => {
                 </div>
 
                 <div className="absolute -translate-y-4 hidden lg:block">
-                  {item.product.images && item.product.images[0] && (
-                    <Image
-                      key={item.product.id + item.product.images[0].id}
-                      src={item.product.images[0].src}
-                      alt={item.product.title}
-                      width={200}
-                      height={200}
-                      className="mx-auto"
-                    />
-                  )}
+                  <Image
+                    src={`/images/${item.product.handle}/sm/image0.png`}
+                    alt={item.product.title}
+                    width={200}
+                    height={200}
+                    className="mx-auto"
+                  />
                 </div>
 
                 <div className="text-2xl mx-auto w-full md:w-16">
