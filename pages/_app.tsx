@@ -66,25 +66,18 @@ const ScrollManager: React.FC<ScrollManagerProps> = ({ children }) => {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <NextUIProvider>
-      <ScrollProvider>
-        {/* Set the title of the webpage */}
-        <Head>
-          <title>Cinesuit</title>
-          {/* You can also include other head elements like meta tags here */}
-        </Head>
-        <div className="flex flex-col min-h-screen">
-          {/* Main content with Inter font */}
-          <main className={`flex-grow ${inter.className}`}>
-            <ScrollManager>
-              <CartProvider>
-                <Component {...pageProps} />
-              </CartProvider>
-            </ScrollManager>
-          </main>
-          {/* Footer with Inter font */}
-        </div>
-      </ScrollProvider>
-    </NextUIProvider>
+    <ScrollProvider>
+      <div className="flex flex-col min-h-screen">
+        {/* Main content with Inter font */}
+        <main className={`flex-grow ${inter.className}`}>
+          <ScrollManager>
+            <CartProvider>
+              <Component {...pageProps} />
+            </CartProvider>
+          </ScrollManager>
+        </main>
+        {/* Footer with Inter font */}
+      </div>
+    </ScrollProvider>
   );
 }

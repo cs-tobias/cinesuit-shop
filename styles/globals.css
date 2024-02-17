@@ -263,14 +263,6 @@
 
 }
 
-/* Container for the carousel items */
-.carousel-container {
-  @apply absolute top-1/2 left-1/2 w-full h-full;
-  transform: translate(-50%, -50%);
-  background-color: 
-  
-
-}
 
 /* Container for each carousel item */
 .carousel-item {

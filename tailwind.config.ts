@@ -1,14 +1,14 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
-const config = {
-  darkMode: ["class"],
+const config: Config = {
+  darkMode: "class",
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -62,7 +62,7 @@ const config = {
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
-          '100%': { opacity: '2' },
+          '100%': { opacity: '1' }, // Corrected the opacity to '1' for the fadeIn animation
         },
         "accordion-down": {
           from: { height: "0" },
@@ -79,11 +79,14 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       scale: {
-        '102': '1.005',  // Adding a custom scale utility for subtle hover effect
+        '102': '1.02',  // Adjusted for clarity
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/forms"), // Added the @tailwindcss/forms plugin
+  ],
+};
 
-export default config
+export default config;

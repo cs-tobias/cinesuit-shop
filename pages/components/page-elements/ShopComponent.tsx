@@ -57,16 +57,8 @@ const ShopComponent = () => {
               <Link
                 href={
                   product.productType === "unreleased"
-                    ? "https://www.facebook.com/tobias.eek"
+                    ? `/shop/unreleased/${product.handle}`
                     : `/shop/${product.handle}`
-                }
-                target={
-                  product.productType === "unreleased" ? "_blank" : undefined
-                }
-                rel={
-                  product.productType === "unreleased"
-                    ? "noopener noreferrer"
-                    : undefined
                 }
                 className="cursor-pointer hover:opacity-95 transition-opacity duration-300 justify-center"
               >
@@ -120,8 +112,7 @@ const ShopComponent = () => {
                 {product.productType === "unreleased" ? (
                   <div className="py-4">
                     <Link
-                      href="https://www.facebook.com/tobias.eek"
-                      target="_blank"
+                      href={`/shop/unreleased/${product.handle}`}
                       className="w-full flex justify-center bg-neutral-200 border-neutral-300 border-2 hover:border-neutral-400 transition-colors duration-300 text-black py-1.5 rounded-lg"
                     >
                       Learn more

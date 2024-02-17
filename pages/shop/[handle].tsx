@@ -274,129 +274,120 @@ const Product = ({
               </div>
             </div>
 
-            <TextWrapper>
-              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                Whats in the box?
+            <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+              Whats in the box?
+            </p>
+            <div className="text-base font-normal leading-11 text-neutral-500">
+              <li className="">Cinesuit gear rings</li>
+              <li className="">Screws (+Backup screws)</li>
+              <li className="">Rubber removal tool</li>
+              <p className="py-2 font-semibold text-neutral-600">
+                Add the screwdriver to your cart at checkout, if you need it.
               </p>
-              <div className="text-base font-normal leading-11 text-neutral-500">
-                <li className="">Cinesuit gear rings</li>
-                <li className="">Screws (+Backup screws)</li>
-                <li className="">Rubber removal tool</li>
-                <p className="py-2 font-semibold text-neutral-600">
-                  Add the screwdriver to your cart at checkout, if you need it.
-                </p>
-              </div>
-            </TextWrapper>
+            </div>
 
-            <TextWrapper>
-              <div className="text-base">
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>Install Guide</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="font-medium text-neutral-500">
-                        <li>
-                          <span className="text-black">
-                            1. Remove your lens&apos; rubber rings
-                          </span>
-                          , either by hand or with the included rubber removal
-                          tool.
-                        </li>
-                        <li className="text-black">
-                          {" "}
-                          2. Slide on Cinesuit, one by one.
-                        </li>
-                        <li className="text-black">
-                          3. Insert and tighten the screws <br />
-                          <span className="text-black font-bold">
-                            DO NOT OVERTIGHTEN
-                          </span>
-                        </li>
-                      </ul>
-                      <div className="py-4">
-                        <Link
-                          href={"/shop"}
-                          className="text-neutral-800 font-medium hover:underline"
-                        >
-                          Click here to watch the Installation Video Guide
-                        </Link>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger>Care guide</AccordionTrigger>
-                    <AccordionContent>
-                      Make sure the inside of the Cinesuit, particularely the
-                      rubber part is dust free. Especially if you take it on and
-                      off over time.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-3">
-                    <AccordionTrigger>Shipping and Returns</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="ulpolicy font-medium text-neutral-500">
-                        <li className="lipolicy">
-                          We offer{" "}
-                          <span className="text-black">free shipping</span> to
-                          most countries, you get your final shipping options at
-                          checkout.{" "}
-                        </li>
-                        <li className="lipolicy">
-                          Standard VAT and Import charges applies for your local
-                          country, it is your responsibility.
-                        </li>
-                        <li className="lipolicy">Something about returns</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            </TextWrapper>
+            <div className="text-base">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Install Guide</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="font-medium text-neutral-500">
+                      <li>
+                        <span className="text-black">
+                          1. Remove your lens&apos; rubber rings
+                        </span>
+                        , either by hand or with the included rubber removal
+                        tool.
+                      </li>
+                      <li className="text-black">
+                        {" "}
+                        2. Slide on Cinesuit, one by one.
+                      </li>
+                      <li className="text-black">
+                        3. Insert and tighten the screws <br />
+                        <span className="text-black font-bold">
+                          DO NOT OVERTIGHTEN
+                        </span>
+                      </li>
+                    </ul>
+                    <div className="py-4">
+                      <Link
+                        href={"/shop"}
+                        className="text-neutral-800 font-medium hover:underline"
+                      >
+                        Click here to watch the Installation Video Guide
+                      </Link>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Care guide</AccordionTrigger>
+                  <AccordionContent>
+                    Make sure the inside of the Cinesuit, particularely the
+                    rubber part is dust free. Especially if you take it on and
+                    off over time.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>Shipping and Returns</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="ulpolicy font-medium text-neutral-500">
+                      <li className="lipolicy">
+                        We offer{" "}
+                        <span className="text-black">free shipping</span> to
+                        most countries, you get your final shipping options at
+                        checkout.{" "}
+                      </li>
+                      <li className="lipolicy">
+                        Standard VAT and Import charges applies for your local
+                        country, it is your responsibility.
+                      </li>
+                      <li className="lipolicy">Something about returns</li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
 
             <div className=" pb-10">
-              <TextWrapper>
-                <div>
-                  <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                    Industry Standard
-                  </p>
-                  <p className="mb-8 text-base font-normal leading-11 text-neutral-500">
-                    Cinesuit uses standard 0.8 mod gears,{" "}
-                    <span className="text-black">
-                      compatible with all standard follow focus systems.
-                    </span>
-                  </p>
-                </div>
-              </TextWrapper>
+              <div>
+                <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+                  Industry Standard
+                </p>
+                <p className="mb-8 text-base font-normal leading-11 text-neutral-500">
+                  Cinesuit uses standard 0.8 mod gears,{" "}
+                  <span className="text-black">
+                    compatible with all standard follow focus systems.
+                  </span>
+                </p>
+              </div>
 
-              <TextWrapper>
-                <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                  Lightweight
-                </p>
-                <p className="mb-2 text-base font-normal leading-11 text-neutral-500">
-                  Cinesuit bearly adds weight to your setup.
-                </p>
-                <div className="text-base font-normal leading-11 text-neutral-500">
-                  <li className="">
-                    Sigma 18-35{" "}
-                    <span className="text-black">default weight: 800g</span>
-                  </li>
-                  <li className="">
-                    Sigma 18-35 with{" "}
-                    <span className="text-black">Cinesuit weight: 950g</span>
-                  </li>
-                </div>
-              </TextWrapper>
-              <TextWrapper>
-                <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                  Low Profile
-                </p>
-                <p className="-mb-10 text-base font-normal leading-11 text-neutral-500">
-                  Staying true to the size of the lens, Cinesuit doesnt add any
-                  unnessecary bulk. It simply follows the shape of the lens, and
-                  adds only what it needs, to provide you a secure and reliable
-                  solution.
-                </p>
-              </TextWrapper>
+              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+                Lightweight
+              </p>
+              <p className="mb-2 text-base font-normal leading-11 text-neutral-500">
+                Cinesuit bearly adds weight to your setup.
+              </p>
+              <div className="text-base font-normal leading-11 text-neutral-500">
+                <li className="">
+                  Sigma 18-35{" "}
+                  <span className="text-black">default weight: 800g</span>
+                </li>
+                <li className="">
+                  Sigma 18-35 with{" "}
+                  <span className="text-black">Cinesuit weight: 950g</span>
+                </li>
+              </div>
+
+              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+                Low Profile
+              </p>
+              <p className="-mb-10 text-base font-normal leading-11 text-neutral-500">
+                Staying true to the size of the lens, Cinesuit doesnt add any
+                unnessecary bulk. It simply follows the shape of the lens, and
+                adds only what it needs, to provide you a secure and reliable
+                solution.
+              </p>
             </div>
           </div>
         </div>
