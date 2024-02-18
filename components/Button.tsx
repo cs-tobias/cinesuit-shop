@@ -19,8 +19,6 @@ const Button = ({
     switch (size) {
       case "small":
         return "text-xs px-3 py-1";
-      case "smmd":
-        return "text-sm px-4 py-2";
       case "large":
         return "text-lg px-5 py-3";
       default: // medium
