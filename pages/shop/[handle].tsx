@@ -154,6 +154,7 @@ const Product = ({
             isOpen={isLightboxOpen}
             images={imagePaths}
             onClose={closeLightbox}
+            selectedIndex={0}
           />
           <div
             className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]"
