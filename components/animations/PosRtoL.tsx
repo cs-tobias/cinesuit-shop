@@ -17,7 +17,7 @@ const PosRtoL: React.FC<PosRtoLProps> = ({ children }) => {
     offset: ["start end", "end start"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["35%", "-10%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["40%", "-5%"]);
 
   // Set mounted state after mounting
   useEffect(() => {

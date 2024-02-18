@@ -27,6 +27,9 @@ const Product = ({
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     mainProduct
   );
+
+  const [currentImagePath, setCurrentImagePath] = useState(imagePaths[0]);
+
   // State to manage lightbox visibility
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
@@ -55,6 +58,11 @@ const Product = ({
 
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
+
+    // Assuming each product variant has a unique handle and images are named after the variant's handle.
+    // Update this logic based on how your images are named and stored.
+    const variantImagePath = `/images/${product.handle}/image0.png`; // Adjust according to how you store and name your variant images.
+    setCurrentImagePath(variantImagePath);
   };
 
   const handleAddToCart = () => {
@@ -126,7 +134,7 @@ const Product = ({
             }}
           >
             <Image
-              src={imagePaths[selectedIndex]}
+              src={currentImagePath}
               alt={`Product Image ${selectedIndex}`}
               width={1237}
               height={1524}

@@ -34,7 +34,7 @@ const ThinProfile = () => {
       </div>
       <div className="mx-auto w-full overflow-hidden relative gradient-overlay">
         <Image
-          src="/images/hero/lg/cs1835-long-lg-3.png"
+          src="/images/cs1835-long-side.jpg"
           width={1675}
           height={774}
           className="w-full mx-auto"

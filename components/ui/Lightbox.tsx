@@ -7,6 +7,7 @@ interface LightboxProps {
   images: string[]; // Assuming images are strings representing URLs
   isOpen: boolean;
   onClose: () => void;
+  selectedIndex: number; // Add this line
 }
 
 const Lightbox: React.FC<LightboxProps> = ({ images, isOpen, onClose }) => {

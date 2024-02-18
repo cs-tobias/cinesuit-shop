@@ -14,6 +14,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   const [selectedQuantity, setSelectedQuantity] = useState(initialQuantity);
 
   useEffect(() => {
+    console.log(
+      `QuantitySelector received a new initialQuantity: ${initialQuantity}`
+    );
     setSelectedQuantity(initialQuantity);
   }, [initialQuantity]);
 

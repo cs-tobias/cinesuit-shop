@@ -47,11 +47,11 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
       <div className="relative w-full py-10 bg-black border-b border-neutral-200 overflow-hidden">
         {!isMobile && (
           <video
-            src="/videos/very-wide-launch-1835-02-blur.mov"
+            src="/videos/very-wide-launch-1835-04-blur.mov"
             autoPlay
             muted
             loop
-            className={`opacity-75 absolute top-0 left-1/2 transform -translate-x-1/2 min-h-full min-w-full object-cover ${
+            className={`absolute top-0 left-1/2 transform -translate-x-1/2 min-h-full min-w-full object-cover ${
               isLoaded ? "animate-fadeIn" : ""
             }`}
           ></video>

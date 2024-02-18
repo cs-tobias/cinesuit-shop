@@ -80,11 +80,11 @@ const Hero = () => {
           }}
         >
           <Image
-            src="/images/cs-hero-lg-1.png"
+            src="/images/cs-hero-lg-1.jpg"
             alt="Hero Image"
-            layout="responsive"
             width={imageDimensions.width}
             height={imageDimensions.height}
+            priority
           />
         </div>
       </div>

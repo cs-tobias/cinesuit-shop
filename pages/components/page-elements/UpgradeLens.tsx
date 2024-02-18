@@ -47,7 +47,7 @@ const UpgradeLens = () => {
           <PosLtoR>
             <div>
               <Image
-                src="/images/cs-013-assemble-left-lg.png"
+                src="/images/cs-013-assemble-left-main.jpg"
                 className="w-full"
                 width={660}
                 height={960}
@@ -58,7 +58,7 @@ const UpgradeLens = () => {
 
           <div>
             <Image
-              src="/images/cs-013-assemble-lens-lg.png"
+              src="/images/cs-013-assemble-lens-main.jpg"
               className="w-full"
               width={660}
               height={960}
@@ -68,7 +68,7 @@ const UpgradeLens = () => {
           <PosRtoL>
             <div>
               <Image
-                src="/images/cs-013-assemble-right-lg.png"
+                src="/images/cs-013-assemble-right-main.jpg"
                 className="w-full"
                 width={660}
                 height={960}

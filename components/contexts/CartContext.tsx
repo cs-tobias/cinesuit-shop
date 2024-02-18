@@ -78,55 +78,49 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   }, [cart, isMounted]);
 
   const addToCart = (product: Product, variantId: string, quantity: number) => {
-    // Find if the product already exists in the cart
-    const existingItemIndex = cart.findIndex(
-      (item) => item.product.id === product.id
-    );
+    setCart((prevCart) => {
+      let updatedCart = prevCart.map((item) => {
+        if (item.product.id === product.id) {
+          // Check if the specific variant exists
+          const variantIndex = item.variants.findIndex(
+            (v) => v.id === variantId
+          );
+          if (variantIndex > -1) {
+            // Update quantity for existing variant
+            const updatedVariants = [...item.variants];
+            updatedVariants[variantIndex] = {
+              ...updatedVariants[variantIndex],
+              quantity: updatedVariants[variantIndex].quantity + quantity,
+            };
+            return { ...item, variants: updatedVariants };
+          } else {
+            // Add new variant to product
+            return {
+              ...item,
+              variants: [...item.variants, { id: variantId, quantity }],
+            };
+          }
+        }
+        return item;
+      });
 
-    if (existingItemIndex >= 0) {
-      // Product exists in the cart, update it
-      const existingProduct = cart[existingItemIndex];
-      const existingVariantIndex = existingProduct.variants.findIndex(
-        (v) => v.id === variantId
+      // Check if the product is already in the cart
+      const existingProductIndex = updatedCart.findIndex(
+        (item) => item.product.id === product.id
       );
-
-      if (existingVariantIndex >= 0) {
-        // Variant exists, update quantity
-        let updatedVariants = [...existingProduct.variants];
-        updatedVariants[existingVariantIndex] = {
-          ...updatedVariants[existingVariantIndex],
-          quantity: updatedVariants[existingVariantIndex].quantity + quantity,
-        };
-        let updatedCart = [...cart];
-        updatedCart[existingItemIndex] = {
-          ...existingProduct,
-          variants: updatedVariants,
-        };
-        setCart(updatedCart);
-      } else {
-        // Variant does not exist, add new variant
-        let updatedVariants = [
-          ...existingProduct.variants,
-          { id: variantId, quantity },
-        ];
-        let updatedCart = [...cart];
-        updatedCart[existingItemIndex] = {
-          ...existingProduct,
-          variants: updatedVariants,
-        };
-        setCart(updatedCart);
-      }
-    } else {
-      // Product does not exist in the cart, add new product with the variant
-      setCart([
-        ...cart,
-        {
-          product,
-          quantity: 1, // Assuming you want a default quantity for the product itself
+      if (existingProductIndex === -1) {
+        // Product not found, add new product to cart
+        updatedCart.push({
+          product: { ...product }, // Ensure this includes all necessary Product properties
           variants: [{ id: variantId, quantity }],
-        },
-      ]);
-    }
+          quantity: 0,
+        });
+      }
+
+      // Optionally, update localStorage or other persistence mechanisms here
+      console.log("Updated cart:", updatedCart);
+      return updatedCart;
+    });
   };
 
   const updateQuantity = (productId: string, newQuantity: any) => {

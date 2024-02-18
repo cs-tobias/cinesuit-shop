@@ -153,8 +153,8 @@ const CartPage = () => {
 
                 <div className="text-2xl mx-auto w-full md:w-16">
                   <QuantitySelector
-                    initialQuantity={item.quantity}
-                    maxQuantity={10} // Or any logical limit
+                    initialQuantity={item.variants[0].quantity} // Assuming each item has at least one variant
+                    maxQuantity={10}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityChange(item.product.id, newQuantity)
                     }

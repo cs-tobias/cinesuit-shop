@@ -52,14 +52,14 @@ const NextStep = () => {
         <Image
           src="/images/cs-013-hero-lg.png"
           className="w-[325px] lg:w-[1000px] xl:w-[1400px] lg:pr-6 mx-auto"
-          width={1800}
+          width={400}
           height={800}
           alt="Image for Mobile of Sigma 18-35 with Cinesuit"
         />
       </div>
       <div className="hidden md:block overflow-hidden px-20">
         <Image
-          src="/images/1835-profile-hero-1.png"
+          src="/images/1835-profile-hero-1.jpg"
           className="w-[660px] lg:w-[1000px] xl:w-[1800px] lg:pr-6 mx-auto"
           width={1800}
           height={800}

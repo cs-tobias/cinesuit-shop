@@ -53,7 +53,7 @@ const InstallUninstall = () => {
       <RotWrapper>
         <div className="flex justify-center w-full mx-auto pb-12 overflow-hidden">
           <Image
-            src="/images/top-3.png"
+            src="/images/cs-top-install-01.jpg"
             className="max-w-none w-[985px] md:w-[1624px] lg:w-[2020px] 2xl:w-full"
             width={2400}
             height={760}

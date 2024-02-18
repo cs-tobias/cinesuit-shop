@@ -37,7 +37,7 @@ const LessExpensive = () => {
       <RotWrapper>
         <div className="max-w-[285px] md:max-w-[585px] lg:max-w-[768px] xl:max-w-[860px] py-4 pt-10 mx-auto">
           <Image
-            src="/images/cs-013-showcase-lg.png"
+            src="/images/cs-013_less-expensive-hero.jpg"
             className="w-full"
             width={660}
             height={960}
