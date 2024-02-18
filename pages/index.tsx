@@ -11,6 +11,7 @@ import ThinProfile from "./components/page-elements/ThinProfile";
 import UpgradeLens from "./components/page-elements/UpgradeLens";
 import Navbar from "../components/ui/Navbar";
 import { Product } from "@/types/Types";
+import CookieBanner from "@/components/ui/CookieBanner";
 
 // Define a type for the props expected by the Home component
 interface HomeProps {
