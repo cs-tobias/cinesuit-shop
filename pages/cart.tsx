@@ -148,6 +148,7 @@ const CartPage = () => {
                     width={200}
                     height={200}
                     className="mx-auto"
+                    priority
                   />
                 </div>
 

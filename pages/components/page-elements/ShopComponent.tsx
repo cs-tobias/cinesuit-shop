@@ -67,10 +67,10 @@ const ShopComponent = () => {
                   alt="Product Image"
                   width={400}
                   height={300}
-                  loading="lazy"
                   className={`w-full ${
                     product.productType === "unreleased" ? "opacity-75" : ""
                   }`}
+                  priority
                 />
               </Link>
 
