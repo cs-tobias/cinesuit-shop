@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   ConsentProvider,
   useConsent,
@@ -55,6 +55,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 <GoogleAnalyticsInitializer />
                 <CookieBanner />
                 <Component {...pageProps} />
+                <SpeedInsights />
               </CartProvider>
             </main>
           </div>
