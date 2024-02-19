@@ -36,10 +36,34 @@ export default function Home({ products }: HomeProps) {
 }
 
 export async function getStaticProps() {
-  const products = await client.product.fetchAll();
-  // Optionally apply filters here if needed, similar to what's done in shop.tsx
+  // Fetch all products
+  const fetchedProducts = await client.product.fetchAll();
+
+  // Filter out "bundle" products and prepare them for the ShopComponent
+  let products = fetchedProducts
+    .filter((product) => !product.productType.includes("bundle"))
+    .map((product) => ({
+      ...product,
+      images: product.images.map(({ id, src }) => ({
+        id: id ?? undefined,
+        src,
+      })),
+    }));
+
+  // Sort products to ensure "new" products come first
+  products.sort((a, b) => {
+    if (a.productType === "new" && b.productType !== "new") {
+      return -1; // 'a' (new product) comes before 'b'
+    } else if (a.productType !== "new" && b.productType === "new") {
+      return 1; // 'b' (new product) comes before 'a'
+    }
+    return 0; // Keep original order if neither is "new"
+  });
+
   return {
-    props: { products: JSON.parse(JSON.stringify(products)) },
-    revalidate: 3600, // Use ISR to update the page periodically
+    props: {
+      products: JSON.parse(JSON.stringify(products)),
+    },
+    revalidate: 3600, // Optional: Revalidate at most once per hour for updates
   };
 }

@@ -57,8 +57,9 @@ export default function Shop({ featuredProduct, products }: ShopProps) {
 export async function getStaticProps() {
   // Fetch all products
   const fetchedProducts = await client.product.fetchAll();
+
   // Filter out "bundle" products and prepare them for the ShopComponent
-  const products = fetchedProducts
+  let products = fetchedProducts
     .filter((product) => !product.productType.includes("bundle"))
     .map((product) => ({
       ...product,
@@ -68,8 +69,19 @@ export async function getStaticProps() {
       })),
     }));
 
+  // Sort products to ensure "new" products come first
+  products.sort((a, b) => {
+    if (a.productType === "new" && b.productType !== "new") {
+      return -1; // 'a' (new product) comes before 'b'
+    } else if (a.productType !== "new" && b.productType === "new") {
+      return 1; // 'b' (new product) comes before 'a'
+    }
+    return 0; // Keep original order if neither is "new"
+  });
+
+  // Find the featured product using its ID
   const FEATURED_PRODUCT_ID = "gid://shopify/Product/7638832218270";
-  const featuredProduct = products.find(
+  const featuredProduct = fetchedProducts.find(
     (product) => product.id === FEATURED_PRODUCT_ID
   );
 

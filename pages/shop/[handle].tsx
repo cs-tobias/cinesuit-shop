@@ -1,14 +1,14 @@
-import type { Product as ProductType, ProductProps } from "@/types/Types";
+// [handle].tsx
+import type { ProductProps, Product as ProductType } from "@/types/Types";
+import { useRouter } from "next/router";
 import { client } from "@/utils/shopifyClient";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Button from "../../components/Button";
 import { useCart } from "../../components/contexts/CartContext";
 import Footer from "../../components/page-elements/Footer";
 import WhatsIncluded from "../../components/page-elements/WhatsIncluded";
-import Button from "../../components/Button";
 import Lightbox from "../../components/ui/Lightbox";
 import NavbarLight from "../../components/ui/NavbarLight";
 import {
@@ -17,6 +17,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
+
+interface StaticPropsParams {
+  params: {
+    handle: string; // Define the expected properties of `params`
+  };
+}
 
 const Product = ({
   mainProduct,
@@ -27,55 +33,45 @@ const Product = ({
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     mainProduct
   );
-
   const [currentImagePath, setCurrentImagePath] = useState(imagePaths[0]);
-
-  // State to manage lightbox visibility
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
-  // Function to open the lightbox
-  const openLightbox = () => setIsLightboxOpen(true);
-
-  // Function to close the lightbox
-  const closeLightbox = () => setIsLightboxOpen(false);
-  const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addToCart } = useCart();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
-    // Assuming video loads quickly, otherwise consider more robust load detection
     setIsLoaded(true);
   }, []);
-  // Debugging useEffect for scroll position
+
   useEffect(() => {
     console.log("Scroll position before carousel update:", window.scrollY);
-
-    // This function will run when the component unmounts or before the next re-render
     return () => {
       console.log("Scroll position after carousel update:", window.scrollY);
     };
-  }, [selectedIndex]); // This effect depends on selectedIndex, so it runs before and after it changes
+  }, [selectedIndex]);
 
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
-
-    // Assuming each product variant has a unique handle and images are named after the variant's handle.
-    // Update this logic based on how your images are named and stored.
-    const variantImagePath = `/images/${product.handle}/image0.png`; // Adjust according to how you store and name your variant images.
+    const variantImagePath = `/images/${product.handle}/image0.png`;
     setCurrentImagePath(variantImagePath);
   };
 
+  const router = useRouter();
+
   const handleAddToCart = () => {
     if (selectedProduct) {
-      const variantId = selectedProduct.variants[0].id; // Assuming you want to add the first variant
-      const quantity = 1; // The quantity you want to add to the cart
-      const productWithCorrectedAmount = {
+      const variantId = selectedProduct.variants[0].id;
+      const quantity = 1;
+
+      // Create a new product object with price.amount converted to string
+      // and ensuring all images have a defined id.
+      const productForCart = {
         ...selectedProduct,
         variants: selectedProduct.variants.map((variant) => ({
           ...variant,
           price: {
             ...variant.price,
-            amount: variant.price.amount.toString(), // Ensure amount is a string
+            amount: variant.price.amount.toString(), // Convert amount to string
           },
         })),
         images: selectedProduct.images.map(({ id, src }) => ({
@@ -84,8 +80,9 @@ const Product = ({
         })),
       };
 
-      // Now call addToCart with the required three arguments
-      addToCart(productWithCorrectedAmount, variantId, quantity);
+      addToCart(productForCart, variantId, quantity);
+
+      // Navigate to the cart page
       router.push("/cart");
     }
   };
@@ -94,31 +91,20 @@ const Product = ({
     direction: string,
     event: { preventDefault: () => void }
   ) => {
-    event.preventDefault(); // Prevent default action
-
-    if (direction === "left") {
-      setSelectedIndex(
-        (prevIndex) => (prevIndex - 1 + imagePaths.length) % imagePaths.length
-      );
-    } else {
-      setSelectedIndex((prevIndex) => (prevIndex + 1) % imagePaths.length);
-    }
+    event.preventDefault();
+    setSelectedIndex(
+      direction === "left"
+        ? (selectedIndex - 1 + imagePaths.length) % imagePaths.length
+        : (selectedIndex + 1) % imagePaths.length
+    );
   };
 
-  const TextWrapper = dynamic(
-    () => import("../../components/animations/TextWrapper"),
-    {
-      ssr: false,
-    }
-  );
-  const RotWrapper = dynamic(
-    () => import("../../components/animations/RotWrapper"),
-    {
-      ssr: false,
-    }
-  );
+  // Function to open and close the lightbox
+  const openLightbox = () => setIsLightboxOpen(true);
+  const closeLightbox = () => setIsLightboxOpen(false);
 
-  // Component rendering
+  // Main component rendering will follow in the next part
+
   return (
     <>
       <NavbarLight />
@@ -405,7 +391,6 @@ const Product = ({
       </div>
 
       <div className="w-full h-[1px] py-12 bg-neutral-100"></div>
-      <WhatsIncluded />
       <div className="">
         <Footer />
       </div>
@@ -413,28 +398,31 @@ const Product = ({
   );
 };
 
-export async function getServerSideProps(context: { params: { handle: any } }) {
-  const handle = context.params.handle;
+export async function getStaticPaths() {
+  const allProducts = await client.product.fetchAll();
+  const paths = allProducts.map((product) => ({
+    params: { handle: product.handle },
+  }));
+
+  return { paths, fallback: "blocking" };
+}
+
+export async function getStaticProps({ params }: StaticPropsParams) {
+  const handle = params.handle;
   const fetchedMainProduct = await client.product.fetchByHandle(handle);
   const associatedProductType = `${fetchedMainProduct.title}_bundle`;
-
   const productsWithSpecificType = await client.product.fetchQuery({
     query: `productType:${associatedProductType}`,
     first: 3,
   });
-
-  const imageCount = 3; // Adjust this number based on how many images you expect per product
   const imagePaths = Array.from(
-    { length: imageCount },
-    (_, index) => `/images/${handle}/image${index + 0}.png`
+    { length: 3 },
+    (_, index) => `/images/${handle}/image${index}.png`
   );
-
-  // New array for images from the 'sm' folder
   const smImagePaths = Array.from(
-    { length: imageCount },
-    (_, index) => `/images/${handle}/sm/image${index + 0}.png`
+    { length: 3 },
+    (_, index) => `/images/${handle}/sm/image${index}.png`
   );
-
   const associatedProducts = productsWithSpecificType.filter(
     (product) => product.id !== fetchedMainProduct.id
   );
@@ -444,8 +432,9 @@ export async function getServerSideProps(context: { params: { handle: any } }) {
       mainProduct: JSON.parse(JSON.stringify(fetchedMainProduct)),
       associatedProducts: JSON.parse(JSON.stringify(associatedProducts)),
       imagePaths,
-      smImagePaths, // Include smImagePaths in the props
+      smImagePaths,
     },
+    revalidate: 600, // Use ISR to refresh the page periodically
   };
 }
 
