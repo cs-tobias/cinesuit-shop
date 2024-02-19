@@ -1,4 +1,3 @@
-// ConsentContext.js
 import React, {
   createContext,
   useContext,
@@ -28,12 +27,17 @@ export const ConsentProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [consentGiven, setConsentGiven] = useState<boolean>(false);
-  const [showBanner, setShowBanner] = useState<boolean>(true); // Assume true initially
+  // Start with assuming we need to show the banner until we confirm otherwise
+  const [showBanner, setShowBanner] = useState<boolean>(true);
 
   useEffect(() => {
-    const consent = localStorage.getItem("ga_consent");
-    setConsentGiven(consent === "granted");
-    setShowBanner(consent !== "granted" && consent !== "denied"); // Only show if not explicitly granted or denied
+    console.log("Checking localStorage for ga_consent");
+    const consentStatus = localStorage.getItem("ga_consent");
+    console.log(`Consent Status: ${consentStatus}`);
+    const consentIsGranted = consentStatus === "granted";
+    setConsentGiven(consentIsGranted);
+    // If consent has been granted or denied, we should not show the banner
+    setShowBanner(!consentIsGranted && consentStatus !== "denied");
   }, []);
 
   return (

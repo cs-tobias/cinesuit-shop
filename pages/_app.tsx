@@ -1,79 +1,67 @@
-import CookieBanner from "@/components/ui/CookieBanner";
-import "@/styles/globals.css";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { CartProvider } from "../components/contexts/CartContext";
-import {
-  ScrollProvider,
-  useScroll,
-} from "../components/contexts/ScrollContext";
-import { GA_TRACKING_ID, pageview } from "../utils/gtag"; // Import GA functions
-import { ConsentProvider } from "@/components/contexts/ConsentContext";
-import { useConsent } from "@/components/contexts/ConsentContext";
 
-interface ScrollManagerProps {
-  children: React.ReactNode;
-}
+import {
+  ConsentProvider,
+  useConsent,
+} from "@/components/contexts/ConsentContext";
+import ErrorBoundary from "@/components/contexts/ErrorBoundary";
+import { CartProvider } from "@/components/contexts/CartContext";
+import { ScrollProvider } from "@/components/contexts/ScrollContext";
+import CookieBanner from "@/components/ui/CookieBanner";
+import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsInitializer";
+import { pageview } from "@/utils/gtag"; // Import GA functions
+
+import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const ScrollManager: React.FC<ScrollManagerProps> = ({ children }) => {
+// Custom hook for handling GA pageview tracking
+const useGoogleAnalytics = () => {
+  const { consentGiven } = useConsent();
   const router = useRouter();
-  const { setScrollPosition, scrollPositions } = useScroll();
-  const [isBackNavigation, setIsBackNavigation] = useState(false);
 
   useEffect(() => {
-    // Your existing code for scroll position management
-    // ...
+    // Only add page view tracking if consent has been given
+    if (consentGiven) {
+      const handleRouteChange = (url: string) => {
+        pageview(url);
+      };
 
-    // Extend to include GA tracking after consent is verified
-    const handleConsentGiven = () => {
-      // Assuming `localStorage` is used to store consent
-      const hasConsent = localStorage.getItem("ga_consent") === "granted";
-      if (hasConsent) {
-        // Initialize GA tracking here. This could be adding the GA script dynamically
-        // or simply ensuring you're ready to track page views.
+      // Track the initial page view
+      pageview(window.location.pathname);
 
-        // Track the initial page
-        pageview(window.location.pathname);
+      // Add event listeners for route changes
+      router.events.on("routeChangeComplete", handleRouteChange);
 
-        // Track pages on route change
-        const handleRouteChange = (url: string) => {
-          pageview(url);
-        };
-
-        router.events.on("routeChangeComplete", handleRouteChange);
-
-        return () => {
-          router.events.off("routeChangeComplete", handleRouteChange);
-        };
-      }
-    };
-
-    handleConsentGiven();
-  }, [router.events, setScrollPosition, scrollPositions, isBackNavigation]);
-
-  return <>{children}</>;
+      // Clean up event listeners on component unmount
+      return () => {
+        router.events.off("routeChangeComplete", handleRouteChange);
+      };
+    }
+  }, [consentGiven, router.events]);
 };
 
-export default function App({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ConsentProvider>
-      <ScrollProvider>
-        <div className="flex flex-col min-h-screen">
-          <main className={`flex-grow ${inter.className}`}>
-            <ScrollManager>
+    <ErrorBoundary>
+      <ConsentProvider>
+        <ScrollProvider>
+          <div className="flex flex-col min-h-screen">
+            <main className={`flex-grow ${inter.className}`}>
               <CartProvider>
-                {/* Conditionally render CookieBanner inside its definition based on consent */}
+                <GoogleAnalyticsInitializer />
                 <CookieBanner />
                 <Component {...pageProps} />
               </CartProvider>
-            </ScrollManager>
-          </main>
-        </div>
-      </ScrollProvider>
-    </ConsentProvider>
+            </main>
+          </div>
+        </ScrollProvider>
+      </ConsentProvider>
+    </ErrorBoundary>
   );
-}
+};
+
+export default MyApp;

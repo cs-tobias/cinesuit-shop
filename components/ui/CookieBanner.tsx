@@ -1,16 +1,37 @@
-// CookieBanner.js
-import React, { useState } from "react";
+// CookieBanner.tsx
+import React, { useEffect, useState } from "react";
 import Button from "../Button"; // Adjust path as necessary
 import { useConsent } from "../contexts/ConsentContext"; // Adjust path as necessary
-import { loadGA } from "@/utils/gtag";
+import { loadGA } from "@/utils/gtag"; // Ensure this path matches your project structure
 
 const CookieBanner = () => {
-  // Temporary local state for debugging
+  // Initialize isVisible to true by default, then set it based on localStorage in useEffect
   const [isVisible, setIsVisible] = useState(true);
+  const { setConsentGiven, setShowBanner } = useConsent();
+
+  useEffect(() => {
+    const consent = localStorage.getItem("ga_consent");
+    const shouldShowBanner = !(consent === "granted" || consent === "denied");
+    setIsVisible(shouldShowBanner);
+    setShowBanner(shouldShowBanner);
+    if (consent) {
+      setConsentGiven(consent === "granted");
+    }
+  }, [setConsentGiven, setShowBanner]);
 
   const handleAccept = (): void => {
+    localStorage.setItem("ga_consent", "granted");
     setIsVisible(false);
-    // Other logic remains the same
+    setConsentGiven(true);
+    setShowBanner(false);
+    loadGA(); // Consider moving this call to a more appropriate place if needed
+  };
+
+  const handleDeny = (): void => {
+    localStorage.setItem("ga_consent", "denied");
+    setIsVisible(false);
+    setConsentGiven(false);
+    setShowBanner(false);
   };
 
   if (!isVisible) return null;
@@ -22,7 +43,6 @@ const CookieBanner = () => {
         use of these technologies.
       </h1>
       <div className="flex justify-between items-center">
-        {/* The Consent Settings button appears to be non-functional in this snippet. */}
         <Button
           onClick={() => {}}
           className="text-white text-sm bg-black bg-opacity-0 border-[1px] border-neutral-400 border-opacity-30 hover:bg-opacity-30 transition-colors duration-300"
@@ -30,11 +50,12 @@ const CookieBanner = () => {
           Consent Settings
         </Button>
         <div className="flex gap-2">
-          {/* Attach the handleDeny function to the onClick event of the Deny button */}
-          <Button className="text-black text-sm bg-neutral-200 hover:bg-neutral-50 transition-colors duration-300">
+          <Button
+            onClick={handleDeny}
+            className="text-black text-sm bg-neutral-200 hover:bg-neutral-50 transition-colors duration-300"
+          >
             Deny
           </Button>
-          {/* Attach the handleAccept function to the onClick event of the Accept All button */}
           <Button
             onClick={handleAccept}
             className="text-black text-sm bg-neutral-200 hover:bg-neutral-50 transition-colors duration-300"

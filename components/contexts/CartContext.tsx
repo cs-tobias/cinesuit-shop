@@ -154,7 +154,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const getCartItemCount = () => {
-    return cart.reduce((total, item) => total + item.variants[0].quantity, 0);
+    return cart.reduce((count, item) => {
+      // Ensure `item.variants` is an array before calling reduce
+      const itemTotalQuantity = (item.variants || []).reduce(
+        (total, variant) => total + variant.quantity,
+        0
+      );
+      return count + itemTotalQuantity;
+    }, 0);
   };
 
   const redirectToCheckout = async () => {
