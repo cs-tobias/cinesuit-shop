@@ -1,18 +1,12 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
-const RotWrapper = dynamic(
-  () => import("../../../components/animations/RotWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
+const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
+  ssr: false,
+});
 
 const LessExpensive = () => {
   return (

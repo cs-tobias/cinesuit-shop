@@ -1,12 +1,9 @@
 import dynamic from "next/dynamic";
 import React, { ForwardedRef } from "react";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
 
 interface ShopTitle2Props {
   // Props definitions, if any

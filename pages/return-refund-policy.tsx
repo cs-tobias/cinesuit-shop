@@ -1,4 +1,4 @@
-import Footer from "./components/page-elements/Footer";
+import Footer from "../components/page-elements/Footer";
 import Navbar from "../components/ui/Navbar";
 import NavbarLight from "../components/ui/NavbarLight";
 

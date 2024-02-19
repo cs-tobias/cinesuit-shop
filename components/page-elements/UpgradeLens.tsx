@@ -1,24 +1,15 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
-const PosLtoR = dynamic(
-  () => import("../../../components/animations/PosLtoR"),
-  {
-    ssr: false,
-  }
-);
-const PosRtoL = dynamic(
-  () => import("../../../components/animations/PosRtoL"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
+const PosLtoR = dynamic(() => import("../animations/PosLtoR"), {
+  ssr: false,
+});
+const PosRtoL = dynamic(() => import("../animations/PosRtoL"), {
+  ssr: false,
+});
 
 const UpgradeLens = () => {
   return (

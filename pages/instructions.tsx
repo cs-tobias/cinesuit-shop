@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import FooterDark from "./components/page-elements/FooterDark";
+import FooterDark from "../components/page-elements/FooterDark";
 import Navbar from "../components/ui/Navbar";
 import RotWrapper from "../components/animations/RotWrapper";
 

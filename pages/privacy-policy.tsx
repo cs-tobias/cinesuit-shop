@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Navbar from "../components/ui/Navbar";
-import Footer from "./components/page-elements/Footer";
+import Footer from "../components/page-elements/Footer";
 import { Separator } from "../components/ui/separator";
 import Image from "next/image";
 import NavbarLight from "../components/ui/NavbarLight";

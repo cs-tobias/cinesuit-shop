@@ -2,18 +2,12 @@ import React from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
-const RotWrapper = dynamic(
-  () => import("../../../components/animations/RotWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
+const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
+  ssr: false,
+});
 
 const SizesStandardized = () => {
   return (

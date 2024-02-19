@@ -1,13 +1,13 @@
 // shop.tsx
-import ShopComponent from "./components/page-elements/ShopComponent";
+import ShopComponent from "../components/page-elements/ShopComponent";
 import { Product } from "@/types/Types";
 import { useState, useRef, useEffect } from "react";
 import { client } from "@/utils/shopifyClient";
 import Navbar from "../components/ui/Navbar";
 import NavbarLight from "../components/ui/NavbarLight";
-import FeaturedProduct from "./components/page-elements/FeaturedProduct";
-import Footer from "./components/page-elements/Footer";
-import ShopTitle2 from "./components/page-elements/ShopTitle2";
+import FeaturedProduct from "../components/page-elements/FeaturedProduct";
+import Footer from "../components/page-elements/Footer";
+import ShopTitle2 from "../components/page-elements/ShopTitle2";
 
 interface ShopProps {
   featuredProduct: Product;

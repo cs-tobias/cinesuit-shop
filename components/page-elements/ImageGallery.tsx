@@ -1,55 +1,46 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ImageProps } from "../../../components/interfaces/ImageProps";
+import { ImageProps } from "../interfaces/ImageProps";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
-const MoveWrapper1 = dynamic(
-  () => import("../../../components/animations/MoveWrapper1"),
-  {
-    ssr: false,
-  }
-);
+const MoveWrapper1 = dynamic(() => import("../animations/MoveWrapper1"), {
+  ssr: false,
+});
 
 const GalleryPage = () => {
   const images: ImageProps[] = [
     {
-      src: "/images/gallery/image15.png",
+      src: "/images/gallery/md/image15.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "square",
       bgColor: "#f2f2f2",
     },
     {
-      src: "/images/gallery/image6.png",
+      src: "/images/gallery/md/image6.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/image1.png",
+      src: "/images/gallery/md/image1.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/image11.png",
+      src: "/images/gallery/md/image11.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/image7.png",
+      src: "/images/gallery/md/image7.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/image5.png",
+      src: "/images/gallery/md/image5.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/image9.png",
+      src: "/images/gallery/md/image9.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },

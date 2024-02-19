@@ -1,15 +1,12 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../../../components/Button";
-import Icons from "../../../components/ui/Icons";
+import Button from "../Button";
+import Icons from "../ui/Icons";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
 
 const NextStep = () => {
   return (

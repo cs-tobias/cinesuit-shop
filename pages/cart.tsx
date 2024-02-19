@@ -27,7 +27,7 @@ import {
   AccordionTrigger,
 } from "../components/ui/accordionCustom";
 import { Separator } from "../components/ui/separator";
-import Footer from "./components/page-elements/Footer";
+import Footer from "../components/page-elements/Footer";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, redirectToCheckout } =

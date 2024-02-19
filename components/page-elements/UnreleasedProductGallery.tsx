@@ -1,49 +1,49 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ImageProps } from "../../../components/interfaces/ImageProps";
+import { ImageProps } from "../interfaces/ImageProps";
 
-const MoveWrapper1 = dynamic(
-  () => import("../../../components/animations/MoveWrapper1"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
+const MoveWrapper1 = dynamic(() => import("../animations/MoveWrapper1"), {
+  ssr: false,
+});
 
 const GalleryPage = () => {
   const images: ImageProps[] = [
     {
-      src: "/images/gallery/md/image15.jpg",
+      src: "/images/gallery/image15.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "square",
       bgColor: "#f2f2f2",
     },
     {
-      src: "/images/gallery/md/image6.jpg",
+      src: "/images/gallery/image6.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image1.jpg",
+      src: "/images/gallery/image1.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image11.jpg",
+      src: "/images/gallery/image11.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image7.jpg",
+      src: "/images/gallery/image7.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image5.jpg",
+      src: "/images/gallery/image5.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image9.jpg",
+      src: "/images/gallery/image9.png",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },

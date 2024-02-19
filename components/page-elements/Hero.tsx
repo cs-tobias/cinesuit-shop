@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../../../components/Button";
+import Button from "../Button";
 import dynamic from "next/dynamic";
 
-const RotWrapper = dynamic(
-  () => import("../../../components/animations/RotWrapper"),
-  {
-    ssr: false,
-  }
-);
+const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
+  ssr: false,
+});
 
 const Hero = () => {
   const titleRef = useRef<HTMLDivElement>(null);

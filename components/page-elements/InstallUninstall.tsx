@@ -1,21 +1,15 @@
 import dynamic from "next/dynamic";
-import Button from "../../../components/Button";
+import Button from "../Button";
 import Image from "next/image";
 import GalleryPage from "./ImageGallery";
 import Link from "next/link";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
-const RotWrapper = dynamic(
-  () => import("../../../components/animations/RotWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
+const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
+  ssr: false,
+});
 
 const InstallUninstall = () => {
   return (

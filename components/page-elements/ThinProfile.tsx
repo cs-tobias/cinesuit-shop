@@ -1,12 +1,9 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const TextWrapper = dynamic(
-  () => import("../../../components/animations/TextWrapper"),
-  {
-    ssr: false,
-  }
-);
+const TextWrapper = dynamic(() => import("../animations/TextWrapper"), {
+  ssr: false,
+});
 
 const ThinProfile = () => {
   return (

@@ -1,5 +1,5 @@
-import FooterDark from "@/pages/components/page-elements/FooterDark";
-import GalleryPage from "@/pages/components/page-elements/ImageGallery";
+import FooterDark from "@/components/page-elements/FooterDark";
+import GalleryPage from "@/components/page-elements/ImageGallery";
 import { ReactNode } from "react";
 import { Product } from "@/types/Types";
 import Navbar from "@/components/ui/Navbar";
