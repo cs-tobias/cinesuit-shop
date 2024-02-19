@@ -1,4 +1,7 @@
+// index.tsx
+import { Product } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
+import Navbar from "../components/ui/Navbar";
 import Footer from "./components/page-elements/Footer";
 import Hero from "./components/page-elements/Hero";
 import InstallUninstall from "./components/page-elements/InstallUninstall";
@@ -9,16 +12,11 @@ import ShopTitle from "./components/page-elements/ShopTitle";
 import SizesStandardized from "./components/page-elements/SizesStandardized";
 import ThinProfile from "./components/page-elements/ThinProfile";
 import UpgradeLens from "./components/page-elements/UpgradeLens";
-import Navbar from "../components/ui/Navbar";
-import { Product } from "@/types/Types";
-import CookieBanner from "@/components/ui/CookieBanner";
 
-// Define a type for the props expected by the Home component
 interface HomeProps {
   products: Product[];
 }
 
-// Use the HomeProps type to type the props parameter
 export default function Home({ products }: HomeProps) {
   return (
     <>
@@ -31,15 +29,17 @@ export default function Home({ products }: HomeProps) {
       <SizesStandardized />
       <InstallUninstall />
       <ShopTitle />
-      <ShopComponent />
+      <ShopComponent products={products} />
       <Footer />
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const products = await client.product.fetchAll();
+  // Optionally apply filters here if needed, similar to what's done in shop.tsx
   return {
-    props: { products: JSON.parse(JSON.stringify(products)) as Product[] },
+    props: { products: JSON.parse(JSON.stringify(products)) },
+    revalidate: 3600, // Use ISR to update the page periodically
   };
 }

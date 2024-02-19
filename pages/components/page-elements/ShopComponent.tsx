@@ -1,59 +1,19 @@
 // ShopComponent.js
 import { Product } from "@/types/Types";
-import { client } from "@/utils/shopifyClient";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useCart } from "../../../components/contexts/CartContext";
 
-const ShopComponent = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-  const { addToCart } = useCart();
-
-  useEffect(() => {
-    setLoading(true);
-    client.product
-      .fetchAll()
-      .then((fetchedProducts) => {
-        const sortedProducts = fetchedProducts
-          .filter((product) => !product.productType.includes("bundle"))
-          .sort((a, b) =>
-            a.availableForSale === b.availableForSale
-              ? 0
-              : a.availableForSale
-              ? -1
-              : 1
-          )
-          .map((product) => ({
-            ...product, // Spread other product properties as needed
-            images: product.images.map(({ id, src }) => ({
-              id: id ?? undefined, // Ensure id is either string or undefined
-              src,
-            })),
-            // Apply other transformations as needed to match your Product type
-          })) as unknown as Product[]; // Cast to your Product type
-
-        setProducts(sortedProducts);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      });
-  }, []);
-
+// Accept products as props
+const ShopComponent = ({ products }: { products: Product[] }) => {
   return (
     <>
       <div className="bg-neutral-50 text-black flex flex-col pb-20">
-        <div className="text-center text-5xl md:text-6xl tracking-tighter leading-11 font-semibold pb-10"></div>
         <div className="container max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
           {products.map((product) => (
             <div
               key={product.id}
               className="bg-neutral-200 text-black flex flex-col p-6 rounded-xl"
             >
-              {/* Conditional rendering of image link based on productType */}
               <Link
                 href={
                   product.productType === "unreleased"
@@ -63,11 +23,11 @@ const ShopComponent = () => {
                 className="cursor-pointer hover:opacity-95 transition-opacity duration-300 justify-center"
               >
                 <Image
-                  src={`/images/${product.handle}/sm/image0.png`} // Adjusted src
+                  src={`/images/${product.handle}/sm/image0.png`}
                   alt="Product Image"
                   width={400}
                   height={300}
-                  className={`w-full ${
+                  className={`${
                     product.productType === "unreleased" ? "opacity-75" : ""
                   }`}
                   priority
@@ -105,7 +65,6 @@ const ShopComponent = () => {
                 <p className="text-sm leading-5 text-neutral-700">
                   {product.description}
                 </p>
-                {/* Conditional rendering of buttons based on productType */}
                 {product.productType === "unreleased" ? (
                   <div className="py-4">
                     <Link
@@ -135,8 +94,8 @@ const ShopComponent = () => {
                       <>
                         Coming Soon <br />{" "}
                         <Link
-                          className="hover:underline hover:cursor-pointer"
                           href={"/"}
+                          className="hover:underline hover:cursor-pointer"
                         >
                           Submit your requests
                         </Link>
