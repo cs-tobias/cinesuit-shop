@@ -127,6 +127,7 @@ const Product = ({
               layout="fixed"
               className="w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
               onClick={openLightbox} // This line triggers the lightbox on click
+              loading="eager"
               priority
             />
             <p
