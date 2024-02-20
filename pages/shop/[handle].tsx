@@ -429,7 +429,7 @@ export async function getStaticProps({ params }: StaticPropsParams) {
       mainImagePaths,
       associatedProductsImages,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }
 
