@@ -1,14 +1,14 @@
 // [handle].tsx
 import type { ProductProps, Product as ProductType } from "@/types/Types";
-import { useRouter } from "next/router";
 import { client } from "@/utils/shopifyClient";
+import { GetStaticPaths } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { useCart } from "../../components/contexts/CartContext";
 import Footer from "../../components/page-elements/Footer";
-import WhatsIncluded from "../../components/page-elements/WhatsIncluded";
 import Lightbox from "../../components/ui/Lightbox";
 import NavbarLight from "../../components/ui/NavbarLight";
 import {
@@ -20,20 +20,20 @@ import {
 
 interface StaticPropsParams {
   params: {
-    handle: string; // Define the expected properties of `params`
+    handle: string;
   };
 }
 
 const Product = ({
   mainProduct,
   associatedProducts,
-  imagePaths,
-  smImagePaths,
+  mainImagePaths,
+  associatedProductsImages,
 }: ProductProps) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     mainProduct
   );
-  const [currentImagePath, setCurrentImagePath] = useState(imagePaths[0]);
+  const [currentImagePath, setCurrentImagePath] = useState(mainImagePaths[0]); // Use mainImagePaths
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addToCart } = useCart();
@@ -52,10 +52,11 @@ const Product = ({
 
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
-    const variantImagePath = `/images/${product.handle}/image0.png`;
-    setCurrentImagePath(variantImagePath);
-  };
 
+    const newImagePath = `/images/${product.handle}/image0.png`; // This assumes the first image is always image1.png
+    console.log(newImagePath); // Debug the path
+    setCurrentImagePath(newImagePath);
+  };
   const router = useRouter();
 
   const handleAddToCart = () => {
@@ -85,18 +86,6 @@ const Product = ({
       // Navigate to the cart page
       router.push("/cart");
     }
-  };
-
-  const navigateCarousel = (
-    direction: string,
-    event: { preventDefault: () => void }
-  ) => {
-    event.preventDefault();
-    setSelectedIndex(
-      direction === "left"
-        ? (selectedIndex - 1 + imagePaths.length) % imagePaths.length
-        : (selectedIndex + 1) % imagePaths.length
-    );
   };
 
   // Function to open and close the lightbox
@@ -140,9 +129,15 @@ const Product = ({
 
           <Lightbox
             isOpen={isLightboxOpen}
-            images={imagePaths}
+            images={
+              currentImagePath === mainImagePaths[0]
+                ? mainImagePaths
+                : associatedProductsImages.find(
+                    (p) => p.id === selectedProduct?.id
+                  )?.images || []
+            }
             onClose={closeLightbox}
-            selectedIndex={0}
+            selectedIndex={selectedIndex}
           />
           <div
             className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]"
@@ -167,13 +162,13 @@ const Product = ({
             </div>
             <div className="lg:hidden py-3">
               <Image
-                src={smImagePaths[selectedIndex]}
+                src={mainImagePaths[selectedIndex]} // Adjust based on your current logic
                 alt={`Product Image ${selectedIndex}`}
                 width={1500}
                 height={700}
                 className="mx-auto rounded-2xl"
-                onClick={openLightbox} // This line triggers the lightbox on click
-                priority
+                onClick={openLightbox} // If this interaction is still desired
+                priority // Consider if this should be prioritized
               />
 
               {/* Navigation Buttons */}
@@ -399,44 +394,52 @@ const Product = ({
   );
 };
 
-export async function getStaticPaths() {
+export async function getStaticProps({ params }: StaticPropsParams) {
+  const handle = params.handle;
+  const fetchedMainProduct = await client.product.fetchByHandle(handle);
+
+  const numberOfImages = 3;
+  const mainImagePaths = Array.from(
+    { length: numberOfImages },
+    (_, index) => `/images/${handle}/image${index}.png`
+  );
+
+  const associatedProductType = `${fetchedMainProduct.title}_bundle`;
+  const productsWithSpecificType = await client.product.fetchQuery({
+    query: `productType:${associatedProductType}`,
+    first: 3,
+  });
+
+  const associatedProducts = productsWithSpecificType.filter(
+    (product) => product.id !== fetchedMainProduct.id
+  );
+
+  const associatedProductsImages = associatedProducts.map((product) => ({
+    id: product.id,
+    images: Array.from(
+      { length: numberOfImages },
+      (_, index) => `/images/${product.handle}/image${index}.png`
+    ),
+  }));
+
+  return {
+    props: {
+      mainProduct: JSON.parse(JSON.stringify(fetchedMainProduct)),
+      associatedProducts: JSON.parse(JSON.stringify(associatedProducts)),
+      mainImagePaths,
+      associatedProductsImages,
+    },
+    revalidate: 10,
+  };
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
   const allProducts = await client.product.fetchAll();
   const paths = allProducts.map((product) => ({
     params: { handle: product.handle },
   }));
 
   return { paths, fallback: "blocking" };
-}
-
-export async function getStaticProps({ params }: StaticPropsParams) {
-  const handle = params.handle;
-  const fetchedMainProduct = await client.product.fetchByHandle(handle);
-  const associatedProductType = `${fetchedMainProduct.title}_bundle`;
-  const productsWithSpecificType = await client.product.fetchQuery({
-    query: `productType:${associatedProductType}`,
-    first: 3,
-  });
-  const imagePaths = Array.from(
-    { length: 3 },
-    (_, index) => `/images/${handle}/image${index}.png`
-  );
-  const smImagePaths = Array.from(
-    { length: 3 },
-    (_, index) => `/images/${handle}/sm/image${index}.png`
-  );
-  const associatedProducts = productsWithSpecificType.filter(
-    (product) => product.id !== fetchedMainProduct.id
-  );
-
-  return {
-    props: {
-      mainProduct: JSON.parse(JSON.stringify(fetchedMainProduct)),
-      associatedProducts: JSON.parse(JSON.stringify(associatedProducts)),
-      imagePaths,
-      smImagePaths,
-    },
-    revalidate: 600, // Use ISR to refresh the page periodically
-  };
-}
+};
 
 export default Product;

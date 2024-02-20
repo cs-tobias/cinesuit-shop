@@ -22,8 +22,8 @@ export interface Product {
 export interface ProductProps {
   mainProduct: Product;
   associatedProducts: Product[];
-  imagePaths: string[]; // Add this line
-  smImagePaths: string[]; // Add this line
+  mainImagePaths: string[]; // Updated to reflect actual usage
+  associatedProductsImages: { id: string; images: string[] }[]; // Added this line
 }
 
   export interface ProductImage {
