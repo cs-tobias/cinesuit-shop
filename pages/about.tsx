@@ -50,7 +50,7 @@ const Instructions = () => {
         <RotWrapper>
           <div className="flex justify-center w-full mx-auto pb-12">
             <Image
-              src="/images/cs-prime-lineup.jpg"
+              src=""
               className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
               width={1920}
               height={760}
@@ -74,7 +74,7 @@ const Instructions = () => {
         <RotWrapper>
           <div className="flex justify-center w-full mx-auto pb-12">
             <Image
-              src="/images/cs-prime-lineup.jpg"
+              src=""
               className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
               width={1920}
               height={760}
@@ -110,7 +110,7 @@ const Instructions = () => {
         <RotWrapper>
           <div className="flex justify-center w-full mx-auto pb-12">
             <Image
-              src="/images/cs-prime-lineup.jpg"
+              src=""
               className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
               width={1920}
               height={760}

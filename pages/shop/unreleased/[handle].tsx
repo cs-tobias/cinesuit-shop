@@ -1,14 +1,14 @@
-import FooterDark from "@/components/page-elements/FooterDark";
-import Navbar from "@/components/ui/Navbar";
-import { client } from "@/utils/shopifyClient";
+import React, { useState } from "react";
+import { GetStaticProps, GetStaticPaths } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import Button from "@/components/Button";
-import Image from "next/image";
-import Lightbox from "@/components/ui/Lightbox"; // Assuming you have a Lightbox component
 
-// Assuming Product type is correctly defined in "@/types/Types"
+import FooterDark from "@/components/page-elements/FooterDark";
+import Navbar from "@/components/ui/Navbar";
+import Button from "@/components/Button";
+import LightboxDark from "@/components/ui/LightboxDark";
+import { client } from "@/utils/shopifyClient";
 import { Product } from "@/types/Types";
 
 interface UnreleasedProductPageProps {
@@ -20,9 +20,13 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
   product,
   imagePaths,
 }) => {
-  const router = useRouter();
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  // Dynamically adjust the path for high-resolution images
+  const highResImagePaths = imagePaths.map((path) =>
+    path.replace(`/images/${product.handle}/`, `/images/${product.handle}/lg/`)
+  );
 
   const openLightbox = (index: number) => {
     setSelectedImageIndex(index);
@@ -56,7 +60,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
             </Link>
           </div>
         </div>
-        <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="container mx-auto p-6 grid grid-cols-2 gap-6">
           {imagePaths.map((src, index) => (
             <div
               key={index}
@@ -66,33 +70,33 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
               <Image
                 src={src}
                 alt={`Image ${index}`}
-                width={400}
-                height={300}
+                width={1920}
+                height={1080}
                 layout="responsive"
+                className="rounded-xl"
               />
             </div>
           ))}
         </div>
         {isLightboxOpen && (
-          <Lightbox
-            images={imagePaths}
-            selectedIndex={selectedImageIndex}
+          <LightboxDark
+            isOpen={isLightboxOpen}
+            images={highResImagePaths} // Pass high-resolution images for Lightbox
             onClose={() => setIsLightboxOpen(false)}
-            isOpen={false}
+            selectedIndex={selectedImageIndex}
+            setSelectedIndex={setSelectedImageIndex}
           />
         )}
+        <div className="h-[80px] w-full"></div>
         <FooterDark />
       </div>
     </div>
   );
 };
 
-export async function getServerSideProps(context: {
-  params: { handle: string };
-}) {
-  const { handle } = context.params;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const handle = params?.handle as string;
   const product = await client.product.fetchByHandle(handle);
-
   if (product.productType !== "unreleased") {
     return {
       redirect: {
@@ -101,19 +105,24 @@ export async function getServerSideProps(context: {
       },
     };
   }
-
-  const imageCount = 5; // Adjust based on your actual needs for the gallery
   const imagePaths = Array.from(
-    { length: imageCount },
-    (_, index) => `/images/${handle}/image${index + 1}.png`
+    { length: 6 },
+    (_, index) => `/images/${handle}/image${index + 1}.jpg`
   );
-
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),
       imagePaths,
     },
+    revalidate: 10,
   };
-}
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
 
 export default UnreleasedProductPage;

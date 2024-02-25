@@ -130,6 +130,16 @@ const CartPage = () => {
 
           {cart.map((item, index) => (
             <div key={`cart-item-${item.product.id}-${index}`}>
+              <div className="lg:hidden w-full">
+                <Image
+                  src={`/images/${item.product.handle}/sm/image3.png`}
+                  alt={item.product.title}
+                  width={1000}
+                  height={120}
+                  className="mx-auto pb-8"
+                  priority
+                />
+              </div>
               <h1 className="md:hidden text-2xl md:text-3xl font-medium tracking-tight">
                 {item.product.title}
               </h1>

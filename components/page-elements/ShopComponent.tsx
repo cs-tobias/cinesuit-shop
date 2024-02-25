@@ -7,7 +7,7 @@ import Link from "next/link";
 const ShopComponent = ({ products }: { products: Product[] }) => {
   return (
     <>
-      <div className="bg-neutral-50 text-black flex flex-col pb-20">
+      <div className="bg-neutral-50 text-black flex flex-col pt-6 pb-20">
         <div className="container max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
           {products.map((product) => (
             <div
@@ -85,21 +85,11 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                   </div>
                 )}
                 <div className="font-semibold">
-                  <p className="text-sm leading-5 text-neutral-700">
+                  <p className="text-sm leading-5 text-neutral-600">
                     {product.availableForSale ? (
-                      <>
-                        In Stock <br /> Free Shipping
-                      </>
+                      <>In Stock</>
                     ) : (
-                      <>
-                        Coming Soon <br />{" "}
-                        <Link
-                          href={"/"}
-                          className="hover:underline hover:cursor-pointer"
-                        >
-                          Submit your requests
-                        </Link>
-                      </>
+                      <>Coming Soon</>
                     )}
                   </p>
                 </div>

@@ -3,22 +3,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Icons from "./Icons";
 
-interface LightboxProps {
+interface LightboxDarkProps {
   images: string[]; // Assuming images are strings representing URLs
   isOpen: boolean;
   onClose: () => void;
-  selectedIndex: number; // Add this line
-  setSelectedIndex: (index: number) => void; // New prop to update the index
+  selectedIndex: number;
+  setSelectedIndex: (index: number) => void;
 }
 
-const Lightbox: React.FC<LightboxProps> = ({
+const LightboxDark: React.FC<LightboxDarkProps> = ({
   images,
   isOpen,
   onClose,
   selectedIndex,
   setSelectedIndex,
 }) => {
-  // Use the passed `selectedIndex` and `setSelectedIndex` directly without internal state
+  const [imageSrc, setImageSrc] = useState("");
 
   const navigate = useCallback(
     (direction: "next" | "prev") => {
@@ -28,7 +28,7 @@ const Lightbox: React.FC<LightboxProps> = ({
           : (selectedIndex - 1 + images.length) % images.length;
       setSelectedIndex(newIndex);
     },
-    [images.length, selectedIndex, setSelectedIndex] // Add setSelectedIndex as a dependency
+    [images.length, selectedIndex, setSelectedIndex]
   );
 
   useEffect(() => {
@@ -42,17 +42,23 @@ const Lightbox: React.FC<LightboxProps> = ({
       }
     };
 
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
 
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
     }
 
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
     };
   }, [isOpen, onClose, navigate]);
+
+  // Function to handle image load error
+  const handleError = () => {
+    // Fallback to the original image path if high-res image fails to load
+    setImageSrc(images[selectedIndex]);
+  };
 
   if (!isOpen) return null;
 
@@ -63,7 +69,7 @@ const Lightbox: React.FC<LightboxProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-neutral-50 z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-black z-50 flex items-center justify-center"
           onClick={onClose}
         >
           <div
@@ -75,20 +81,21 @@ const Lightbox: React.FC<LightboxProps> = ({
               className="absolute hidden left-0 z-40 h-full w-1/2 md:flex items-center justify-start"
               onClick={() => navigate("prev")}
             >
-              <button className="mr-4 text-neutral-600 font-light p-8 hover:cursor-pointer hover:text-black transition-color duration-300">
+              <button className="mr-4 text-neutral-400 font-light p-8 hover:cursor-pointer hover:text-white transition-color duration-300">
                 <Icons icon="chevron-left" width="80" height="80"></Icons>
               </button>
             </div>
 
             {/* Image container */}
             <div className="no-select flex flex-col items-center justify-center z-30">
+              {/* Image */}
               <Image
-                src={images[selectedIndex]}
+                src={imageSrc}
                 alt={`Image ${selectedIndex + 1}`}
-                layout="responsive"
-                width={1237}
-                height={1524}
-                className="w-auto mx-auto max-h-[1000px] mb-6"
+                layout="fill"
+                objectFit="contain"
+                className="p-36"
+                onError={handleError}
               />
 
               {/* Indicators */}
@@ -97,7 +104,7 @@ const Lightbox: React.FC<LightboxProps> = ({
                   <button
                     key={index}
                     className={`inline-block h-3 w-3 mx-1 rounded-full ${
-                      selectedIndex === index ? "bg-black" : "bg-gray-400"
+                      selectedIndex === index ? "bg-white" : "bg-gray-600"
                     }`}
                     onClick={() => setSelectedIndex(index)}
                   ></button>
@@ -122,14 +129,14 @@ const Lightbox: React.FC<LightboxProps> = ({
               className="absolute hidden right-0 z-40 h-full w-1/2 md:flex p-8 items-center justify-end"
               onClick={() => navigate("next")}
             >
-              <button className="mr-4 text-neutral-600 font-light p-2 hover:cursor-pointer hover:text-black transition-color duration-300">
+              <button className="mr-4 text-neutral-400 font-light p-2 hover:cursor-pointer hover:text-white transition-color duration-300">
                 <Icons icon="chevron-right" width="80" height="80"></Icons>
               </button>
             </div>
 
             {/* Close button */}
             <button
-              className="z-50 absolute top-2 md:top-10 right-2 md:right-8  text-black text-lg font-semibold p-2 hover:cursor-pointer hover:text-black transition-color duration-300"
+              className="z-50 absolute top-2 md:top-10 right-2 md:right-8  text-neutral-400 text-lg font-semibold p-2 hover:cursor-pointer hover:text-white transition-color duration-300"
               onClick={onClose}
             >
               <Icons icon="x" width="48" height="48" strokeWidth="1.5"></Icons>
@@ -141,4 +148,4 @@ const Lightbox: React.FC<LightboxProps> = ({
   );
 };
 
-export default Lightbox;
+export default LightboxDark;

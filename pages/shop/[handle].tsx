@@ -130,7 +130,7 @@ const Product = ({
           <Lightbox
             isOpen={isLightboxOpen}
             images={
-              currentImagePath === mainImagePaths[0]
+              selectedProduct && selectedProduct.handle === mainProduct.handle
                 ? mainImagePaths
                 : associatedProductsImages.find(
                     (p) => p.id === selectedProduct?.id
@@ -138,6 +138,7 @@ const Product = ({
             }
             onClose={closeLightbox}
             selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex} // Pass the method to update the index
           />
           <div
             className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]"
@@ -316,20 +317,22 @@ const Product = ({
                 <AccordionItem value="item-2">
                   <AccordionTrigger>Care guide</AccordionTrigger>
                   <AccordionContent>
-                    Make sure the inside of the Cinesuit, particularely the
-                    rubber part is dust free. Especially if you take it on and
-                    off over time.
+                    <ul className="ulpolicy ulpolicy font-medium text-neutral-600">
+                      <li className="lipolicy">
+                        Make sure the inside of the Cinesuit, particularely the
+                        rubber part is dust free. Especially if you take it on
+                        and off over time.
+                      </li>
+                    </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
                   <AccordionTrigger>Shipping and Returns</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="ulpolicy font-medium text-neutral-500">
+                    <ul className="ulpolicy font-medium text-neutral-600">
                       <li className="lipolicy">
-                        We offer{" "}
-                        <span className="text-black">free shipping</span> to
-                        most countries, you get your final shipping options at
-                        checkout.{" "}
+                        We offer fast and cheap shipping to most countries, you
+                        get your final shipping options at checkout.{" "}
                       </li>
                       <li className="lipolicy">
                         Standard VAT and Import charges applies for your local
