@@ -29,7 +29,7 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                   height={300}
                   className={`${
                     product.productType === "unreleased" ? "opacity-75" : ""
-                  }`}
+                  } mx-auto`}
                   priority
                 />
               </Link>

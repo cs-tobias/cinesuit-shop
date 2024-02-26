@@ -60,7 +60,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
             </Link>
           </div>
         </div>
-        <div className="container mx-auto p-6 grid grid-cols-2 gap-6">
+        <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {imagePaths.map((src, index) => (
             <div
               key={index}
@@ -87,7 +87,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
             setSelectedIndex={setSelectedImageIndex}
           />
         )}
-        <div className="h-[80px] w-full"></div>
+        <div className="h-[40px] w-full hidden xl:block"></div>
         <FooterDark />
       </div>
     </div>

@@ -114,7 +114,7 @@ const CartPage = () => {
     <>
       <NavbarLight />
       <div className="lg:w-full md:min-h-screen pb-10 md:pb-0 bg-neutral-50">
-        <div className="mx-auto container md:max-w-[700px] tracking-tight lg:max-w-5xl lg:px-6">
+        <div className="mx-auto container  tracking-tight lg:max-w-5xl lg:px-6">
           <section className="pt-24 md:pt-28 md:pb-12 flex-col">
             <h1 className="text-5xl tracking-tighter font-semibold mb-4 text-left">
               Review your bag
@@ -130,9 +130,9 @@ const CartPage = () => {
 
           {cart.map((item, index) => (
             <div key={`cart-item-${item.product.id}-${index}`}>
-              <div className="lg:hidden w-full">
+              <div className="md:hidden w-full">
                 <Image
-                  src={`/images/${item.product.handle}/sm/image3.png`}
+                  src={`/images/${item.product.handle}/sm/image2.png`}
                   alt={item.product.title}
                   width={1000}
                   height={120}
@@ -144,19 +144,19 @@ const CartPage = () => {
                 {item.product.title}
               </h1>
               <section className="flex w-full pt-4">
-                <div className="lg:w-56"></div>
+                <div className="md:w-56"></div>
                 <div className="lg:w-3/5 max-w-sm">
                   <h1 className="hidden md:block text-2xl md:text-3xl font-medium tracking-tight">
                     {item.product.title}
                   </h1>
                 </div>
 
-                <div className="absolute -translate-y-4 hidden lg:block">
+                <div className="absolute -translate-y-3 hidden md:block">
                   <Image
                     src={`/images/${item.product.handle}/sm/image0.png`}
                     alt={item.product.title}
-                    width={200}
-                    height={200}
+                    width={185}
+                    height={120}
                     className="mx-auto"
                     priority
                   />
@@ -180,7 +180,7 @@ const CartPage = () => {
               </section>
 
               <section className="flex w-full">
-                <div className="lg:w-56"></div>
+                <div className="md:w-56"></div>
                 <div className="w-3/5 max-w-md">
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">

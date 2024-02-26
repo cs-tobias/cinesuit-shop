@@ -33,7 +33,7 @@ const Product = ({
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     mainProduct
   );
-  const [currentImagePath, setCurrentImagePath] = useState(mainImagePaths[0]); // Use mainImagePaths
+  const [currentImagePath, setCurrentImagePath] = useState(mainImagePaths[0]);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addToCart } = useCart();
@@ -53,8 +53,8 @@ const Product = ({
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
 
-    const newImagePath = `/images/${product.handle}/image0.png`; // This assumes the first image is always image1.png
-    console.log(newImagePath); // Debug the path
+    const newImagePath = `/images/${product.handle}/image0.png`; 
+    console.log(newImagePath); 
     setCurrentImagePath(newImagePath);
   };
   const router = useRouter();
@@ -64,35 +64,26 @@ const Product = ({
       const variantId = selectedProduct.variants[0].id;
       const quantity = 1;
 
-      // Create a new product object with price.amount converted to string
-      // and ensuring all images have a defined id.
       const productForCart = {
         ...selectedProduct,
         variants: selectedProduct.variants.map((variant) => ({
           ...variant,
           price: {
             ...variant.price,
-            amount: variant.price.amount.toString(), // Convert amount to string
+            amount: variant.price.amount.toString(),
           },
         })),
         images: selectedProduct.images.map(({ id, src }) => ({
-          id: id ?? "default-id", // Provide a default id if undefined
+          id: id ?? "default-id", 
           src,
         })),
       };
-
       addToCart(productForCart, variantId, quantity);
-
-      // Navigate to the cart page
       router.push("/cart");
     }
   };
-
-  // Function to open and close the lightbox
   const openLightbox = () => setIsLightboxOpen(true);
   const closeLightbox = () => setIsLightboxOpen(false);
-
-  // Main component rendering will follow in the next part
 
   return (
     <>
@@ -115,7 +106,7 @@ const Product = ({
               height={1524}
               layout="fixed"
               className="w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
-              onClick={openLightbox} // This line triggers the lightbox on click
+              onClick={openLightbox}
               loading="eager"
               priority
             />
@@ -126,7 +117,6 @@ const Product = ({
               View Gallery
             </p>
           </div>
-
           <Lightbox
             isOpen={isLightboxOpen}
             images={
@@ -138,11 +128,10 @@ const Product = ({
             }
             onClose={closeLightbox}
             selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex} // Pass the method to update the index
+            setSelectedIndex={setSelectedIndex} 
           />
           <div
             className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]"
-            // Removed inline style, added Tailwind's responsive utility class
           >
             {mainProduct.productType === "new" && (
               <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
@@ -163,13 +152,11 @@ const Product = ({
             </div>
             <div className="lg:hidden py-3">
               <Image
-                src={mainImagePaths[selectedIndex]} // Adjust based on your current logic
+                src={mainImagePaths[selectedIndex]} // I want to use a different path of image(s) here, images is the same path mostly, but "../sm/image1.png"
                 alt={`Product Image ${selectedIndex}`}
-                width={1500}
-                height={700}
+                width={1200}
+                height={500}
                 className="mx-auto rounded-2xl"
-                onClick={openLightbox} // If this interaction is still desired
-                priority // Consider if this should be prioritized
               />
 
               {/* Navigation Buttons */}
@@ -190,21 +177,18 @@ const Product = ({
                 );
               })()}
             </p>
-
             <p className="mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
               Configure your Cinesuit
             </p>
-
             <div className="w-full">
-              {/* Associated Products */}
               {associatedProducts.map((associatedProduct) => (
                 <div
                   key={associatedProduct.id}
                   onClick={() => handleProductSelection(associatedProduct)}
                   className={`p-4 border-[1px] bg-neutral-100 rounded-2xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
                     selectedProduct?.id === associatedProduct.id
-                      ? "border-neutral-600 hover:border-neutral-600" // Apply no-hover class to the selected item
-                      : "border-gray-300 hover:border-neutral-400" // Keep hover effect for unselected items
+                      ? "border-neutral-600 hover:border-neutral-600" 
+                      : "border-gray-300 hover:border-neutral-400"
                   }`}
                 >
                   <div className="flex justify-between items-center text-lg">
@@ -220,13 +204,12 @@ const Product = ({
                   </div>
                 </div>
               ))}
-
               <div
                 onClick={() => handleProductSelection(mainProduct)}
                 className={`p-4 border-[1px] rounded-2xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
                   selectedProduct?.id === mainProduct.id
-                    ? "border-neutral-500 hover:border-neutral-600" // Apply no-hover class to the selected item
-                    : "border-gray-300 hover:border-neutral-400" // Keep hover effect for unselected items
+                    ? "border-neutral-500 hover:border-neutral-600" 
+                    : "border-gray-300 hover:border-neutral-400"
                 }`}
               >
                 <div className="flex justify-between items-center text-lg">
@@ -267,7 +250,6 @@ const Product = ({
                 <div className="w-full h-[1px] bg-neutral-300"></div>
               </div>
             </div>
-
             <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
               Whats in the box?
             </p>
@@ -279,7 +261,6 @@ const Product = ({
                 Add the screwdriver to your cart at checkout, if you need it.
               </p>
             </div>
-
             <div className="text-base">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
@@ -344,7 +325,6 @@ const Product = ({
                 </AccordionItem>
               </Accordion>
             </div>
-
             <div className=" pb-10">
               <div>
                 <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
@@ -357,7 +337,6 @@ const Product = ({
                   </span>
                 </p>
               </div>
-
               <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
                 Lightweight
               </p>
@@ -374,7 +353,6 @@ const Product = ({
                   <span className="text-black">Cinesuit weight: 950g</span>
                 </li>
               </div>
-
               <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
                 Low Profile
               </p>
@@ -388,7 +366,6 @@ const Product = ({
           </div>
         </div>
       </div>
-
       <div className="w-full h-[1px] py-12 bg-neutral-100"></div>
       <div className="">
         <Footer />
