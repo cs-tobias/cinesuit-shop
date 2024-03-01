@@ -77,7 +77,7 @@ const Hero = () => {
           }}
         >
           <Image
-            src="/images/cs-hero-lg-1.jpg"
+            src="/images/cs-hero-lg-1_02.jpg"
             alt="Hero Image"
             width={imageDimensions.width}
             height={imageDimensions.height}

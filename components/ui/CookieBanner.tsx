@@ -44,22 +44,15 @@ const CookieBanner = () => {
 
   return (
     <div
-      className={`flex flex-col justify-between bottom-4 md:left-4 fixed md:w-[380px] border-[1px] backdrop-blur-md bg-black bg-opacity-65 border-neutral-400 border-opacity-30 z-50 rounded-3xl p-5 ${
+      className={`flex bottom-4 md:left-4 fixed md:w-[540px] border-[1px] backdrop-blur-md bg-black bg-opacity-65 border-neutral-400 border-opacity-30 z-50 rounded-3xl p-5 ${
         isVisible ? "animate-fadeIn" : ""
       }`}
     >
-      <h1 className="text-sm text-neutral-200 mb-4">
+      <h1 className="text-sm text-neutral-200 w-full mr-4">
         This site uses tracking technologies. You may opt in or opt out of the
         use of these technologies.
       </h1>
-      <div className="flex justify-between items-center">
-        {/* Consent Settings Button - Consider implementing its functionality */}
-        <Button
-          onClick={() => {}}
-          className="text-white text-sm bg-black bg-opacity-0 border-[1px] border-neutral-400 border-opacity-30 hover:bg-opacity-30 transition-colors duration-300"
-        >
-          Consent Settings
-        </Button>
+      <div className="flex justify-end items-center">
         <div className="flex gap-2">
           <Button
             onClick={handleDeny}
@@ -71,7 +64,7 @@ const CookieBanner = () => {
             onClick={handleAccept}
             className="text-black text-sm bg-neutral-300 hover:bg-neutral-50 transition-colors duration-300"
           >
-            Accept All
+            Accept
           </Button>
         </div>
       </div>
