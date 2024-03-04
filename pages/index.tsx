@@ -22,6 +22,7 @@ export default function Home({ products }: HomeProps) {
   return (
     <>
       <ComingSoon />
+      {/* <ComingSoon />
       <Navbar />
       <Hero />
       <NextStep />
@@ -33,6 +34,7 @@ export default function Home({ products }: HomeProps) {
       <ShopTitle />
       <ShopComponent products={products} />
       <Footer />
+      */}
     </>
   );
 }
