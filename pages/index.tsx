@@ -37,7 +37,8 @@ export default function Home({ products }: HomeProps) {
   );
 }
 
-export async function getStaticProps() {
+{
+  /*export async function getStaticProps() {
   // Fetch all products
   const fetchedProducts = await client.product.fetchAll();
 
@@ -68,4 +69,5 @@ export async function getStaticProps() {
     },
     revalidate: 3600, // Optional: Revalidate at most once per hour for updates
   };
+} */
 }
