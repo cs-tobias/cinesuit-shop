@@ -66,6 +66,6 @@ export async function getStaticProps() {
     props: {
       products: JSON.parse(JSON.stringify(products)),
     },
-    revalidate: 3600, // Optional: Revalidate at most once per hour for updates
+    revalidate: 2, // Optional: Revalidate at most once per hour for updates
   };
 }
