@@ -1,12 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import Button from "../Button";
-import dynamic from "next/dynamic";
-
-const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
-  ssr: false,
-});
+import { useEffect, useRef, useState } from "react";
 
 const ComingSoon = () => {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -26,6 +19,7 @@ const ComingSoon = () => {
 
   useEffect(() => {
     const calculateImageDimensions = () => {
+      // Ensuring that all necessary measurements are taken before showing the image
       const titleHeightValue = titleRef.current?.offsetHeight ?? 0;
       const callToActionHeight = callToActionRef.current?.offsetHeight ?? 0;
       const availableHeight =
@@ -39,18 +33,23 @@ const ComingSoon = () => {
       const aspectRatio = 16 / 9;
       const imageWidth = availableHeight * aspectRatio;
 
-      // Apply these dimensions only on medium screens and above
+      // Only apply these dimensions on medium screens and above, and mark as loaded
       if (window.innerWidth >= 768) {
-        // Tailwind's default breakpoint for medium screens
         setImageDimensions({ width: imageWidth, height: availableHeight });
+      } else {
+        // For smaller screens, you might want to adjust or maintain a specific handling
+        // This example sets a default/fallback, adjust as necessary for your design
+        setImageDimensions({ width: 600, height: 400 }); // Default values for smaller screens
       }
+      setIsLoaded(true); // This now marks the end of calculations and adjustments
     };
 
-    calculateImageDimensions();
     window.addEventListener("resize", calculateImageDimensions);
+    calculateImageDimensions(); // Initial call to ensure everything is set before the first render
 
+    // Cleanup listener when component unmounts
     return () => window.removeEventListener("resize", calculateImageDimensions);
-  }, []);
+  }, []); // Empty dependency array means this effect runs once on mount and cleanup on unmount
 
   return (
     <div className="bg-black h-screen w-full overflow-hidden relative">
