@@ -28,6 +28,7 @@ const Product = ({
   mainProduct,
   associatedProducts,
   mainImagePaths,
+  smallImagePaths = [], // Default to an empty array if undefined
   associatedProductsImages,
 }: ProductProps) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
@@ -52,9 +53,10 @@ const Product = ({
 
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
+    console.log("Selected Product:", product); // Log the selected product data
 
-    const newImagePath = `/images/${product.handle}/image0.png`; 
-    console.log(newImagePath); 
+    const newImagePath = `/images/${product.handle}/image0.png`;
+    console.log(newImagePath);
     setCurrentImagePath(newImagePath);
   };
   const router = useRouter();
@@ -74,7 +76,7 @@ const Product = ({
           },
         })),
         images: selectedProduct.images.map(({ id, src }) => ({
-          id: id ?? "default-id", 
+          id: id ?? "default-id",
           src,
         })),
       };
@@ -105,7 +107,7 @@ const Product = ({
               width={1237}
               height={1524}
               layout="fixed"
-              className="w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
+              className="hidden md:block w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
               onClick={openLightbox}
               loading="eager"
               priority
@@ -128,11 +130,9 @@ const Product = ({
             }
             onClose={closeLightbox}
             selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex} 
+            setSelectedIndex={setSelectedIndex}
           />
-          <div
-            className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]"
-          >
+          <div className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]">
             {mainProduct.productType === "new" && (
               <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
                 New
@@ -151,15 +151,17 @@ const Product = ({
                 ))}
             </div>
             <div className="lg:hidden py-3">
-              <Image
-                src={mainImagePaths[selectedIndex]} // I want to use a different path of image(s) here, images is the same path mostly, but "../sm/image1.png"
-                alt={`Product Image ${selectedIndex}`}
-                width={1200}
-                height={500}
-                className="mx-auto rounded-2xl"
-              />
-
-              {/* Navigation Buttons */}
+              {smallImagePaths &&
+                smallImagePaths.length > 0 &&
+                smallImagePaths[selectedIndex] && (
+                  <Image
+                    src={smallImagePaths[selectedIndex]}
+                    alt={`Product Image ${selectedIndex}`}
+                    width={1200}
+                    height={500}
+                    className="mx-auto rounded-2xl"
+                  />
+                )}
             </div>
             <p className="hidden md:block mb-8 text-lg lg:text-xl font-medium leading-7 text-neutral-500">
               {(() => {
@@ -187,7 +189,7 @@ const Product = ({
                   onClick={() => handleProductSelection(associatedProduct)}
                   className={`p-4 border-[1px] bg-neutral-100 rounded-2xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
                     selectedProduct?.id === associatedProduct.id
-                      ? "border-neutral-600 hover:border-neutral-600" 
+                      ? "border-neutral-600 hover:border-neutral-600"
                       : "border-gray-300 hover:border-neutral-400"
                   }`}
                 >
@@ -208,7 +210,7 @@ const Product = ({
                 onClick={() => handleProductSelection(mainProduct)}
                 className={`p-4 border-[1px] rounded-2xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
                   selectedProduct?.id === mainProduct.id
-                    ? "border-neutral-500 hover:border-neutral-600" 
+                    ? "border-neutral-500 hover:border-neutral-600"
                     : "border-gray-300 hover:border-neutral-400"
                 }`}
               >
@@ -225,27 +227,48 @@ const Product = ({
                 </div>
               </div>
               <div className="flex items-center justify-between py-2 px-1 mx-auto max-w-5xl">
-                <div className="text-xl md:text-2xl font-medium tracking-tight text-black">
-                  <p>Total</p>
+                <div className="text-xl md:text-2xl font-medium tracking-tight">
+                  <p
+                    className={
+                      selectedProduct?.availableForSale
+                        ? "text-black"
+                        : "text-neutral-700 text-lg md:text-xl"
+                    }
+                  >
+                    {selectedProduct?.availableForSale
+                      ? "Total"
+                      : "Expected back in stock by May 5th!"}
+                  </p>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-xl md:text-2xl font-medium text-black">
-                    <p>
-                      $
-                      {selectedProduct
-                        ? selectedProduct.variants[0].price.amount
-                        : "0.00"}
-                    </p>
+                {selectedProduct?.availableForSale ? (
+                  <div className="flex items-center gap-4">
+                    <div className="text-xl md:text-2xl font-medium text-black">
+                      <p>
+                        $
+                        {selectedProduct
+                          ? selectedProduct.variants[0].price.amount
+                          : "0.00"}
+                      </p>
+                    </div>
+                    <Button
+                      size="large"
+                      className="text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300 rounded-2xl px-12"
+                      onClick={handleAddToCart}
+                    >
+                      Add to Cart
+                    </Button>
                   </div>
+                ) : (
                   <Button
                     size="large"
-                    className="text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300 rounded-2xl px-12"
-                    onClick={handleAddToCart}
+                    disabled={true}
+                    className="text-neutral-500 bg-neutral-100 border-[1px] border-neutral-500 rounded-2xl px-12"
                   >
-                    Add to bag
+                    Out of Stock
                   </Button>
-                </div>
+                )}
               </div>
+
               <div className="py-2">
                 <div className="w-full h-[1px] bg-neutral-300"></div>
               </div>
@@ -377,11 +400,16 @@ const Product = ({
 export async function getStaticProps({ params }: StaticPropsParams) {
   const handle = params.handle;
   const fetchedMainProduct = await client.product.fetchByHandle(handle);
+  console.log("Fetched Main Product:", fetchedMainProduct); // Log the fetched product data
 
   const numberOfImages = 3;
   const mainImagePaths = Array.from(
     { length: numberOfImages },
     (_, index) => `/images/${handle}/image${index}.png`
+  );
+  const smallImagePaths = Array.from(
+    { length: numberOfImages },
+    (_, index) => `/images/${handle}/sm/image${index}.png`
   );
 
   const associatedProductType = `${fetchedMainProduct.title}_bundle`;
@@ -409,7 +437,7 @@ export async function getStaticProps({ params }: StaticPropsParams) {
       mainImagePaths,
       associatedProductsImages,
     },
-    revalidate: 3600,
+    revalidate: 4,
   };
 }
 

@@ -47,37 +47,49 @@ const Instructions = () => {
             time not being able to afford the real deal.
           </p>
         </div>
+
         <RotWrapper>
           <div className="flex justify-center w-full mx-auto pb-12">
             <Image
-              src=""
-              className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
-              width={1920}
-              height={760}
+              src="/images/bts/sm/cs-eek-1.jpg"
+              className="max-w-none w-[785px] rounded-xl mt-8"
+              width={800}
+              height={1000}
               alt="Descriptive Alt Text"
             />
           </div>
         </RotWrapper>
+
         <div className="max-w-[295px] md:max-w-[600px] text-center mx-auto py-4 md:pt-10 text-white">
           <h1 className="text-4xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
             Introducing Cinesuit
           </h1>
-          <TooltipProvider>
-            <Tooltip>
-              <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500">
-                After one day trying to dissassemble a Sigma ART 24mm, starting
-                with the rubber ring, Tobias got an ephiphony
-              </p>
-            </Tooltip>
-          </TooltipProvider>
+          <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500">
+            After one day trying to dissassemble a Sigma ART 24mm, starting with
+            the rubber ring, Tobias got an ephiphony
+          </p>
         </div>
         <RotWrapper>
-          <div className="flex justify-center w-full mx-auto pb-12">
+          <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <Image
-              src=""
-              className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
-              width={1920}
-              height={760}
+              src="/images/bts/sm/cs24-bts1.jpg"
+              className=" rounded-xl mt-8"
+              width={800}
+              height={1000}
+              alt="Descriptive Alt Text"
+            />
+            <Image
+              src="/images/bts/sm/cs1835-bts2-1.jpg"
+              className="rounded-xl mt-8"
+              width={800}
+              height={1000}
+              alt="Descriptive Alt Text"
+            />
+            <Image
+              src="/images/bts/sm/cs1835-bts2-1.jpg"
+              className="rounded-xl mt-8"
+              width={800}
+              height={1000}
               alt="Descriptive Alt Text"
             />
           </div>
@@ -107,17 +119,36 @@ const Instructions = () => {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <RotWrapper>
-          <div className="flex justify-center w-full mx-auto pb-12">
-            <Image
-              src=""
-              className="max-w-none w-[885px] md:w-[1024px] xl:w-[1424px]"
-              width={1920}
-              height={760}
-              alt="Descriptive Alt Text"
-            />
-          </div>
-        </RotWrapper>
+        <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Image
+            src="/images/bts/sm/cs24-bts1.jpg"
+            className=" rounded-xl mt-8"
+            width={800}
+            height={1000}
+            alt="Descriptive Alt Text"
+          />
+          <Image
+            src="/images/bts/sm/cs1835-bts2-1.jpg"
+            className="rounded-xl mt-8"
+            width={800}
+            height={1000}
+            alt="Descriptive Alt Text"
+          />
+          <Image
+            src="/images/bts/sm/cs24-bts1.jpg"
+            className=" rounded-xl mt-8"
+            width={800}
+            height={1000}
+            alt="Descriptive Alt Text"
+          />
+          <Image
+            src="/images/bts/sm/cs1835-bts2-1.jpg"
+            className="rounded-xl mt-8"
+            width={800}
+            height={1000}
+            alt="Descriptive Alt Text"
+          />
+        </div>
       </div>
 
       <FooterDark />

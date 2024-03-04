@@ -6,10 +6,13 @@ import {
   ReactElement,
   ReactNode,
   ReactPortal,
+  startTransition,
   useEffect,
   useState,
 } from "react";
 import Button from "../Button";
+import Video from "next-video";
+import ShopBanner1 from "/videos/ShopBanner1.mov";
 
 interface FeaturedProductProps {
   featuredProduct: {
@@ -47,7 +50,7 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
       <div className="relative w-full py-10 bg-black border-b border-neutral-200 overflow-hidden">
         {!isMobile && (
           <video
-            src="/videos/very-wide-launch-1835-04-blur.mov"
+            src="/videos/ShopBanner1.mov"
             autoPlay
             muted
             loop

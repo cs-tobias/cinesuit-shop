@@ -7,6 +7,7 @@ export interface Product {
   id: string;
   title: string;
   description: string;
+  vendor: string;
   images: Array<{
     id: string | undefined; // Allow 'id' to be 'undefined'
     src: string;
@@ -23,6 +24,7 @@ export interface ProductProps {
   mainProduct: Product;
   associatedProducts: Product[];
   mainImagePaths: string[]; // Updated to reflect actual usage
+  smallImagePaths: string[]; // Updated to reflect actual usage
   associatedProductsImages: { id: string; images: string[] }[]; // Added this line
 }
 
