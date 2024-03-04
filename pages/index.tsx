@@ -30,15 +30,14 @@ export default function Home({ products }: HomeProps) {
       <LessExpensive />
       <SizesStandardized />
       <InstallUninstall />
-      <ShopTitle />
+      <ShopTitle />*/}
       <ShopComponent products={products} />
-  <Footer />*/}
+      <Footer />
     </>
   );
 }
 
-{
-  /*export async function getStaticProps() {
+export async function getStaticProps() {
   // Fetch all products
   const fetchedProducts = await client.product.fetchAll();
 
@@ -69,5 +68,4 @@ export default function Home({ products }: HomeProps) {
     },
     revalidate: 3600, // Optional: Revalidate at most once per hour for updates
   };
-} */
 }
