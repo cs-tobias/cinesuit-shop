@@ -22,7 +22,6 @@ export default function Home({ products }: HomeProps) {
   return (
     <>
       <ComingSoon />
-
       {/*<Navbar />
       <Hero />
       <NextStep />
