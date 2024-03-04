@@ -12,6 +12,7 @@ import ShopTitle from "../components/page-elements/ShopTitle";
 import SizesStandardized from "../components/page-elements/SizesStandardized";
 import ThinProfile from "../components/page-elements/ThinProfile";
 import UpgradeLens from "../components/page-elements/UpgradeLens";
+import ComingSoon from "@/components/page-elements/ComingSoon";
 
 interface HomeProps {
   products: Product[];
@@ -20,7 +21,9 @@ interface HomeProps {
 export default function Home({ products }: HomeProps) {
   return (
     <>
-      <Navbar />
+      <ComingSoon />
+
+      {/*<Navbar />
       <Hero />
       <NextStep />
       <UpgradeLens />
@@ -30,7 +33,7 @@ export default function Home({ products }: HomeProps) {
       <InstallUninstall />
       <ShopTitle />
       <ShopComponent products={products} />
-      <Footer />
+  <Footer />*/}
     </>
   );
 }
