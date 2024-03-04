@@ -53,7 +53,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <main className={`flex-grow ${inter.className}`}>
               <CartProvider>
                 <GoogleAnalyticsInitializer />
-                {/*<CookieBanner />*/}
+                <CookieBanner />
                 <Component {...pageProps} />
                 <SpeedInsights />
               </CartProvider>

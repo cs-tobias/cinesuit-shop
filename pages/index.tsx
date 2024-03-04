@@ -22,7 +22,7 @@ export default function Home({ products }: HomeProps) {
   return (
     <>
       <ComingSoon />
-      {/*<Navbar />
+      <Navbar />
       <Hero />
       <NextStep />
       <UpgradeLens />
@@ -30,7 +30,7 @@ export default function Home({ products }: HomeProps) {
       <LessExpensive />
       <SizesStandardized />
       <InstallUninstall />
-      <ShopTitle />*/}
+      <ShopTitle />
       <ShopComponent products={products} />
       <Footer />
     </>
