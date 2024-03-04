@@ -11,8 +11,6 @@ import {
   useState,
 } from "react";
 import Button from "../Button";
-import Video from "next-video";
-import ShopBanner1 from "/videos/ShopBanner1.mov";
 
 interface FeaturedProductProps {
   featuredProduct: {
