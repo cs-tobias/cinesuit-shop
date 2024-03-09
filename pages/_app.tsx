@@ -16,7 +16,7 @@ import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsIni
 import { pageview } from "@/utils/gtag"; // Import GA functions
 import { Toaster } from "@/components/ui/sonner";
 import { DefaultSeo } from "next-seo";
-import SEO from "../pages/next-seo.config"; // Adjust the path as necessary
+import SEO from "../next-seo.config"; // Adjust the path as necessary
 
 import "@/styles/globals.css";
 
