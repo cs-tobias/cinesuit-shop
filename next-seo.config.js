@@ -4,6 +4,7 @@ export default {
     openGraph: {
       type: 'website',
       locale: 'en_IE',
+      description: 'This is the description',
       url: 'https://www.cinesuit.com/',
       site_name: 'Cinesuit',
       images: [
