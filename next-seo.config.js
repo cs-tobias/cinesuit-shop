@@ -10,7 +10,7 @@ export default {
       site_name: 'Cinesuit',
       images: [
         {
-          url: '/opengraph-image-1.jpg',
+          url: 'https://www.cinesuit.com/opengraph-image-1.jpg',
           width: 800,
           height: 600,
           alt: 'Cinesuit Open Graph Image',
