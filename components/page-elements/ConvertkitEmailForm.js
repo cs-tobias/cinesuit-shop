@@ -21,7 +21,7 @@ class ConvertkitEmailForm extends Component {
       duration: 2000, // duration of the toast
     });
 
-    const res = await fetch('https://www.cinesuit.com/api/ConvertkitSubscribe', {
+    const res = await fetch('/api/ConvertkitSubscribe', {
       body: JSON.stringify({
         email: email,
         productTitle: productTitle, // Use the product title for tagging
