@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
@@ -13,10 +14,21 @@ import { ScrollProvider } from "@/components/contexts/ScrollContext";
 import CookieBanner from "@/components/ui/CookieBanner";
 import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsInitializer";
 import { pageview } from "@/utils/gtag"; // Import GA functions
+import { Toaster } from "@/components/ui/sonner";
 
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: "Cinesuit",
+  description:
+    "Custom lens gears for Sigma lenses, transforming your lenses into cinema lenses.",
+  verification: {
+    google:
+      "google-site-verification=uHowOxlHDGt_Xy9ojuB1p3Y0M-bSiu2WahUTGMwXIX0",
+  },
+};
 
 // Custom hook for handling GA pageview tracking
 const useGoogleAnalytics = () => {
@@ -52,9 +64,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <div className="flex flex-col min-h-screen">
             <main className={`flex-grow ${inter.className}`}>
               <CartProvider>
+                <Head>
+                  <title>{metadata.title}</title>
+                </Head>
                 <GoogleAnalyticsInitializer />
-                {/* <CookieBanner />*/}
+                <CookieBanner />
                 <Component {...pageProps} />
+                <Toaster />
                 <SpeedInsights />
               </CartProvider>
             </main>

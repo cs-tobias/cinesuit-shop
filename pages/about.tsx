@@ -49,10 +49,10 @@ const Instructions = () => {
         </div>
 
         <RotWrapper>
-          <div className="flex justify-center w-full mx-auto pb-12">
+          <div className="flex justify-center w-full mx-auto pb-12 px-6 lg:px-0">
             <Image
               src="/images/bts/sm/cs-eek-1.jpg"
-              className="max-w-none w-[785px] rounded-xl mt-8"
+              className="rounded-xl mt-8"
               width={800}
               height={1000}
               alt="Descriptive Alt Text"
@@ -73,7 +73,7 @@ const Instructions = () => {
           <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <Image
               src="/images/bts/sm/cs24-bts1.jpg"
-              className=" rounded-xl mt-8"
+              className="rounded-xl mt-8"
               width={800}
               height={1000}
               alt="Descriptive Alt Text"

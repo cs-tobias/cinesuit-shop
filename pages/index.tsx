@@ -13,16 +13,19 @@ import SizesStandardized from "../components/page-elements/SizesStandardized";
 import ThinProfile from "../components/page-elements/ThinProfile";
 import UpgradeLens from "../components/page-elements/UpgradeLens";
 import ComingSoon from "@/components/page-elements/ComingSoon";
+import { title } from "process";
 
 interface HomeProps {
   products: Product[];
 }
 
+export const metadata = {
+  title: "Cinesuit",
+};
+
 export default function Home({ products }: HomeProps) {
   return (
     <>
-      <ComingSoon />
-      {/* <ComingSoon />
       <Navbar />
       <Hero />
       <NextStep />
@@ -34,7 +37,6 @@ export default function Home({ products }: HomeProps) {
       <ShopTitle />
       <ShopComponent products={products} />
       <Footer />
-      */}
     </>
   );
 }

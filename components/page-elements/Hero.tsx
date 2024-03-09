@@ -68,7 +68,7 @@ const Hero = () => {
         onLoadedData={() => setIsLoaded(true)}
       >
         <div
-          className="absolute -mt-5 md:-mt-0 left-1/2"
+          className="absolute -mt-5 md:-mt-0 left-1/2 no-select"
           style={{
             top: `calc(${titleHeight}px + ${paddingTop}px)`,
             height: `${imageDimensions.height}px`,

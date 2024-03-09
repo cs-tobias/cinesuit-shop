@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   JSXElementConstructor,
   Key,
@@ -46,46 +47,24 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
   return (
     <>
       <div className="relative w-full py-10 bg-black border-b border-neutral-200 overflow-hidden">
-        {!isMobile && (
-          <video
-            src="/videos/ShopBanner1.mov"
-            autoPlay
-            muted
-            loop
-            className={`absolute top-0 left-1/2 transform -translate-x-1/2 min-h-full min-w-full object-cover ${
-              isLoaded ? "animate-fadeIn" : ""
-            }`}
-          ></video>
-        )}
+        <Image
+          src="/images/featured-sm-013.jpg"
+          alt="featured product image"
+          layout="fill"
+          objectFit="cover" // This makes the image cover the available space
+          className={`w-[400px] mx-auto ${isLoaded ? "animate-fadeIn" : ""}`}
+        />
+        {/* Overlay with blur */}
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-md"></div>
 
         {/* Text Content */}
-        <div className="relative z-10 max-w-[375px] md:max-w-[600px] text-center mx-auto pt-16 pb-4 text-white">
+        <div className="relative z-10 max-w-[375px] md:max-w-[600px] text-center mx-auto pt-14 text-white">
           {featuredProduct.productType === "new" && (
             <div className="text-white text-xl">Available Now</div>
           )}
+
           <h1 className="text-5xl md:text-7xl tracking-tighter leading-11 font-semibold mt-2 mb-6">
-            {featuredProduct.title
-              .split(" ")
-              .slice(0, 4)
-              .map(
-                (
-                  word:
-                    | string
-                    | number
-                    | boolean
-                    | ReactElement<any, string | JSXElementConstructor<any>>
-                    | Iterable<ReactNode>
-                    | ReactPortal
-                    | PromiseLikeOfReactNode
-                    | null
-                    | undefined,
-                  index: Key | null | undefined
-                ) => (
-                  <span key={index}>
-                    {word} {index === 1 ? <br /> : " "}
-                  </span>
-                )
-              )}
+            Cinesuit for <br /> Sigma 18-35
           </h1>
           <div className="text-center my-3">
             <Link href={`/shop/${featuredProduct.handle}`}>

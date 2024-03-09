@@ -11,6 +11,11 @@ interface LightboxProps {
   setSelectedIndex: (index: number) => void; // New prop to update the index
 }
 
+interface AnimatedImageProps {
+  src: string;
+  alt: string;
+}
+
 const Lightbox: React.FC<LightboxProps> = ({
   images,
   isOpen,
@@ -19,6 +24,28 @@ const Lightbox: React.FC<LightboxProps> = ({
   setSelectedIndex,
 }) => {
   // Use the passed `selectedIndex` and `setSelectedIndex` directly without internal state
+  const AnimatedImage: React.FC<AnimatedImageProps> = ({ src, alt }) => {
+    return (
+      <motion.div
+        key={src}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      >
+        <div style={{ scale: 0.75 }} className="transform scale-75">
+          <Image
+            src={src}
+            alt={alt}
+            width={1237}
+            height={1524}
+            layout="intrinsic"
+          />
+        </div>
+      </motion.div>
+    );
+  };
 
   const navigate = useCallback(
     (direction: "next" | "prev") => {
@@ -82,14 +109,15 @@ const Lightbox: React.FC<LightboxProps> = ({
 
             {/* Image container */}
             <div className="no-select flex flex-col items-center justify-center z-30">
-              <Image
-                src={images[selectedIndex]}
-                alt={`Image ${selectedIndex + 1}`}
-                layout="responsive"
-                width={1237}
-                height={1524}
-                className="w-auto mx-auto max-h-[1000px] mb-6"
-              />
+              <div className="">
+                <AnimatePresence>
+                  <AnimatedImage
+                    key={images[selectedIndex]} // Ensure this key changes to trigger animations
+                    src={images[selectedIndex]}
+                    alt={`Image ${selectedIndex + 1}`}
+                  />
+                </AnimatePresence>
+              </div>
 
               {/* Indicators */}
               <div className="hidden absolute bottom-8 md:flex justify-center p-4 mt-10">

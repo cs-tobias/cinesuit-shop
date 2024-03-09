@@ -3,6 +3,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ConvertkitEmailForm from "@/components/page-elements/ConvertkitEmailForm";
 
 import FooterDark from "@/components/page-elements/FooterDark";
 import Navbar from "@/components/ui/Navbar";
@@ -28,6 +29,11 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
     path.replace(`/images/${product.handle}/`, `/images/${product.handle}/lg/`)
   );
 
+  const isMediumScreenOrLarger = () => {
+    // Tailwind's 'md' breakpoint is 768px. Adjust if your theme customizes this value.
+    return window.innerWidth >= 768;
+  };
+
   const openLightbox = (index: number) => {
     setSelectedImageIndex(index);
     setIsLightboxOpen(true);
@@ -40,32 +46,36 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
   return (
     <div>
       <Navbar />
-      <div className="bg-black w-full min-h-screen pt-10 text-white">
+      <div
+        className="bg-black
+       w-full min-h-screen pt-10 text-white"
+      >
         <div className="max-w-[295px] md:max-w-[600px] mx-auto py-4 md:py-10 text-center">
           <h1 className="text-6xl md:text-7xl font-semibold tracking-tight leading-11 pt-7 mb-8">
             {product.title}
           </h1>
           <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500 mb-4">
-            Decide which Cinesuits are released next by choosing from the poll
-            on our Facebook page.
+            Show us which lenses you want support for by joining our
+            waitinglist.{" "}
+            <span className="text-neutral-200">
+              Your choices directly determine what we make next!
+            </span>
           </p>
-          <div className="flex justify-center pt-2 pb-4 gap-4">
-            <Link href="https://www.facebook.com" passHref>
-              <Button
-                size="large"
-                className="flex bg-neutral-300 hover:bg-white transition-colors duration-300 text-black font-normal"
-              >
-                Request Lenses on Facebook
-              </Button>
-            </Link>
+          <div className="mt-4">
+            <ConvertkitEmailForm productTitle={product.title} />
           </div>
         </div>
+
         <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {imagePaths.map((src, index) => (
             <div
               key={index}
-              className="cursor-pointer"
-              onClick={() => openLightbox(index)}
+              className="md:cursor-pointer"
+              onClick={() => {
+                if (isMediumScreenOrLarger()) {
+                  openLightbox(index);
+                }
+              }}
             >
               <Image
                 src={src}

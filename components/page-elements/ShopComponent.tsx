@@ -28,7 +28,7 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                   width={400}
                   height={300}
                   className={`${
-                    product.productType === "unreleased" ? "opacity-75" : ""
+                    product.productType === "unreleased" ? "opacity-95" : ""
                   } mx-auto`}
                   priority
                 />
@@ -85,13 +85,17 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                   </div>
                 )}
                 <div className="font-semibold">
-                  <p className="text-sm leading-5 text-neutral-600">
-                    {product.availableForSale ? (
-                      <>In Stock</>
+                  <div className="text-sm leading-5 text-neutral-600">
+                    {product.productType === "unreleased" ? (
+                      <p className="text-neutral-500 font-medium px-1 mt-2 -mb-2">
+                        Coming Soon
+                      </p>
                     ) : (
-                      <>Coming Soon</>
+                      <p className="text-neutral-800 font-medium px-1 mt-2 -mb-2">
+                        In Stock
+                      </p>
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

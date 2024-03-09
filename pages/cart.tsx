@@ -140,15 +140,21 @@ const CartPage = () => {
                   priority
                 />
               </div>
-              <h1 className="md:hidden text-2xl md:text-3xl font-medium tracking-tight">
+              <Link
+                href={"/shop/cinesuit-for-sigma-1835"}
+                className="md:hidden text-2xl md:text-3xl font-medium tracking-tight hover:cursor-pointer"
+              >
                 {item.product.title}
-              </h1>
+              </Link>
               <section className="flex w-full pt-4">
                 <div className="md:w-56"></div>
                 <div className="lg:w-3/5 max-w-sm">
-                  <h1 className="hidden md:block text-2xl md:text-3xl font-medium tracking-tight">
+                  <Link
+                    href={"/shop/cinesuit-for-sigma-1835"}
+                    className="hidden md:block text-2xl md:text-3xl font-medium tracking-tight hover:cursor-pointer"
+                  >
                     {item.product.title}
-                  </h1>
+                  </Link>
                 </div>
 
                 <div className="absolute -translate-y-3 hidden md:block">

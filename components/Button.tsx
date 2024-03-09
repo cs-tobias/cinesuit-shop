@@ -31,8 +31,8 @@ const Button = ({
   return (
     <button
       className={`font-light rounded-full ${sizeClasses} ${className}`}
-      onClick={onClick} // Attach the onClick event handler
-      disabled={disabled} // Apply the disabled prop to the button element
+      onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

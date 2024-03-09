@@ -11,6 +11,11 @@ interface LightboxDarkProps {
   setSelectedIndex: (index: number) => void;
 }
 
+interface AnimatedImageProps {
+  src: string;
+  alt: string;
+}
+
 const LightboxDark: React.FC<LightboxDarkProps> = ({
   images,
   isOpen,
@@ -18,6 +23,21 @@ const LightboxDark: React.FC<LightboxDarkProps> = ({
   selectedIndex,
   setSelectedIndex,
 }) => {
+  // Use the passed `selectedIndex` and `setSelectedIndex` directly without internal state
+  const AnimatedImage: React.FC<AnimatedImageProps> = ({ src, alt }) => {
+    return (
+      <motion.div
+        key={src} // Key is important for AnimatePresence to detect changes
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }} // Adjust the duration as needed
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      >
+        <Image src={src} alt={alt} width={1920} height={1080} />
+      </motion.div>
+    );
+  };
   const [imageSrc, setImageSrc] = useState("");
 
   const navigate = useCallback(
@@ -89,14 +109,13 @@ const LightboxDark: React.FC<LightboxDarkProps> = ({
             {/* Image container */}
             <div className="no-select flex flex-col items-center justify-center z-30">
               {/* Image */}
-              <Image
-                src={imageSrc}
-                alt={`Image ${selectedIndex + 1}`}
-                layout="fill"
-                objectFit="contain"
-                className="p-36"
-                onError={handleError}
-              />
+              <AnimatePresence>
+                <AnimatedImage
+                  key={images[selectedIndex]} // Ensure this key changes to trigger animations
+                  src={images[selectedIndex]}
+                  alt={`Image ${selectedIndex + 1}`}
+                />
+              </AnimatePresence>
 
               {/* Indicators */}
               <div className="hidden absolute bottom-8 md:flex justify-center p-4 mt-10">

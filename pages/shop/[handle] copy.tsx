@@ -8,10 +8,9 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { useCart } from "../../components/contexts/CartContext";
+import Footer from "../../components/page-elements/Footer";
 import Lightbox from "../../components/ui/Lightbox";
 import NavbarLight from "../../components/ui/NavbarLight";
-import RestockNotificationForm from "@/components/page-elements/RestockNotificationForm";
-import Footer from "@/components/page-elements/Footer";
 import {
   Accordion,
   AccordionContent,
@@ -24,6 +23,7 @@ interface StaticPropsParams {
     handle: string;
   };
 }
+
 const Product = ({
   mainProduct,
   associatedProducts,
@@ -39,8 +39,6 @@ const Product = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { addToCart } = useCart();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [imageLoading, setImageLoading] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -56,14 +54,10 @@ const Product = ({
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
     console.log("Selected Product:", product); // Log the selected product data
-    setIsTransitioning(true); // Start transition
-    const newImagePath = `/images/${product.handle}/image0.png`;
 
-    // Use a timeout to simulate the fade-out effect
-    setTimeout(() => {
-      setCurrentImagePath(newImagePath);
-      setIsTransitioning(false); // End transition
-    }, 300); // Adjust the timeout to match your CSS transition duration
+    const newImagePath = `/images/${product.handle}/image0.png`;
+    console.log(newImagePath);
+    setCurrentImagePath(newImagePath);
   };
   const router = useRouter();
 
@@ -103,27 +97,21 @@ const Product = ({
             className="rounded-xl hidden lg:block"
             style={{
               position: "sticky",
-              top: "130px",
-              height: "calc(80vh - 20px)",
+              top: "180px",
+              height: "calc(70vh - 5px)",
             }}
           >
-            <div
-              className={`
- ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-              style={{ transition: "opacity 0.5s ease-in-out" }}
-            >
-              <Image
-                src={currentImagePath}
-                alt={`Product Image ${selectedIndex}`}
-                width={1237}
-                height={1524}
-                layout="fixed"
-                className="hidden md:block w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
-                onClick={openLightbox}
-                loading="eager"
-                priority
-              />
-            </div>
+            <Image
+              src={currentImagePath}
+              alt={`Product Image ${selectedIndex}`}
+              width={1237}
+              height={1524}
+              layout="fixed"
+              className="hidden md:block w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
+              onClick={openLightbox}
+              loading="eager"
+              priority
+            />
             <p
               onClick={openLightbox}
               className="mt-6 text-lg flex justify-center mx-auto text-neutral-600 hover:text-black hover:cursor-pointer transition duration-300 rounded"
@@ -144,7 +132,7 @@ const Product = ({
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
           />
-          <div className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-28 ml-auto lg:max-w-[80%]">
+          <div className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-32 ml-auto lg:max-w-[80%]">
             {mainProduct.productType === "new" && (
               <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
                 New
@@ -162,22 +150,19 @@ const Product = ({
                   </React.Fragment>
                 ))}
             </div>
-            <div
-              className={`lg:hidden rotate-90 -my-8 md:-my-20 px-6
- ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-              style={{ transition: "opacity 0.5s ease-in-out" }}
-            >
-              <Image
-                src={currentImagePath}
-                alt={`Product Image ${selectedIndex}`}
-                width={600}
-                height={300}
-                layout="fixed"
-                className="flip-vertical mx-auto hover:cursor-pointer no-select"
-                loading="eager"
-              />
+            <div className="lg:hidden py-3">
+              {smallImagePaths &&
+                smallImagePaths.length > 0 &&
+                smallImagePaths[selectedIndex] && (
+                  <Image
+                    src={smallImagePaths[selectedIndex]}
+                    alt={`Product Image ${selectedIndex}`}
+                    width={1200}
+                    height={500}
+                    className="mx-auto rounded-2xl"
+                  />
+                )}
             </div>
-
             <p className="hidden md:block mb-8 text-lg lg:text-xl font-medium leading-7 text-neutral-500">
               {(() => {
                 const words = mainProduct.description.split(" ");
@@ -194,7 +179,6 @@ const Product = ({
                 );
               })()}
             </p>
-
             <p className="mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
               Configure your Cinesuit
             </p>
@@ -251,7 +235,9 @@ const Product = ({
                         : "text-neutral-700 text-lg md:text-xl"
                     }
                   >
-                    {selectedProduct?.availableForSale ? "Total" : ""}
+                    {selectedProduct?.availableForSale
+                      ? "Total"
+                      : "Expected back in stock by May 5th!"}
                   </p>
                 </div>
                 {selectedProduct?.availableForSale ? (
@@ -273,16 +259,16 @@ const Product = ({
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex flex-col w-full items-center gap-2 mt-2">
-                    <p className="text-lg md:text-lg font-medium leading-11 text-neutral-500 mb-2">
-                      <span className="text-black">Were out of stock!</span>{" "}
-                      Sign up for notifications to get notified when its back in
-                      stock and to help us learn how many people are interested!
-                    </p>
-                    <RestockNotificationForm />
-                  </div>
+                  <Button
+                    size="large"
+                    disabled={true}
+                    className="text-neutral-500 bg-neutral-100 border-[1px] border-neutral-500 rounded-2xl px-12"
+                  >
+                    Out of Stock
+                  </Button>
                 )}
               </div>
+
               <div className="py-2">
                 <div className="w-full h-[1px] bg-neutral-300"></div>
               </div>
@@ -451,7 +437,7 @@ export async function getStaticProps({ params }: StaticPropsParams) {
       mainImagePaths,
       associatedProductsImages,
     },
-    revalidate: 2,
+    revalidate: 4,
   };
 }
 
