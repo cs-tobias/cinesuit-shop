@@ -15,6 +15,8 @@ import CookieBanner from "@/components/ui/CookieBanner";
 import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsInitializer";
 import { pageview } from "@/utils/gtag"; // Import GA functions
 import { Toaster } from "@/components/ui/sonner";
+import { DefaultSeo } from "next-seo";
+import SEO from "../pages/next-seo.config"; // Adjust the path as necessary
 
 import "@/styles/globals.css";
 
@@ -64,9 +66,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <div className="flex flex-col min-h-screen">
             <main className={`flex-grow ${inter.className}`}>
               <CartProvider>
-                <Head>
-                  <title>{metadata.title}</title>
-                </Head>
+                <DefaultSeo {...SEO} />
                 <GoogleAnalyticsInitializer />
                 <CookieBanner />
                 <Component {...pageProps} />
