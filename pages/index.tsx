@@ -1,7 +1,6 @@
 // index.tsx
 import { Product } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
-import Navbar from "../components/ui/Navbar";
 import Footer from "../components/page-elements/Footer";
 import Hero from "../components/page-elements/Hero";
 import InstallUninstall from "../components/page-elements/InstallUninstall";
@@ -12,8 +11,7 @@ import ShopTitle from "../components/page-elements/ShopTitle";
 import SizesStandardized from "../components/page-elements/SizesStandardized";
 import ThinProfile from "../components/page-elements/ThinProfile";
 import UpgradeLens from "../components/page-elements/UpgradeLens";
-import ComingSoon from "@/components/page-elements/ComingSoon";
-import { title } from "process";
+import Navbar from "../components/ui/Navbar";
 
 interface HomeProps {
   products: Product[];
@@ -70,6 +68,6 @@ export async function getStaticProps() {
     props: {
       products: JSON.parse(JSON.stringify(products)),
     },
-    revalidate: 2, // Optional: Revalidate at most once per hour for updates
+    revalidate: 24, // Optional: Revalidate at most once per hour for updates
   };
 }
