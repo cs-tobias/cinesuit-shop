@@ -32,9 +32,18 @@ const LightboxDark: React.FC<LightboxDarkProps> = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }} // Adjust the duration as needed
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        className="absolute inset-0 flex items-center justify-center rounded-xl" // Use padding to prevent image from touching the viewport edges
+        style={{ maxHeight: "100vh" }} // Prevent the image from being taller than the viewport
       >
-        <Image src={src} alt={alt} width={1920} height={1080} />
+        <div className="flex max-w-full max-h-full">
+          <Image
+            src={src}
+            alt={alt}
+            width={1920}
+            height={1080}
+            className="rounded-xl"
+          />
+        </div>
       </motion.div>
     );
   };

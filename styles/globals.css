@@ -246,51 +246,6 @@
 }
 
 
-
-
-
-
-
-/* Wrapper for the entire carousel */
-.carousel-wrapper {
-  @apply sticky top-0 z-10 w-full h-screen flex justify-center items-center overflow-hidden;
-  
-}
-
-/* Container for the carousel, positioning it in the center */
-.carousel-center {
-  @apply relative w-[750px] h-[70vh];
-
-}
-
-
-/* Container for each carousel item */
-.carousel-item {
-  @apply absolute w-full h-[70vh] flex items-center justify-center transition-all duration-700 ease-in-out;
-  backface-visibility: hidden; /* For smoother 3D transitions */
- 
-}
-
-
-
-
-
-/* Styles for the navigation buttons */
-.carousel-btn {
-  @apply  h-9 w-9 cursor-pointer items-center rounded-full border-2 bg-neutral-50 text-2xl opacity-50 transition duration-300 hover:opacity-75 md:h-12 md:w-12;
-}
-
-/* Positioning for the right navigation button */
-.carousel-btn-switch-card-right {
-  @apply absolute top-1/2 -translate-x-[100%] -translate-y-1/2 -left-4;
-}
-
-/* Positioning for the left navigation button */
-.carousel-btn-switch-card-left {
-  @apply absolute top-1/2 translate-x-[100%] -translate-y-1/2 -scale-x-100 -right-4;
-}
-
-
 /* Custom CSS for gradient overlay */
 .gradient-overlay::after {
   content: '';
@@ -348,6 +303,17 @@
   list-style-type: disc;
   margin-left: 20px;
 }
+
+
+.ulcustom {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.licustom {
+  margin-bottom: 5px;
+}
+
 
 .ulpolicy .lipolicy {
   margin-bottom: 5px;

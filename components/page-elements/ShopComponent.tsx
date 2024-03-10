@@ -7,7 +7,7 @@ import Link from "next/link";
 const ShopComponent = ({ products }: { products: Product[] }) => {
   return (
     <>
-      <div className="bg-neutral-50 text-black flex flex-col pt-6 pb-20">
+      <div className="bg-neutral-50 text-black flex flex-col pt-6 pb-6">
         <div className="container max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
           {products.map((product) => (
             <div

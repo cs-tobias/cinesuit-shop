@@ -12,6 +12,7 @@ import SizesStandardized from "../components/page-elements/SizesStandardized";
 import ThinProfile from "../components/page-elements/ThinProfile";
 import UpgradeLens from "../components/page-elements/UpgradeLens";
 import Navbar from "../components/ui/Navbar";
+import RequestLenses from "@/components/page-elements/RequestLenses";
 
 interface HomeProps {
   products: Product[];
@@ -34,6 +35,7 @@ export default function Home({ products }: HomeProps) {
       <InstallUninstall />
       <ShopTitle />
       <ShopComponent products={products} />
+      <RequestLenses />
       <Footer />
     </>
   );

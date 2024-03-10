@@ -1,3 +1,4 @@
+//ConvertkitEmailForm.js
 import React, { Component } from 'react';
 import { toast } from "sonner"
 
@@ -12,19 +13,17 @@ class ConvertkitEmailForm extends Component {
   };
 
   subscribeUser = async (e) => {
-    e.preventDefault(); // Prevent the form from submitting in the traditional way
+    e.preventDefault();
     const { email } = this.state;
-    const { productTitle } = this.props; // Assuming productTitle is passed as a prop for tagging purpose
-
-    // Show toast here for immediate feedback upon clicking Submit
+    const { productTitle } = this.props;
     toast.success('Signing you up...', {
-      duration: 2000, // duration of the toast
+      duration: 2000,
     });
 
     const res = await fetch('/api/ConvertkitSubscribe', {
       body: JSON.stringify({
         email: email,
-        productTitle: productTitle, // Use the product title for tagging
+        productTitle: productTitle,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       method: 'POST',
@@ -34,7 +33,7 @@ class ConvertkitEmailForm extends Component {
 
     if (res.ok) {
       // Show success message
-      toast.success('Successfully signed up!');
+      toast.success('Successfully signed up! Check your email for verification.');
     } else {
       // Show error message
       toast.error('There was a problem with your signup.');
@@ -63,7 +62,7 @@ class ConvertkitEmailForm extends Component {
           />
         </div>
 
-        <div className="">
+        <div>
           <button
             id="newsletter-btn"
             type="submit"

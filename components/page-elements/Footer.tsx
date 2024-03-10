@@ -12,8 +12,8 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
           <div>
             <div className="text-center mb-4 text-sm">
               <p>
-                <span className="font-semibold">Questions?</span> Send an email
-                to{" "}
+                <span className="font-semibold">Questions?</span> Send us an
+                email at{" "}
                 <a
                   href={`mailto:${contactEmail}`}
                   className="underline hover:cursor-pointer hover:text-black transition-colors"

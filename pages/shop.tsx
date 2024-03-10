@@ -9,6 +9,7 @@ import FeaturedProduct from "../components/page-elements/FeaturedProduct";
 import Footer from "../components/page-elements/Footer";
 import ShopTitle2 from "../components/page-elements/ShopTitle2";
 import { NextSeo } from "next-seo";
+import RequestLenses from "@/components/page-elements/RequestLenses";
 
 interface ShopProps {
   featuredProduct: Product;
@@ -51,6 +52,7 @@ export default function Shop({ featuredProduct, products }: ShopProps) {
       <div className="w-full h-10 md:hidden"></div>
       <ShopTitle2 ref={shopTitle2Ref} />
       <ShopComponent products={products} />
+      <RequestLenses />
       <Footer />
     </>
   );

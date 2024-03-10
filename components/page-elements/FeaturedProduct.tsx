@@ -51,16 +51,13 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
           src="/images/featured-sm-013.jpg"
           alt="featured product image"
           layout="fill"
-          objectFit="cover" // This makes the image cover the available space
+          objectFit="cover"
           className={`w-[400px] mx-auto ${isLoaded ? "animate-fadeIn" : ""}`}
         />
-        {/* Overlay with blur */}
         <div className="absolute inset-0 bg-black/30 backdrop-blur-md"></div>
-
-        {/* Text Content */}
         <div className="relative z-10 max-w-[375px] md:max-w-[600px] text-center mx-auto pt-14 text-white">
           {featuredProduct.productType === "new" && (
-            <div className="text-white text-xl">Available Now</div>
+            <h5 className="text-white text-xl">Available Now</h5>
           )}
 
           <h1 className="text-5xl md:text-7xl tracking-tighter leading-11 font-semibold mt-2 mb-6">

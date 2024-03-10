@@ -1,3 +1,4 @@
+//ConvertkitSubscribe.js
 const API_KEY = process.env.CONVERTKIT_API_KEY;
 const FORM_ID_1 = process.env.CONVERTKIT_FORM_ID_1;
 const BASE_URL = 'https://api.convertkit.com/v3';
@@ -11,8 +12,6 @@ async function getTagIdByTitle(productTitle) {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
   });
   const tagsData = await tagsResponse.json();
-  // Assuming a naming convention "Product-{handle}"
-  // Adjust this logic based on your actual naming convention in ConvertKit
   const tag = tagsData.tags.find(tag => tag.name === `${productTitle}`);
   return tag ? tag.id : null;
 }
@@ -31,7 +30,6 @@ async function convertkitSubscribeHandler(req, res) {
   }
 
   try {
-    // Subscribe the user to the form/list
     const subscribeData = {
       api_key: API_KEY,
       email: email,
@@ -47,8 +45,6 @@ async function convertkitSubscribeHandler(req, res) {
     if (!subscribeResponse.ok) {
       return res.status(500).json({ message: error_message });
     }
-
-    // Then, apply the tag to the subscriber
     const taggingData = {
       api_key: API_KEY,
       email: email,

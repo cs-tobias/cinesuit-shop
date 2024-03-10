@@ -72,7 +72,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
                         width: "100%",
                         height: "100%",
                       }}
-                      src="https://www.youtube.com/embed/qNAEtyBosbM"
+                      src="https://www.youtube.com/embed/ZWTzXrTRhE8"
                       frameBorder="0"
                       allowFullScreen
                       title="Embedded youtube"
@@ -86,73 +86,103 @@ const Instructions: React.FC = (products, featuredProduct) => {
         </RotWrapper>
       </div>
 
-      <div className="bg-black w-full">
-        <div className="max-w-[295px] md:max-w-[600px] text-center  mx-auto py-4 md:py-10 text-white">
+      <div className="bg-black w-full text-xl font-medium leading-11 text-neutral-400">
+        <div className="max-w-[295px] md:max-w-[600px] mx-auto py-4 md:py-10">
           <TextWrapper>
-            <h1 className="text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
+            <h1 className="text-white text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
               Written Guide
             </h1>
           </TextWrapper>
           <TextWrapper>
-            <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500 pb-2">
-              <span className="text-white">
-                Make sure you have all nessecary components.
-              </span>{" "}
-              Your Simga ART lens, Cinesuit rings, screws, screwdriver and the
-              rubber removal tool.
+            <p className="text-xl md:text-2xl leading-11 pb-2">
+              First, gather everything you need: your Sigma ART lens, the
+              Cinesuit rings, screws, a screwdriver, and the rubber removal
+              tool.
             </p>
           </TextWrapper>
           <TextWrapper>
-            <h1 className="text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-14">
-              1. Remove rubber ring(s)
+            <h1 className="text-white text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-14 mb-4">
+              1. Removing the Rubber Ring
             </h1>
           </TextWrapper>
           <TextWrapper>
-            <p className="my-4 text-xl md:text-xl font-medium leading-11 text-neutral-500">
-              Get your lens and identify the rubber ring. Use your finger to
-              slightly lift up the edge of the rubber ring, then slide the
-              rubber removal tool underneath. This gives room for you to put
-              your finger(s) under the rubber ring and to pull it down. Pull a
-              little on one side, then repeat the process, little by little, all
-              around the lens. Once its taken off, make sure to store it in a
-              clean and safe place where you wont loose it in case you want to
-              revert back to original.
-            </p>
+            <ul className="ulcustom">
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Locate the rubber ring on your lens.
+                </span>{" "}
+                Gently lift the edge with your finger/nail.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Use the rubber removal tool
+                </span>{" "}
+                to slide under the lifted edge. This makes space for your
+                fingers.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">Peel the ring off</span>{" "}
+                gradually, working around the lens. Go bit by bit until
+                it&apos;s completely removed.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">Keep the ring safe</span> in
+                a clean spot in case you want to switch back later.
+              </li>
+            </ul>
           </TextWrapper>
+
           <TextWrapper>
-            <h1 className="text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-8">
-              2. Slide on Cinesuit
+            <h1 className="text-white text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-6 mb-4">
+              2. Attaching the Cinesuit
             </h1>
           </TextWrapper>
           <TextWrapper>
-            <p className="my-4 text-xl md:text-xl font-medium leading-11 text-neutral-500">
-              Start with one of the Cinesuit half rings. Line it up with the
-              grouve in the lens, and push it onto the lens. Next, do the same
-              for the other side, but make sure to go slowly, as to not to
-              scratch your lens. Cinesuit rings are metal and can easily scratch
-              the metal part of your lens.
-            </p>
+            <ul className="ulcustom">
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Position a Cinesuit half-ring
+                </span>{" "}
+                against the groove on your lens and press it on.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Carefully place the second half
+                </span>{" "}
+                on the other side. Move slowly to avoid scratches; the rings are
+                metal and could mark your lens.
+              </li>
+            </ul>
           </TextWrapper>
+
           <TextWrapper>
-            <h1 className="text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-8">
-              3. Insert the screws
+            <h1 className="text-white text-3xl md:text-3xl tracking-tight leading-11 font-semibold pt-6 mb-4">
+              3. Securing with Screws
             </h1>
           </TextWrapper>
           <TextWrapper>
-            <p className="my-4 text-xl md:text-xl font-medium leading-11 text-neutral-500">
-              Lastly, Insert the screws. Insert the first screw and secure it.
-              Next, lightly squeeze the two half-rings together in order to
-              insert and secure the next screw. A little pressure is nessecary,
-              but careful not to damage your lens.
-            </p>
+            <ul className="ulcustom">
+              <li className="licustom">
+                <span className="text-neutral-200">Start with one screw</span>,
+                fitting and tightening it first.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Gently bring the two halves together
+                </span>{" "}
+                to fit the next screw. A bit of pressure is needed, but be
+                gentle to avoid lens damage.
+              </li>
+            </ul>
           </TextWrapper>
+
           <TextWrapper>
-            <h1 className="text-6xl md:text-5xl tracking-tight leading-11 font-semibold pt-7 mb-8">
-              — And thats it.
+            <h1 className="text-white text-6xl md:text-5xl tracking-tight pt-7 mb-8">
+              — And you&apos;re done!
             </h1>
           </TextWrapper>
           <TextWrapper>
-            <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-50 pb-2">
+            <p className="text-white text-xl md:text-2xl pb-2">
               Enjoy your new compact cinema lens!
             </p>
           </TextWrapper>
