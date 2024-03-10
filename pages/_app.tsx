@@ -1,36 +1,26 @@
-import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import type { AppProps } from "next/app";
-import { Inter } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+//_app.tsx
+import { CartProvider } from "@/components/contexts/CartContext";
 import {
   ConsentProvider,
   useConsent,
 } from "@/components/contexts/ConsentContext";
 import ErrorBoundary from "@/components/contexts/ErrorBoundary";
-import { CartProvider } from "@/components/contexts/CartContext";
+import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsInitializer";
 import { ScrollProvider } from "@/components/contexts/ScrollContext";
 import CookieBanner from "@/components/ui/CookieBanner";
-import GoogleAnalyticsInitializer from "@/components/contexts/GoogleAnalyticsInitializer";
-import { pageview } from "@/utils/gtag"; // Import GA functions
 import { Toaster } from "@/components/ui/sonner";
+import { pageview } from "@/utils/gtag"; // Import GA functions
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { DefaultSeo } from "next-seo";
+import type { AppProps } from "next/app";
+import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import SEO from "../next-seo.config"; // Adjust the path as necessary
 
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Cinesuit",
-  description:
-    "Custom lens gears for Sigma lenses, transforming your lenses into cinema lenses.",
-  verification: {
-    google:
-      "google-site-verification=uHowOxlHDGt_Xy9ojuB1p3Y0M-bSiu2WahUTGMwXIX0",
-  },
-};
 
 // Custom hook for handling GA pageview tracking
 const useGoogleAnalytics = () => {

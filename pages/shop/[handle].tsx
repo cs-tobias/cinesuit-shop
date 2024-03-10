@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
+import { NextSeo } from "next-seo";
 
 interface StaticPropsParams {
   params: {
@@ -95,6 +96,7 @@ const Product = ({
 
   return (
     <>
+      <NextSeo title={`${mainProduct.title}`} />
       <NavbarLight />
       <div className="bg-neutral-100 w-full min-h-screen ">
         <div className="container mx-auto flex flex-col md:flex-row items-start md:items-stretch">
@@ -451,7 +453,7 @@ export async function getStaticProps({ params }: StaticPropsParams) {
       mainImagePaths,
       associatedProductsImages,
     },
-    revalidate: 2,
+    revalidate: 3600,
   };
 }
 

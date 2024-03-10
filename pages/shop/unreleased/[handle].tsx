@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import LightboxDark from "@/components/ui/LightboxDark";
 import { client } from "@/utils/shopifyClient";
 import { Product } from "@/types/Types";
+import { NextSeo } from "next-seo";
 
 interface UnreleasedProductPageProps {
   product: Product;
@@ -45,6 +46,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
 
   return (
     <div>
+      <NextSeo title={`${product.title}`} />
       <Navbar />
       <div
         className="bg-black

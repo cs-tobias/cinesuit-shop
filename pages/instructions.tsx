@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import FooterDark from "../components/page-elements/FooterDark";
 import Navbar from "../components/ui/Navbar";
 import RotWrapper from "../components/animations/RotWrapper";
+import { NextSeo } from "next-seo";
 
 const TextWrapper = dynamic(
   () => import("../components/animations/TextWrapper"),
@@ -33,6 +34,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
 
   return (
     <>
+      <NextSeo title="Cinesuit - Instructions" />
       <Navbar />
       <div className="bg-black w-full pb-16 pt-16">
         <div className="max-w-[295px] md:max-w-[600px] text-center  mx-auto py-4 md:py-10 text-white">

@@ -8,6 +8,7 @@ import NavbarLight from "../components/ui/NavbarLight";
 import FeaturedProduct from "../components/page-elements/FeaturedProduct";
 import Footer from "../components/page-elements/Footer";
 import ShopTitle2 from "../components/page-elements/ShopTitle2";
+import { NextSeo } from "next-seo";
 
 interface ShopProps {
   featuredProduct: Product;
@@ -42,6 +43,7 @@ export default function Shop({ featuredProduct, products }: ShopProps) {
 
   return (
     <>
+      <NextSeo title="Cinesuit - Shop" />
       {isLightNavbar || isMobileView ? <NavbarLight /> : <Navbar />}
       <div className="hidden md:block">
         <FeaturedProduct featuredProduct={featuredProduct} />

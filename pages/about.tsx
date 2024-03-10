@@ -9,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { NextSeo } from "next-seo";
 
 const TextWrapper = dynamic(
   () => import("../components/animations/TextWrapper"),
@@ -32,6 +33,7 @@ const RotWrapper = dynamic(
 const Instructions = () => {
   return (
     <>
+      <NextSeo title="Cinesuit - About" />
       <Navbar />
       <div className="bg-black w-full pb-16 pt-16">
         <div className="max-w-[295px] md:max-w-[600px] text-center mx-auto py-4 md:pt-10 text-white">

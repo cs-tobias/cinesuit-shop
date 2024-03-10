@@ -28,6 +28,7 @@ import {
 } from "../components/ui/accordionCustom";
 import { Separator } from "../components/ui/separator";
 import Footer from "../components/page-elements/Footer";
+import { NextSeo } from "next-seo";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, redirectToCheckout } =
@@ -113,6 +114,7 @@ const CartPage = () => {
   return (
     <>
       <NavbarLight />
+      <NextSeo title="Cinesuit - Cart" />
       <div className="lg:w-full md:min-h-screen pb-10 md:pb-0 bg-neutral-50">
         <div className="mx-auto container  tracking-tight lg:max-w-5xl lg:px-6">
           <section className="pt-24 md:pt-28 md:pb-12 flex-col">
