@@ -89,14 +89,12 @@ const NextStep = () => {
           </h1>
         </TextWrapper>
         <TextWrapper>
-          <p className="mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
+          <p className="mb-8 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
             Markings and other high-end specs often go unused in the indie
             filmmaking process.
-            <span className="text-white">
+            <span className="">
               What&apos;s truly important? Solid gears with consitant placement.
-            </span>{" "}
-            Cinesuit provides a robust solution tailored for the needs of
-            filmmakers for a fraction of the cost.
+            </span>
           </p>
         </TextWrapper>
       </div>

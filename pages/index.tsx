@@ -13,6 +13,7 @@ import ThinProfile from "../components/page-elements/ThinProfile";
 import UpgradeLens from "../components/page-elements/UpgradeLens";
 import Navbar from "../components/ui/Navbar";
 import RequestLenses from "@/components/page-elements/RequestLenses";
+import ComingSoon from "@/components/page-elements/ComingSoon";
 
 interface HomeProps {
   products: Product[];
@@ -25,7 +26,8 @@ export const metadata = {
 export default function Home({ products }: HomeProps) {
   return (
     <>
-      <Navbar />
+      <ComingSoon />
+      {/* <Navbar />
       <Hero />
       <NextStep />
       <UpgradeLens />
@@ -36,7 +38,7 @@ export default function Home({ products }: HomeProps) {
       <ShopTitle />
       <ShopComponent products={products} />
       <RequestLenses />
-      <Footer />
+  <Footer /> */}
     </>
   );
 }
