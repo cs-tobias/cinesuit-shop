@@ -298,9 +298,11 @@ const Product = ({
                 ) : (
                   <div className="flex flex-col w-full items-center gap-2 mt-2">
                     <p className="text-lg md:text-lg font-medium leading-11 text-neutral-500 mb-2">
-                      <span className="text-black">We're out of stock!</span>{" "}
-                      Sign up for notifications to get notified when it's back
-                      in stock and to help us learn how many people are
+                      <span className="text-black">
+                        We&apos;re out of stock!
+                      </span>{" "}
+                      Sign up for notifications to get notified when it&apos;s
+                      back in stock and to help us learn how many people are
                       interested!
                     </p>
                     <RestockNotificationForm />

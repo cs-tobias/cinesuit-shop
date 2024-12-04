@@ -26,7 +26,7 @@ const UpgradeLens = () => {
           <p className="mb-10 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
             Cinesuit offers a new solution.{" "}
             <span className="title-gradient-steel-inverted">
-              Replace the rubber rings on your lens with Cinesuit's
+              Replace the rubber rings on your lens with Cinesuit&apos;s
               custom-designed metal gear rings
             </span>{" "}
             with rubber lining for a rock solid fit. — A new suit for your lens,

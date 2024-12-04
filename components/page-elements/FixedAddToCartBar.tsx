@@ -129,9 +129,9 @@ const FixedAddToCartBar: React.FC<FixedAddToCartBarProps> = ({
         {!selectedProduct?.availableForSale && (
           <div className="flex flex-col items-center space-y-2 mt-2">
             <p className="text-lg font-medium text-gray-500">
-              <span className="text-gray-900">We're out of stock!</span> Sign up
-              for notifications to get notified when it's back in stock and to
-              help us learn how many people are interested!
+              <span className="text-gray-900">We&apos;re out of stock!</span>{" "}
+              Sign up for notifications to get notified when it&apos;s back in
+              stock and to help us learn how many people are interested!
             </p>
             <RestockNotificationForm />
           </div>
