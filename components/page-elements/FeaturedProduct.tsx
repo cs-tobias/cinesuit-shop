@@ -46,7 +46,7 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
 
   return (
     <>
-      <div className="relative w-full py-10 bg-black border-b border-neutral-200 overflow-hidden">
+      <div className="relative w-full py-6 bg-black border-b border-neutral-200 overflow-hidden">
         <Image
           src="/images/featured-sm-013.jpg"
           alt="featured product image"
@@ -60,7 +60,7 @@ const FeaturedProduct: React.FC<FeaturedProductProps> = ({
             <h5 className="text-white text-xl">Available Now</h5>
           )}
 
-          <h1 className="text-5xl md:text-7xl tracking-tighter leading-11 font-semibold mt-2 mb-6">
+          <h1 className="text-5xl md:text-6xl tracking-tighter leading-11 font-semibold mt-2 mb-6">
             Cinesuit for <br /> Sigma 18-35
           </h1>
           <div className="text-center my-3">

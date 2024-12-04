@@ -15,16 +15,18 @@ const SizesStandardized = () => {
       <div className="max-w-[295px] md:max-w-[600px] text-center mx-auto py-4 text-white">
         <TextWrapper>
           <h1 className="text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-4 mb-8">
-            Standard
+            <span className="title-gradient-steel">Standard.</span>
             <br />
-            Sizes.
+            <span className="title-gradient-steel">Sizes.</span>
           </h1>
         </TextWrapper>
         <TextWrapper>
-          <p className="pt-3 mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
+          <p className="pt-3 mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-400">
             Across the Prime lineup — with Cinesuit, every lens has gears placed
-            at the same distance from the lens mount. Allowing more convenient
-            and faster workflows.
+            at the same distance from the lens mount.{" "}
+            <span className="title-gradient-steel">
+              Allowing more convenient and faster workflows.
+            </span>
           </p>
         </TextWrapper>
       </div>

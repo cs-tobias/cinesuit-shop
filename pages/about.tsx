@@ -37,9 +37,9 @@ const Instructions = () => {
       <div className="bg-black w-full pb-16 pt-16">
         <div className="max-w-[295px] md:max-w-[600px] lg:max-w-[960px] text-center mx-auto py-4 md:pt-10 text-white">
           <h3 className="text-4xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
-            <span className="">By Filmmakers.</span>
+            <span className="title-gradient-steel">By Filmmakers.</span>
             <br />
-            For Filmmakers.
+            <span className="title-gradient-steel">For Filmmakers.</span>
           </h3>
           <TooltipProvider>
             <Tooltip>
@@ -51,13 +51,13 @@ const Instructions = () => {
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Filmmaker and Designer.</p>
+                  <p>Filmmaker and Designer</p>
                 </TooltipContent>{" "}
-                profound love for filmmaking. His journey through the intricate
-                world of lenses — exploring the nuances of bokeh, color
-                rendition, chromatic aberration, distortion, sharpness and
-                softness — has been driven by an eagerness to discover how
-                different lenses influence a scene. <br />
+                love for filmmaking. His journey through the intricate world of
+                lenses — exploring the nuances of bokeh, color rendition,
+                chromatic aberration, distortion, sharpness and softness — has
+                been driven by an eagerness to discover how different lenses
+                influence a scene. <br />
                 <br /> From the unique swirl of a Helios 44-2&apos;s bokeh and
                 the warm colors of a Leica R, to the unmatched clarity offered
                 by modern glass like Sigma ART and ARRI Master Primes, each step
@@ -84,7 +84,7 @@ const Instructions = () => {
             </RotWrapper>
           </TextWrapper>
 
-          <h3 className="text-4xl md:text-7xl tracking-tight leading-10 font-semibold pt-7 mb-8">
+          <h3 className="title-gradient-steel text-4xl md:text-7xl tracking-tight leading-10 font-semibold pt-7 mb-8">
             Bridging The Gap
           </h3>
           <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-400">
@@ -99,7 +99,7 @@ const Instructions = () => {
             <br />
             On the other side, you have 3D printed follow focus gears, which,
             while popular due to their low cost, feel like a compromise and lack
-            the professional feel and reliability filmmakers need. <br />
+            the professional feel and reliability we need. <br />
             <br /> This situation exposed{" "}
             <span className="text-white">
               a gap in the market—a need for high-quality optics in a
@@ -132,9 +132,9 @@ const Instructions = () => {
             </span>{" "}
             Our approach transcends the common perception of &apos;cheap
             solutions&apos;, offering filmmakers a sense of pride and confidence
-            in their gear. With Cinesuit, the focus isn&apos;t just on
+            in our gear. With Cinesuit, the focus isn&apos;t just on
             affordability but on providing what is necessary for most
-            filmmakers, without the accompanying price tag.
+            filmmakers, without the insane price tag.
           </p>
 
           <TextWrapper>

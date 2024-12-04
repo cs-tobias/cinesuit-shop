@@ -53,7 +53,7 @@ class ConvertkitEmailForm extends Component {
             id="newsletter-input"
             type="email"
             name="email"
-            className="w-full h-14 bg-transparent rounded-2xl border-2 border-gray-800 px-3 py-2"
+            className="w-full h-14 bg-transparent rounded-2xl border-2 border-neutral-300 text-neutral-300 px-3 py-2"
             placeholder="Enter your email"
             aria-label="Enter Email Address"
             value={this.state.email}
@@ -66,7 +66,7 @@ class ConvertkitEmailForm extends Component {
           <button
             id="newsletter-btn"
             type="submit"
-            className="w-full px-8 h-14 bg-neutral-200 text-black rounded-2xl hover:bg-white transition-colors duration-200"
+            className="w-full px-8 h-14 border-2 border-neutral-300 text-neutral-300 hover:bg-neutral-200 hover:text-black rounded-2xl transition-colors duration-200"
           >
             Submit
           </button>

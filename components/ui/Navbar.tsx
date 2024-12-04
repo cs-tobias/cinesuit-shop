@@ -67,7 +67,7 @@ const Navbar = () => {
                 <Link href={"/shop"}>
                   <Button
                     size="small"
-                    className="text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
+                    className="text-white bg-blue-1 hover:bg-blue-600 transition-colors duration-300"
                   >
                     Shop
                   </Button>

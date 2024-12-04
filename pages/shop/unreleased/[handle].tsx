@@ -56,12 +56,10 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
           <h1 className="text-6xl md:text-7xl font-semibold tracking-tight leading-11 pt-7 mb-8">
             {product.title}
           </h1>
-          <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-500 mb-4">
-            Show us which lenses you want support for by joining our
-            waitinglist.{" "}
-            <span className="text-neutral-200">
-              Your choices directly determine what we make next!
-            </span>
+          <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-400 mb-4">
+            Influence and Save: Secure your spot on our waiting list and get a
+            20% discount on the Sigma 40mm Cinesuit. Act now—limited spots
+            available!
           </p>
           <div className="mt-4">
             <ConvertkitEmailForm productTitle={product.title} />

@@ -11,20 +11,24 @@ const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
 const LessExpensive = () => {
   return (
     <div className="bg-black w-full -mt-4 lg:-mt-10 xl:-mt-32">
-      <div className="max-w-[295px] md:max-w-[600px] text-center  mx-auto py-4 text-white">
+      <div className="max-w-[295px] md:max-w-[620px] lg:max-w-[700px] text-center  mx-auto py-4 text-white">
         <TextWrapper>
           <h1 className="text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-4 mb-11">
             5x less
             <br />
-            Expensive.
+            <span className="text-transparent bg-gradient-to-b from-white via-white to-neutral-300 bg-clip-text">
+              Expensive.
+            </span>
           </h1>
         </TextWrapper>
         <TextWrapper>
-          <p className="mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
-            Cinema lenses are often priced at{" "}
-            <span className="text-neutral-400">$3000-$30000.</span> With your
-            existing lenses — buy Cinesuit and get your own compact cinema
-            lenses, for only <span className="text-white">$99.</span>
+          <p className="mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-400">
+            Cinema lenses with good optics cost thousands of dollars. With
+            Cinesuit, you can transform your existing lenses into professional
+            tools for just $129,{" "}
+            <span className="title-gradient-steel">
+              making high quality cinematography accessible to everyone.
+            </span>
           </p>
         </TextWrapper>
       </div>

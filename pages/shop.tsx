@@ -1,9 +1,7 @@
-// shop.tsx
 import ShopComponent from "../components/page-elements/ShopComponent";
 import { Product } from "@/types/Types";
 import { useState, useRef, useEffect } from "react";
 import { client } from "@/utils/shopifyClient";
-import Navbar from "../components/ui/Navbar";
 import NavbarLight from "../components/ui/NavbarLight";
 import FeaturedProduct from "../components/page-elements/FeaturedProduct";
 import Footer from "../components/page-elements/Footer";
@@ -17,40 +15,19 @@ interface ShopProps {
 }
 
 export default function Shop({ featuredProduct, products }: ShopProps) {
-  const [isLightNavbar, setIsLightNavbar] = useState<boolean>(false);
-  const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const shopTitle2Ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const checkMobileView = () => setIsMobileView(window.innerWidth <= 768);
-    const handleScroll = () => {
-      const shopTitle2Position = shopTitle2Ref.current
-        ? shopTitle2Ref.current.getBoundingClientRect().top +
-          window.scrollY -
-          60
-        : 0;
-      setIsLightNavbar(window.scrollY >= shopTitle2Position);
-    };
-
-    checkMobileView();
-    window.addEventListener("resize", checkMobileView);
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("resize", checkMobileView);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <>
       <NextSeo title="Cinesuit - Shop" />
-      {isLightNavbar || isMobileView ? <NavbarLight /> : <Navbar />}
-      <div className="hidden md:block">
+      <NavbarLight />
+      <div className="hidden">
         <FeaturedProduct featuredProduct={featuredProduct} />
       </div>
-      <div className="w-full h-10 md:hidden"></div>
+
+      <div className="w-full h-[50px]"></div>
       <ShopTitle2 ref={shopTitle2Ref} />
+
       <ShopComponent products={products} />
       <RequestLenses />
       <Footer />
@@ -94,6 +71,6 @@ export async function getStaticProps() {
       products: JSON.parse(JSON.stringify(products)),
       featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
     },
-    revalidate: 3600, // Optional: Revalidate at most once per hour for updates
+    revalidate: 60, // Optional: Revalidate at most once per hour for updates
   };
 }

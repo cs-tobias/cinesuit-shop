@@ -44,7 +44,7 @@ const CookieBanner = () => {
 
   return (
     <div
-      className={`flex bottom-4 md:left-4 fixed md:w-[540px] border-[1px] backdrop-blur-md bg-black bg-opacity-65 border-neutral-400 border-opacity-30 z-50 rounded-3xl p-5 ${
+      className={`flex bottom-8 md:left-8 fixed md:w-[540px] border-[1px] backdrop-blur-md bg-black bg-opacity-65 border-neutral-400 border-opacity-30 z-50 rounded-3xl p-5 ${
         isVisible ? "animate-fadeIn" : ""
       }`}
     >

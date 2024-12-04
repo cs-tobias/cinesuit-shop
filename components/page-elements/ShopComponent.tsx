@@ -12,7 +12,7 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-neutral-200 text-black flex flex-col p-6 rounded-xl"
+              className="bg-neutral-150 text-black flex flex-col p-6 rounded-xl"
             >
               <Link
                 href={
@@ -36,28 +36,38 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
 
               {/* Product label based on productType */}
               {product.productType === "new" && (
-                <div className="text-red-700 px-1 text-xl mt-5 -mb-2">New</div>
+                <div className="text-red-700 px-1 text-xl mt-3 -mb-2">New</div>
               )}
               {product.productType === "unreleased" && (
-                <div className="text-neutral-500 font-medium px-1 text-xl mt-2 -mb-2">
-                  Coming Soon
+                <div className="text-neutral-500 font-medium px-1 text-xl mt-3 -mb-2">
+                  In Development
                 </div>
               )}
 
               <div className="text-4xl font-medium my-2 tracking-tighter leading-9 py-2">
                 {product.title
                   .split(" ")
-                  .slice(0, 4)
+                  .slice(0, 5)
                   .map((word, index) => (
                     <span key={index}>
-                      {word} {index < 3 ? " " : <br />}
+                      {word} {index < 4 ? " " : <br />}
                     </span>
                   ))}
               </div>
 
               <div>
-                <p className="text-[22px] font-medium">
-                  ${product.variants[0].price.amount.toString().slice(0, -2)}
+                <p className="text-[22px] font-medium flex items-center">
+                  <span>
+                    ${product.variants[0].price.amount.toString().slice(0, -2)}
+                  </span>
+                  {product.variants[0].compareAtPrice && (
+                    <span className="text-gray-500 pl-1 text-[15px] line-through">
+                      $
+                      {product.variants[0].compareAtPrice.amount
+                        .toString()
+                        .slice(0, -2)}
+                    </span>
+                  )}
                 </p>
               </div>
 
@@ -69,7 +79,7 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                   <div className="py-4">
                     <Link
                       href={`/shop/unreleased/${product.handle}`}
-                      className="w-full flex justify-center bg-neutral-200 border-neutral-300 border-2 hover:border-neutral-400 transition-colors duration-300 text-black py-1.5 rounded-lg"
+                      className="w-full flex justify-center bg-neutral-150 border-neutral-300 border-2 hover:border-neutral-400 transition-colors duration-300 text-black py-1.5 rounded-lg"
                     >
                       Learn more
                     </Link>
@@ -91,9 +101,10 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                         Coming Soon
                       </p>
                     ) : (
-                      <p className="text-neutral-800 font-medium px-1 mt-2 -mb-2">
-                        In Stock
-                      </p>
+                      <div className="text-neutral-800 font-medium px-1 mt-2 -mb-2">
+                        <p>Pre-order Available</p>
+                        {product.productType !== "tool" && <p>Free shipping</p>}
+                      </div>
                     )}
                   </div>
                 </div>

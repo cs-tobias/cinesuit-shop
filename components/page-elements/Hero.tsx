@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
@@ -8,7 +8,11 @@ const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
   ssr: false,
 });
 
-const Hero = () => {
+interface HeroProps {
+  scrollRef: RefObject<HTMLDivElement>;
+}
+
+const Hero = ({ scrollRef }: HeroProps) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const callToActionRef = useRef<HTMLDivElement>(null);
   const [imageDimensions, setImageDimensions] = useState({
@@ -16,9 +20,10 @@ const Hero = () => {
     height: 400, // Default height for small screens
   });
   const [titleHeight, setTitleHeight] = useState(0);
-  const paddingTop = 60;
-  const paddingBottom = 0;
+  const paddingTop = 40;
+  const paddingBottom = 40;
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     // Assuming video loads quickly, otherwise consider more robust load detection
     setIsLoaded(true);
@@ -52,23 +57,35 @@ const Hero = () => {
     return () => window.removeEventListener("resize", calculateImageDimensions);
   }, []);
 
-  return (
-    <div className="bg-black h-screen w-full overflow-hidden relative">
-      <div ref={titleRef} className="text-center text-white pt-24 md:pt-28">
-        <h1 className="text-7xl md:text-9xl tracking-tighter leading-11 font-semibold">
-          Cinesuit
-        </h1>
-        <p className="ml-4 text-2xl font-medium leading-11 text-neutral-500">
-          Building a future of accessible cinematography.
-        </p>
-      </div>
+  // Function to handle adjusted scrolling
+  const handleScroll = () => {
+    const headerOffset = 55; // Height of the header or other components to offset
+    const element = scrollRef.current;
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
-      <div
-        className={`w-full ${isLoaded ? "animate-fadeIn" : ""}`}
-        onLoadedData={() => setIsLoaded(true)}
-      >
+  return (
+    <>
+      <div className="bg-black h-screen w-full overflow-hidden relative">
+        <div ref={titleRef} className="text-center text-white pt-24 md:pt-28">
+          <h1 className="text-7xl md:text-9xl tracking-tighter leading-11 font-semibold">
+            Cinesuit
+          </h1>
+          <p className="ml-4 text-2xl font-medium leading-11 text-neutral-500">
+            High-end accessible cinematography.
+          </p>
+        </div>
+
         <div
-          className="absolute -mt-5 md:-mt-3 left-1/2 no-select"
+          className="absolute -mt-5 md:-mt-0 left-1/2 no-select"
           style={{
             top: `calc(${titleHeight}px + ${paddingTop}px)`,
             height: `${imageDimensions.height}px`,
@@ -77,40 +94,49 @@ const Hero = () => {
           }}
         >
           <Image
-            src="/images/cs-hero-lg-1_02.jpg"
+            src="/images/cs-hero-lg-1.png"
             alt="Hero Image"
+            layout="responsive"
             width={imageDimensions.width}
             height={imageDimensions.height}
-            priority
           />
         </div>
-      </div>
 
-      <div
-        ref={callToActionRef}
-        className="absolute bottom-10 w-full text-center text-neutral-600"
-      >
-        <RotWrapper>
-          <Link href={"/shop"}>
+        <div
+          ref={callToActionRef}
+          className="absolute bottom-10 w-full text-center text-neutral-600"
+        >
+          <RotWrapper>
             <Button
               size="medium"
-              className="text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
+              className="text-neutral-200 bg-transparent border border-neutral-200 hover:bg-neutral-200 hover:text-black transition-colors duration-300 -translate-x-2"
+              onClick={handleScroll}
             >
-              Buy
+              Learn more
             </Button>
-          </Link>
-        </RotWrapper>
+            <Link href={"/shop"}>
+              <Button
+                size="medium"
+                className="text-white bg-blue-1 hover:bg-blue-600 transition-colors duration-300 translate-x-2"
+              >
+                Pre-order Now
+              </Button>
+            </Link>
+          </RotWrapper>
 
-        <RotWrapper>
-          <p className="pt-4">
-            Cinesuit for Sigma 18-35 is out now <br />{" "}
-            <span className="text-neutral-400">
-              Cinesuit has no affiliation with Sigma
-            </span>
-          </p>
-        </RotWrapper>
+          <RotWrapper>
+            <div className="text-neutral-200 pt-2">
+              <p className="pt-4">
+                Cinesuit products are third-party accessories. <br />
+                <span className="text-neutral-400">
+                  Cinesuit has no affiliation with Sigma
+                </span>
+              </p>
+            </div>
+          </RotWrapper>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

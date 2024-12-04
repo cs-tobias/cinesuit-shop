@@ -9,10 +9,17 @@ import { client } from "@/utils/shopifyClient";
 
 // Define a type for your product and cart item
 interface Product {
+  vendor: string;
+  availableForSale: boolean;
+  productType: string;
   handle: any;
   id: string;
   title: string;
-  variants: Array<{ id: string; price: { amount: string } }>;
+  variants: Array<{
+    compareAtPrice: any;
+    id: string;
+    price: { amount: string };
+  }>;
   images: Array<{ id: string; src: string }>;
   description: string;
 }

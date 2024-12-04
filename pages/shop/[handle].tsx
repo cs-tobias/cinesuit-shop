@@ -1,72 +1,84 @@
-// [handle].tsx
+import Footer from "@/components/page-elements/Footer";
+import LightWeight from "@/components/page-elements/LightWeight";
+import RestockNotificationForm from "@/components/page-elements/RestockNotificationForm";
+import FreeShipping from "@/components/ui/freeShipping";
+import MoneyBack from "@/components/ui/moneyBack";
 import type { ProductProps, Product as ProductType } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
+import { EmblaOptionsType } from "embla-carousel";
 import { GetStaticPaths } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { useCart } from "../../components/contexts/CartContext";
 import Lightbox from "../../components/ui/Lightbox";
 import NavbarLight from "../../components/ui/NavbarLight";
-import RestockNotificationForm from "@/components/page-elements/RestockNotificationForm";
-import Footer from "@/components/page-elements/Footer";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-import { NextSeo } from "next-seo";
+import EmblaCarousel from "@/components/ui/EmblaCarousel";
+import StickyAddToCartBar from "@/components/page-elements/StickyAddToCart";
 
+// Fetching related products and handling props for the product page
 interface StaticPropsParams {
   params: {
     handle: string;
   };
 }
+
+// Function to get the default product if the main product is not available
+const getDefaultProduct = (
+  mainProduct: ProductType,
+  associatedProducts: ProductType[]
+): ProductType => {
+  if (mainProduct.availableForSale) {
+    return mainProduct;
+  }
+  const inStockProduct = associatedProducts.find(
+    (product) => product.availableForSale
+  );
+  return inStockProduct || mainProduct; // Fall back to mainProduct if no associated product is in stock
+};
+
+// Main Product component
 const Product = ({
   mainProduct,
   associatedProducts,
   mainImagePaths,
-  smallImagePaths = [], // Default to an empty array if undefined
+  smallImagePaths = [],
   associatedProductsImages,
 }: ProductProps) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
-    mainProduct
+    getDefaultProduct(mainProduct, associatedProducts)
   );
   const [currentImagePath, setCurrentImagePath] = useState(mainImagePaths[0]);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0); // Shared index state
   const { addToCart } = useCart();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [imageLoading, setImageLoading] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  const OPTIONS: EmblaOptionsType = {}; // Options for EmblaCarousel
 
-  useEffect(() => {
-    console.log("Scroll position before carousel update:", window.scrollY);
-    return () => {
-      console.log("Scroll position after carousel update:", window.scrollY);
-    };
-  }, [selectedIndex]);
+  // Determine the images to display in the carousel
+  const imagesForCarousel =
+    selectedProduct && selectedProduct.handle === mainProduct.handle
+      ? mainImagePaths
+      : associatedProductsImages.find((p) => p.id === selectedProduct?.id)
+          ?.images || [];
 
+  // Handle product selection and image transition
   const handleProductSelection = (product: ProductType) => {
     setSelectedProduct(product);
-    console.log("Selected Product:", product); // Log the selected product data
-    setIsTransitioning(true); // Start transition
-    const newImagePath = `/images/${product.handle}/image0.png`;
-
-    // Use a timeout to simulate the fade-out effect
+    setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentImagePath(newImagePath);
-      setIsTransitioning(false); // End transition
-    }, 300); // Adjust the timeout to match your CSS transition duration
+      setIsTransitioning(false);
+    }, 300);
   };
-  const router = useRouter();
 
   const handleAddToCart = () => {
     if (selectedProduct) {
@@ -91,71 +103,65 @@ const Product = ({
       router.push("/cart");
     }
   };
-  const openLightbox = () => setIsLightboxOpen(true);
+
+  const openLightbox = (index: number) => {
+    setSelectedIndex(index); // Set the index of the clicked image
+    setIsLightboxOpen(true);
+  };
+
   const closeLightbox = () => setIsLightboxOpen(false);
 
   return (
     <>
       <NextSeo title={`${mainProduct.title}`} />
+
       <NavbarLight />
-      <div className="bg-neutral-100 w-full min-h-screen ">
-        <div className="container mx-auto flex flex-col md:flex-row items-start md:items-stretch">
-          <div
-            id="image-container"
-            className="rounded-xl hidden lg:block"
-            style={{
-              position: "sticky",
-              top: "130px",
-              height: "calc(80vh - 20px)",
-            }}
-          >
+
+      <div className="bg-neutral-50 w-full h-full">
+        <div className="container mx-auto flex flex-col md:flex-row items-start md:items-stretch px-8 xl:px-0">
+          <div className="hidden lg:block ml-4 flex-1 mt-36 ">
             <div
               className={`
- ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-              style={{ transition: "opacity 0.5s ease-in-out" }}
+                ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              style={{ transition: "opacity 0.25s ease-in-out" }}
             >
-              <Image
-                src={currentImagePath}
-                alt={`Product Image ${selectedIndex}`}
-                width={1237}
-                height={1524}
-                layout="fixed"
-                className="hidden md:block w-full mx-auto h-full object-cover rounded-xl hover:cursor-pointer max-h-[860px] no-select"
-                onClick={openLightbox}
-                loading="eager"
-                priority
+              <EmblaCarousel
+                slides={imagesForCarousel.map((url, index) => ({
+                  url,
+                  onClick: () => openLightbox(index), // Pass the index on click
+                }))}
+                options={OPTIONS}
               />
             </div>
-            <p
-              onClick={openLightbox}
-              className="mt-6 text-lg flex justify-center mx-auto text-neutral-600 hover:text-black hover:cursor-pointer transition duration-300 rounded"
-            >
-              View Gallery
-            </p>
+
+            {mainProduct.productType !== "tool" && (
+              <div className="mt-3 flex justify-center items-center space-x-4">
+                <FreeShipping />
+                <div className="h-6 w-[1px] bg-neutral-700"></div>
+                <MoneyBack />
+              </div>
+            )}
           </div>
+
           <Lightbox
             isOpen={isLightboxOpen}
-            images={
-              selectedProduct && selectedProduct.handle === mainProduct.handle
-                ? mainImagePaths
-                : associatedProductsImages.find(
-                    (p) => p.id === selectedProduct?.id
-                  )?.images || []
-            }
+            images={imagesForCarousel}
             onClose={closeLightbox}
             selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
+            setSelectedIndex={setSelectedIndex} // Sync with EmblaCarousel
           />
-          <div className="flex-1 flex flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-28 ml-auto lg:max-w-[80%]">
+
+          <div className="flex-1 flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-28 ml-auto lg:max-w-1/2 md:px-16">
             {mainProduct.productType === "new" && (
               <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
                 New
               </div>
             )}
-            <div className="text-5xl md:text-center lg:text-left md:text-8xl lg:text-7xl tracking-tighter leading-11 font-semibold lg:pt-4 lg:mb-8 no-extra-breaks">
+
+            <div className="text-5xl md:text-center lg:text-left md:text-7xl lg:text-7xl tracking-tighter leading-11 font-semibold lg:pt-4 lg:mb-8">
               {mainProduct.title
                 .split(" ")
-                .slice(0, 4)
+                .slice(0, 5)
                 .map((word, index) => (
                   <React.Fragment key={index}>
                     <span>{word}</span>
@@ -164,58 +170,45 @@ const Product = ({
                   </React.Fragment>
                 ))}
             </div>
-            <div
-              className={`lg:hidden rotate-90 -my-8 md:-my-20 px-6
- ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-              style={{ transition: "opacity 0.5s ease-in-out" }}
-            >
-              <Image
-                src={currentImagePath}
-                alt={`Product Image ${selectedIndex}`}
-                width={600}
-                height={300}
-                layout="fixed"
-                className="flip-vertical mx-auto hover:cursor-pointer no-select"
-                loading="eager"
+
+            {/* Replace Mobile Product Image with EmblaCarousel */}
+            <div className={`lg:hidden px-6 md:px-0`}>
+              <EmblaCarousel
+                slides={imagesForCarousel.map((url, index) => ({
+                  url,
+                  onClick: () => openLightbox(index), // Pass the index on click
+                }))}
+                options={OPTIONS}
               />
             </div>
 
-            <p className="hidden md:block mb-8 text-lg lg:text-xl font-medium leading-7 text-neutral-500">
-              {(() => {
-                const words = mainProduct.description.split(" ");
-                const lastTenWordsStartIndex = Math.max(words.length - 11, 0);
-                return (
-                  <>
-                    {words.slice(0, lastTenWordsStartIndex).join(" ")}
-                    {lastTenWordsStartIndex < words.length && (
-                      <span className="">
-                        {" " + words.slice(lastTenWordsStartIndex).join(" ")}
-                      </span>
-                    )}
-                  </>
-                );
-              })()}
+            <p className="hidden md:block text-base lg:text-lg font-medium tracking-tight">
+              {mainProduct.description}
             </p>
 
-            <p className="mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-              Configure your Cinesuit
-            </p>
+            {mainProduct.productType !== "tool" && (
+              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+                Configure your Cinesuit
+              </p>
+            )}
+
             <div className="w-full">
               {associatedProducts.map((associatedProduct) => (
                 <div
                   key={associatedProduct.id}
                   onClick={() => handleProductSelection(associatedProduct)}
-                  className={`p-4 border-[1px] bg-neutral-100 rounded-xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
+                  className={`p-4 border-2 bg-neutral-50 rounded-xl my-2 cursor-pointer hover:border-blue-2 transition-colors duration-300 ${
                     selectedProduct?.id === associatedProduct.id
-                      ? "border-neutral-600 hover:border-neutral-600"
+                      ? "border-blue-1 hover:border-blue-2"
                       : "border-gray-300 hover:border-neutral-400"
                   }`}
                 >
                   <div className="flex justify-between items-center text-lg">
-                    <h3 className="">
+                    <h3 className="select-none">
                       {associatedProduct.title.split(" ").slice(-1).join(" ")}
                     </h3>
-                    <span>
+
+                    <span className="select-none">
                       $
                       {associatedProduct.variants[0].price.amount
                         .toString()
@@ -226,31 +219,50 @@ const Product = ({
               ))}
               <div
                 onClick={() => handleProductSelection(mainProduct)}
-                className={`p-4 border-[1px] rounded-xl my-2 cursor-pointer hover:border-neutral-400 transition-colors duration-300 ${
+                className={`p-4 border-2 rounded-xl my-2 cursor-pointer hover:border-blue-2 transition-colors duration-300 ${
                   selectedProduct?.id === mainProduct.id
-                    ? "border-neutral-500 hover:border-neutral-600"
+                    ? "border-blue-1 hover:border-blue-2"
                     : "border-gray-300 hover:border-neutral-400"
                 }`}
               >
                 <div className="flex justify-between items-center text-lg">
-                  <h3 className="">
-                    {associatedProducts.length > 0 ? "Focus & Zoom" : "Focus"}
+                  <h3 className="select-none">
+                    {mainProduct.productType === "tool"
+                      ? mainProduct.title
+                      : associatedProducts.length > 0
+                      ? "Focus & Zoom"
+                      : "Focus"}
                   </h3>
-                  <span>
-                    $
-                    {mainProduct.variants[0].price.amount
-                      .toString()
-                      .slice(0, -2)}
-                  </span>
+                  <div>
+                    {mainProduct.variants[0].compareAtPrice && (
+                      <span className="text-gray-500 pr-1 text-[15px] line-through select-none">
+                        $
+                        {mainProduct.variants[0].compareAtPrice.amount
+                          .toString()
+                          .slice(0, -2)}
+                      </span>
+                    )}
+                    <span className="select-none">
+                      $
+                      {mainProduct.variants[0].price.amount
+                        .toString()
+                        .slice(0, -2)}
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <p className="flex justify-center text-sm text-neutral-500 mt-4">
+                Lens not included.
+              </p>
+
               <div className="flex items-center justify-between py-2 px-1 mx-auto max-w-5xl">
                 <div className="text-xl md:text-2xl font-medium tracking-tight">
                   <p
                     className={
                       selectedProduct?.availableForSale
-                        ? "text-black"
-                        : "text-neutral-700 text-lg md:text-xl"
+                        ? "text-black select-none"
+                        : "text-neutral-700 text-lg md:text-xl select-none"
                     }
                   >
                     {selectedProduct?.availableForSale ? "Total" : ""}
@@ -258,184 +270,186 @@ const Product = ({
                 </div>
                 {selectedProduct?.availableForSale ? (
                   <div className="flex items-center gap-4">
-                    <div className="text-xl md:text-2xl font-medium text-black">
-                      <p>
+                    <div>
+                      {selectedProduct.variants[0].compareAtPrice && (
+                        <span className="text-gray-500 pr-1 text-[19px] line-through">
+                          $
+                          {selectedProduct.variants[0].compareAtPrice.amount
+                            .toString()
+                            .slice(0, -2)}
+                        </span>
+                      )}
+                      <span className="text-xl md:text-2xl font-medium text-black">
                         $
-                        {selectedProduct
-                          ? selectedProduct.variants[0].price.amount
-                          : "0.00"}
-                      </p>
+                        {selectedProduct.variants[0].price.amount
+                          .toString()
+                          .slice(0, -2)}
+                      </span>
                     </div>
+
                     <Button
                       size="large"
-                      className="text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300 rounded-2xl px-12"
+                      className="text-white bg-blue-1 hover:bg-blue-600 transition-colors duration-300 rounded-2xl px-12"
                       onClick={handleAddToCart}
                     >
-                      Add to Cart
+                      Pre-order
                     </Button>
                   </div>
                 ) : (
                   <div className="flex flex-col w-full items-center gap-2 mt-2">
                     <p className="text-lg md:text-lg font-medium leading-11 text-neutral-500 mb-2">
-                      <span className="text-black">Were out of stock!</span>{" "}
-                      Sign up for notifications to get notified when its back in
-                      stock and to help us learn how many people are interested!
+                      <span className="text-black">We're out of stock!</span>{" "}
+                      Sign up for notifications to get notified when it's back
+                      in stock and to help us learn how many people are
+                      interested!
                     </p>
                     <RestockNotificationForm />
                   </div>
                 )}
               </div>
+              <div>
+                <h1 className="my-2 text-base md:text-lg tracking-tight font-semibold md:text-right mx-1">
+                  Pre-orders are expected to ship in 1-2 months
+                </h1>
+              </div>
+
               <div className="py-2">
                 <div className="w-full h-[1px] bg-neutral-300"></div>
               </div>
             </div>
-            <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-              Whats in the box?
-            </p>
-            <div className="text-base font-normal leading-11 text-neutral-500">
-              <li className="">Cinesuit gear rings</li>
-              <li className="">Screws (+Backup screws)</li>
-              <li className="">Rubber removal tool</li>
-              <p className="py-2 font-semibold text-neutral-600">
-                Add the screwdriver to your cart at checkout, if you need it.
-              </p>
-            </div>
-            <div className="text-base">
+
+            <div className="text-lg pt-2">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>Install Guide</AccordionTrigger>
+                  <AccordionTrigger>How Cinesuit Works</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="font-medium text-neutral-500">
+                    <p className="mb-2">
+                      Cinesuit rings feature an inner rubber lining. When the
+                      screws are tightened, the rubber makes contact with the
+                      barrel, generating friction that holds the ring firmly in
+                      place without slipping. This creates a seamless extension
+                      of your lens.
+                    </p>
+                    <h4 className="font-medium mb-2">Key Features:</h4>
+                    <ul className="list-disc list-inside pl-4">
+                      <li className="mb-2">
+                        <strong>Solid Aluminum Construction:</strong> Machined
+                        from solid aluminium with very high tolerances, reaching
+                        as high as 0.02mm.
+                      </li>
+                      <li className="mb-2">
+                        <strong>Matched Surface:</strong> Having studied Sigmas
+                        surface treatment, we have eumulated it, creating a
+                        seamless look, where Cinesuit merges visually with your
+                        lens.
+                      </li>
                       <li>
-                        <span className="text-black">
-                          1. Remove your lens&apos; rubber rings
-                        </span>
-                        , either by hand or with the included rubber removal
-                        tool.
-                      </li>
-                      <li className="text-black">
-                        {" "}
-                        2. Slide on Cinesuit, one by one.
-                      </li>
-                      <li className="text-black">
-                        3. Insert and tighten the screws <br />
-                        <span className="text-black font-bold">
-                          DO NOT OVERTIGHTEN
-                        </span>
+                        <strong>Precision Fit:</strong> The rubber lining grips
+                        the barrel securely, preventing any movement.
                       </li>
                     </ul>
-                    <div className="py-4">
-                      <Link
-                        href={"/shop"}
-                        className="text-neutral-800 font-medium hover:underline"
-                      >
-                        Click here to watch the Installation Video Guide
-                      </Link>
-                    </div>
                   </AccordionContent>
                 </AccordionItem>
+
                 <AccordionItem value="item-2">
-                  <AccordionTrigger>Care guide</AccordionTrigger>
+                  <AccordionTrigger>Shipping &amp; Taxes</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="ulpolicy ulpolicy font-medium text-neutral-600">
-                      <li className="lipolicy">
-                        Make sure the inside of the Cinesuit, particularely the
-                        rubber part is dust free. Especially if you take it on
-                        and off over time.
+                    <p className="mb-2">
+                      We offer <strong>FREE shipping</strong> to most countries,
+                      with a standard delivery time of 7-11 days. In many
+                      locations, VAT is covered by us—no additional fees for
+                      you.
+                    </p>
+                    <h4 className="font-medium mb-2">Important Notes:</h4>
+                    <ul className="list-disc list-inside pl-4">
+                      <li className="mb-2">
+                        <strong>Import Charges:</strong> Depending on your
+                        country, there may be import taxes or other fees that
+                        are not covered by us and are the customer&apos;s
+                        responsibility.
+                      </li>
+                      <li className="mb-2">
+                        <strong>Expedited Shipping:</strong> If you choose DHL,
+                        FedEx, or UPS for faster delivery, be aware that VAT may
+                        apply as per your country&rsquo;s regulations.
+                      </li>
+                      <li>
+                        <strong>Check Eligibility:</strong> Not sure if your
+                        country qualifies for free shipping? Enter your address
+                        at checkout to view the available options.
                       </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
+
                 <AccordionItem value="item-3">
-                  <AccordionTrigger>Shipping and Returns</AccordionTrigger>
+                  <AccordionTrigger>How to Install</AccordionTrigger>
                   <AccordionContent>
-                    <ul className="ulpolicy font-medium text-neutral-600">
-                      <li className="lipolicy">
-                        We offer fast and cheap shipping to most countries, you
-                        get your final shipping options at checkout.{" "}
+                    <a href="/instructions" target="_blank">
+                      <p className="text-blue-1 font-medium hover:underline hover:cursor-pointer">
+                        Click to watch the Installation Video
+                      </p>
+                    </a>
+                    <ol className="list-decimal list-inside pl-4 mt-2">
+                      <li className="mb-2">
+                        <strong>Remove the Rubber Ring:</strong> Use the Rubber
+                        Removal Tool to gently slide under the lens&apos;s
+                        rubber ring and pull it off. The tool&apos;s
+                        carbon-reinforced plastic ensures it doesnt scratch your
+                        lens.
                       </li>
-                      <li className="lipolicy">
-                        Standard VAT and Import charges applies for your local
-                        country, it is your responsibility.
+                      <li className="mb-2">
+                        <strong>Attach the Cinesuit Half-Rings:</strong>{" "}
+                        Position each half-ring on the lens, aligning them
+                        carefully. Insert the screws provided; we&apos;ve
+                        included 2 extras just in case.
                       </li>
-                      <li className="lipolicy">Something about returns</li>
-                    </ul>
+                      <li className="mb-2">
+                        <strong>Tighten the Screws:</strong> Use a small
+                        Phillips-head precision screwdriver to tighten the
+                        screws securely.{" "}
+                        <strong>!!Make sure not to overtighten!!</strong>
+                      </li>
+                      <li>
+                        <strong>Finalize Installation:</strong> Ensure
+                        everything is securely in place, and you&apos;re all
+                        set!
+                      </li>
+                    </ol>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
             </div>
-            <div className=" pb-10">
-              <div>
-                <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                  Industry Standard
-                </p>
-                <p className="mb-8 text-base font-normal leading-11 text-neutral-500">
-                  Cinesuit uses standard 0.8 mod gears,{" "}
-                  <span className="text-black">
-                    compatible with all standard follow focus systems.
-                  </span>
-                </p>
-              </div>
-              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                Lightweight
-              </p>
-              <p className="mb-2 text-base font-normal leading-11 text-neutral-500">
-                Cinesuit bearly adds weight to your setup.
-              </p>
-              <div className="text-base font-normal leading-11 text-neutral-500">
-                <li className="">
-                  Sigma 18-35{" "}
-                  <span className="text-black">default weight: 800g</span>
-                </li>
-                <li className="">
-                  Sigma 18-35 with{" "}
-                  <span className="text-black">Cinesuit weight: 950g</span>
-                </li>
-              </div>
-              <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
-                Low Profile
-              </p>
-              <p className="-mb-10 text-base font-normal leading-11 text-neutral-500">
-                Staying true to the size of the lens, Cinesuit doesnt add any
-                unnessecary bulk. It simply follows the shape of the lens, and
-                adds only what it needs, to provide you a secure and reliable
-                solution.
-              </p>
-            </div>
           </div>
         </div>
+
+        <LightWeight />
       </div>
-      <div className="w-full h-[1px] py-12 bg-neutral-100"></div>
-      <div className="">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };
 
+// Fetching data for the product page
 export async function getStaticProps({ params }: StaticPropsParams) {
   const handle = params.handle;
-  const fetchedMainProduct = await client.product.fetchByHandle(handle);
-  console.log("Fetched Main Product:", fetchedMainProduct); // Log the fetched product data
 
-  const numberOfImages = 3;
-  const mainImagePaths = Array.from(
-    { length: numberOfImages },
-    (_, index) => `/images/${handle}/image${index}.png`
-  );
-  const smallImagePaths = Array.from(
-    { length: numberOfImages },
-    (_, index) => `/images/${handle}/sm/image${index}.png`
-  );
+  const fetchedMainProduct = await client.product.fetchByHandle(handle);
 
   const associatedProductType = `${fetchedMainProduct.title}_bundle`;
   const productsWithSpecificType = await client.product.fetchQuery({
     query: `productType:${associatedProductType}`,
-    first: 3,
+    first: 4,
   });
 
   const associatedProducts = productsWithSpecificType.filter(
     (product) => product.id !== fetchedMainProduct.id
+  );
+
+  const numberOfImages = 5;
+  const mainImagePaths = Array.from(
+    { length: numberOfImages },
+    (_, index) => `/images/${handle}/image${index}.png`
   );
 
   const associatedProductsImages = associatedProducts.map((product) => ({
@@ -453,10 +467,11 @@ export async function getStaticProps({ params }: StaticPropsParams) {
       mainImagePaths,
       associatedProductsImages,
     },
-    revalidate: 3600,
+    revalidate: 10,
   };
 }
 
+// Generating paths for each product page
 export const getStaticPaths: GetStaticPaths = async () => {
   const allProducts = await client.product.fetchAll();
   const paths = allProducts.map((product) => ({

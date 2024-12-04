@@ -1,4 +1,4 @@
-// index.tsx
+import React, { useRef } from "react";
 import { Product } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
 import Footer from "../components/page-elements/Footer";
@@ -14,6 +14,8 @@ import UpgradeLens from "../components/page-elements/UpgradeLens";
 import Navbar from "../components/ui/Navbar";
 import RequestLenses from "@/components/page-elements/RequestLenses";
 import ComingSoon from "@/components/page-elements/ComingSoon";
+import UnlockProWorkflows from "@/components/page-elements/UnlockProWorkflows";
+import FocusPuller from "@/components/page-elements/UnlockProWorkflows";
 
 interface HomeProps {
   products: Product[];
@@ -24,21 +26,30 @@ export const metadata = {
 };
 
 export default function Home({ products }: HomeProps) {
+  const nextStepRef = useRef(null);
   return (
     <>
-      <ComingSoon />
-      {/* <Navbar />
-      <Hero />
-      <NextStep />
+      {/* <ComingSoon />*/}
+      <Navbar />
+      <Hero scrollRef={nextStepRef} />
+      <NextStep ref={nextStepRef} />
+
       <UpgradeLens />
+      <FocusPuller
+        numImages={79}
+        pathPrefix="/images/focus-puller-09/001_Cinesuit_FocusDemo_v003-v2_0"
+        fileExtension=".jpg"
+        padLength={3} // Adjust this if your padding is different
+      />
       <ThinProfile />
+
       <LessExpensive />
       <SizesStandardized />
       <InstallUninstall />
       <ShopTitle />
       <ShopComponent products={products} />
       <RequestLenses />
-  <Footer /> */}
+      <Footer />
     </>
   );
 }

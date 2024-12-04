@@ -11,8 +11,8 @@ const FooterDark: React.FC<{ className?: string }> = ({ className }) => {
           <div>
             <div className="text-center my-2 mb-4 text-sm text-neutral-300">
               <p>
-                <span className="font-semibold">Questions?</span> Send an email
-                to{" "}
+                <span className="font-semibold">Questions?</span> Send us an
+                email at{" "}
                 <a
                   href={`mailto:${contactEmail}`}
                   className="underline hover:cursor-pointer hover:text-white transition-colors"

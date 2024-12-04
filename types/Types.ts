@@ -13,6 +13,7 @@ export interface Product {
     src: string;
   }>;
   variants: Array<{
+    compareAtPrice: any;
     id: string;
     price: { amount: number };
   }>;

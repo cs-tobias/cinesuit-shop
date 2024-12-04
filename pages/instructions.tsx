@@ -38,7 +38,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
       <Navbar />
       <div className="bg-black w-full pb-16 pt-16">
         <div className="max-w-[295px] md:max-w-[600px] text-center  mx-auto py-4 md:py-10 text-white">
-          <h1 className="text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
+          <h1 className="title-gradient-steel text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
             How to Install
           </h1>
 
@@ -89,7 +89,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
       <div className="bg-black w-full text-xl font-medium leading-11 text-neutral-400">
         <div className="max-w-[295px] md:max-w-[600px] mx-auto py-4 md:py-10">
           <TextWrapper>
-            <h1 className="text-white text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
+            <h1 className="title-gradient-steel  text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-7 mb-8">
               Written Guide
             </h1>
           </TextWrapper>

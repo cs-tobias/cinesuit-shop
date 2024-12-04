@@ -14,28 +14,29 @@ const RotWrapper = dynamic(() => import("../animations/RotWrapper"), {
 const InstallUninstall = () => {
   return (
     <div className="bg-black w-full pt-2 pb-32">
-      <div className="max-w-[295px] md:max-w-[600px] text-center  mx-auto py-4 text-white">
+      <div className="max-w-[295px] md:max-w-[600px] lg:max-w-[720px] text-center  mx-auto py-4 text-white">
         <TextWrapper>
           <h1 className="text-6xl md:text-7xl tracking-tight leading-11 font-semibold pt-4 mb-11">
-            Installed.
+            <span className="title-gradient-steel">Installed.</span>
             <br />
-            Uninstalled.
+            <span className="title-gradient-steel">Uninstalled.</span>
             <br />
-            By you.
+            <span className="title-gradient-steel">By you.</span>
           </h1>
         </TextWrapper>
         <RotWrapper>
           <TextWrapper>
-            <p className="pt-3 mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-500">
-              No need to send in your lens.{" "}
-              <span className="text-white">
-                Follow the installation instructions to do it yourself.
+            <p className="pt-3 mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-400">
+              No need to send in your lenses.{" "}
+              <span className="title-gradient-steel">
+                Follow simple instructions to install Cinesuit yourself, and
+                easily revert to the original setup if needed.
               </span>{" "}
-              Its just as easy to install, as it is to go back to normal.
+              Enjoy flexibility and control over your gear.
             </p>
             <div className="flex justify-center pt-6 pb-12 gap-4">
               <Link href={"/instructions"}>
-                <Button className="flex bg-neutral-300 hover:bg-white transition-colors duration-300 text-black font-normal">
+                <Button className="flex text-neutral-200 bg-transparent border border-neutral-200 hover:bg-neutral-200 hover:text-black transition-colors duration-300">
                   How to install
                 </Button>
               </Link>

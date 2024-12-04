@@ -1,78 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
-
+    --blue-2: #2a64c5;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
- 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
- 
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
- 
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
- 
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
- 
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
- 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
- 
     --radius: 0.5rem;
+    --color-blue-2: #2a64c5;
+    --color-blue-1: #306fdb;
   }
- 
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
- 
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
- 
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
- 
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
- 
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
- 
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
- 
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
- 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
- 
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
-}
- 
-@layer base {
+
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+}
+
+.blue-2 {
+  color: #2a64c5;
+}
+
+.blue-1 {
+  color: #306fdb;
+}
+
+.bg-blue-2 {
+  background-color: #2a64c5;
+}
+
+.bg-blue-1 {
+  background-color: #306fdb;
 }
 
 [class^="number-slide"],
@@ -212,14 +226,17 @@
   border: 2px dashed black;
 }
 
-
 .flipimage {
   transform: scaleY(-1);
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-spinner {
@@ -230,7 +247,6 @@
   height: 20px;
   animation: spin 1s linear infinite;
 }
-
 
 .quantity-dropdown {
   padding: 5px 10px;
@@ -245,39 +261,35 @@
   border-color: #aaa;
 }
 
-
-/* Custom CSS for gradient overlay */
 .gradient-overlay::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 50%;  /* Adjust as needed */
+  top: 50%;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-  pointer-events: none; /* Ensures clicks pass through the overlay */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  pointer-events: none;
 }
 
-
-/* Custom CSS for gradient overlay */
 .gradient-overlay-top::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 50%;  /* Adjust as needed */
-  background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgb(0, 0, 0) 300%);
-  pointer-events: none; /* Ensures clicks pass through the overlay */
+  bottom: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 300%);
+  pointer-events: none;
 }
 
-
-
-
-
 .privacy-policy {
-  background-color: #000; /* Black background */
-  color: #999999; /* Neutral text color */
+  background-color: #000;
+  color: #999999;
 }
 
 .content-container {
@@ -292,8 +304,8 @@
 }
 
 .section-title {
-  color: #000; /* White color for section titles */
-  font-size: 20px; /* 2xl text size */
+  color: #000;
+  font-size: 20px;
   margin-bottom: 5px;
   margin-top: 40px;
   font-weight: 600;
@@ -304,7 +316,6 @@
   margin-left: 20px;
 }
 
-
 .ulcustom {
   list-style-type: disc;
   margin-left: 20px;
@@ -314,29 +325,24 @@
   margin-bottom: 5px;
 }
 
-
 .ulpolicy .lipolicy {
   margin-bottom: 5px;
 }
-
 
 .hover-scale-subtle {
   transition: transform 0.5s;
 }
 .hover-scale-subtle:hover {
-  transform: scale(1.02);  /* Subtle scale up by 2% */
+  transform: scale(1.02);
 }
 
-
-
-  /* Style to hide scrollbar but allow scrolling */
-  .hide-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
-  }
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
 .image-container {
   flex-direction: column;
@@ -344,8 +350,8 @@
 
 .aspect-ratio-container {
   position: relative;
-  width: 100%; /* Set the desired width of the container */
-  padding-top: 133.33%; /* 1500 / 1000 = 1.3333 (Aspect ratio 3:4) */
+  width: 100%;
+  padding-top: 133.33%;
   overflow: hidden;
 }
 
@@ -355,43 +361,38 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Crop the image to fit within the container */
+  object-fit: cover;
 }
 
 .no-hover:hover {
-  border-color: initial; /* or any style you want for the selected item */
+  border-color: initial;
 }
 
-
-/* Custom class for disabled button */
 .disabled-button {
-  opacity: 0.5; /* Example: adding transparency */
-  color: black !important; /* Ensuring the text color is black */
+  opacity: 0.5;
+  color: black !important;
   background-color: #ddd;
 }
 
 .no-extra-breaks {
-  white-space: nowrap; /* Prevents automatic line breaks */   /* Hides overflow text */
- 
+  white-space: nowrap;
 }
 
 .navbar-transition {
   transition: opacity 0.5s ease-in-out;
 }
 
-
 .no-select {
-  user-select: none; /* Standard syntax */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .no-drag {
-  pointer-events: none; /* Prevents clicking, dragging, and any pointer events */
+  pointer-events: none;
 }
 
-/* globals.css */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -404,7 +405,184 @@
   animation: fadeIn 1s ease-out forwards;
 }
 
-
 .flip-vertical {
   transform: scaleX(-1);
+}
+
+.title-gradient-steel {
+  background-image: linear-gradient(to bottom, #ffffff, #ffffff, #d1d5db);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.08em;
+}
+
+.title-gradient-steel-inverted {
+  background-image: linear-gradient(to bottom, #292929, #0e0e0e, #000000);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.08em;
+}
+
+.title-gradient-steel-xl {
+  background-image: linear-gradient(to bottom, #ffffff, #ffffff, #b8b8b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.08em;
+}
+
+.button-gradient-steel {
+  background-image: linear-gradient(to bottom, #ffffff, #ffffff, #d1d5db);
+}
+
+.compact-text {
+  line-height: 0.5 !important; /* Adjust this value as needed */
+}
+
+@keyframes slideUp {
+  from {
+    bottom: -100px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    bottom: 0;
+  }
+  to {
+    bottom: -100px;
+  }
+}
+
+.background-image-class {
+  background-image: url("/images/001_Cinesuit_FocusDemo_v001-v3-Long.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .custom-dialogbox-style {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+}
+
+@layer utilities {
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+
+  .card-wrapper {
+    @apply relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-700 to-slate-800;
+  }
+
+  .card-wrapper::before {
+    background: conic-gradient(
+      rgba(244, 114, 182, 0.4) 0deg,
+      rgba(192, 132, 252, 0.4) 0deg,
+      transparent 80deg
+    );
+
+    @apply absolute left-[-25%] top-[-25%] h-[150%] w-[150%] animate-border-spin content-[''];
+  }
+
+  .card-content {
+    @apply absolute left-[1px] top-[1px] h-[calc(100%-2px)] w-[calc(100%-2px)] rounded-2xl bg-gradient-to-b from-slate-800 to-slate-900;
+  }
+}
+
+.embla {
+  max-width: 48rem;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+.embla__slide__number {
+  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  border-radius: 1.8rem;
+  font-size: 4rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slide-height);
+  user-select: none;
+}
+.embla-thumbs {
+  --thumbs-slide-spacing: 0.8rem;
+  --thumbs-slide-height: 6rem;
+  margin-top: var(--thumbs-slide-spacing);
+}
+.embla-thumbs__viewport {
+  overflow: hidden;
+}
+.embla-thumbs__container {
+  display: flex;
+  flex-direction: row;
+  margin-left: calc(var(--thumbs-slide-spacing) * -1);
+}
+.embla-thumbs__slide {
+  flex: 0 0 22%;
+  min-width: 0;
+  padding-left: var(--thumbs-slide-spacing);
+}
+@media (min-width: 576px) {
+  .embla-thumbs__slide {
+    flex: 0 0 15%;
+  }
+}
+.embla-thumbs__slide__number {
+  border-radius: 1.8rem;
+  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--detail-high-contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--thumbs-slide-height);
+  width: 100%;
+}
+.embla-thumbs__slide--selected .embla-thumbs__slide__number {
+  color: var(--text-body);
 }
