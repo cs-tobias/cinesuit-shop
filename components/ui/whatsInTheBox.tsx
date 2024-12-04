@@ -4,7 +4,7 @@ const WhatsInTheBox = () => {
   return (
     <div className="text-center w-full">
       <h2 className="text-4xl tracking-tight font-semibold my-12">
-        What's in the Box
+        What&apos;s in the Box
       </h2>
       <div className="flex justify-center">
         <div className="flex w-full md:max-w-[980px] bg-neutral-50   justify-center items-center space-x-16 rounded-2xl py-24">

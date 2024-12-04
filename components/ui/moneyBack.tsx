@@ -48,14 +48,15 @@ const MoneyBack = () => {
                 </AlertDialogTitle>
               </AlertDialogHeader>
               <AlertDialogDescription className="text-left text-sm md:text-base lg:text-lg text-gray-700 leading-6 md:leading-7">
-                We stand by the quality of our products. If you're not satisfied
-                with your Cinesuit purchase, you can return it within 14 days
-                for a full refund.
+                We stand by the quality of our products. If you&apos;re not
+                satisfied with your Cinesuit purchase, you can return it within
+                14 days for a full refund.
                 <br />
                 <br />
-                As a new company, your feedback is invaluable to us. If you’re
-                not happy with your purchase, we’d love to hear why. Your input
-                helps us improve our products and services for future customers.
+                As a new company, your feedback is invaluable to us. If
+                you&apos;re not happy with your purchase, we&apos;d love to hear
+                why. Your input helps us improve our products and services for
+                future customers.
               </AlertDialogDescription>
             </div>
             <div className="hidden md:block bg-neutral-100 py-4 px-4 md:px-8 -mx-4 md:-mx-8 -mb-8 md:-mb-8 w-[calc(100%+2rem)] md:w-[calc(100%+4rem)] rounded-b-3xl">

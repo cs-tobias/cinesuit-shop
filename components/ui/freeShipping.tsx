@@ -63,8 +63,8 @@ const FreeShipping = () => {
                 <span className="text-black font-semibold">
                   Not sure if your country qualifies?
                 </span>{" "}
-                Head to the checkout, enter your address, and we'll display the
-                shipping options available for your location.
+                Head to the checkout, enter your address, and we&apos;ll display
+                the shipping options available for your location.
               </AlertDialogDescription>
             </div>
             <div className="hidden md:block bg-neutral-100 py-4 px-4 md:px-8 -mx-4 md:-mx-8 -mb-8 md:-mb-8 w-[calc(100%+2rem)] md:w-[calc(100%+4rem)] rounded-b-3xl">
