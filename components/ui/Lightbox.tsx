@@ -1,14 +1,17 @@
+{
+  /* Updated Lightbox */
+}
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Icons from "./Icons";
 
 interface LightboxProps {
-  images: string[]; // Assuming images are strings representing URLs
+  images: string[];
   isOpen: boolean;
   onClose: () => void;
-  selectedIndex: number; // Add this line
-  setSelectedIndex: (index: number) => void; // New prop to update the index
+  selectedIndex: number;
+  setSelectedIndex: (index: number) => void;
 }
 
 interface AnimatedImageProps {
@@ -23,7 +26,6 @@ const Lightbox: React.FC<LightboxProps> = ({
   selectedIndex,
   setSelectedIndex,
 }) => {
-  // Use the passed `selectedIndex` and `setSelectedIndex` directly without internal state
   const AnimatedImage: React.FC<AnimatedImageProps> = ({ src, alt }) => {
     return (
       <motion.div
@@ -55,7 +57,7 @@ const Lightbox: React.FC<LightboxProps> = ({
           : (selectedIndex - 1 + images.length) % images.length;
       setSelectedIndex(newIndex);
     },
-    [images.length, selectedIndex, setSelectedIndex] // Add setSelectedIndex as a dependency
+    [images.length, selectedIndex, setSelectedIndex]
   );
 
   useEffect(() => {
@@ -91,19 +93,19 @@ const Lightbox: React.FC<LightboxProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-neutral-50 z-50 flex items-center justify-center"
-          onClick={onClose}
+          onClick={onClose} // Allow clicking the background to close
         >
           <div
             className="relative flex h-full w-full justify-center items-center"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // Prevent propagation to background
           >
-            {/* Left navigation area */}
-            <div
-              className="absolute hidden left-0 z-40 h-full w-1/2 md:flex items-center justify-start"
-              onClick={() => navigate("prev")}
-            >
-              <button className="mr-4 text-neutral-600 font-light p-8 hover:cursor-pointer hover:text-black transition-color duration-300">
-                <Icons icon="chevron-left" width="80" height="80"></Icons>
+            {/* Left arrow button */}
+            <div className="absolute hidden left-0 z-40 h-full w-1/2 md:flex items-center justify-start">
+              <button
+                onClick={() => navigate("prev")}
+                className="mr-4 text-neutral-600 font-light p-8 hover:cursor-pointer hover:text-black transition-color duration-300"
+              >
+                <Icons icon="chevron-left" width="80" height="80" />
               </button>
             </div>
 
@@ -145,22 +147,22 @@ const Lightbox: React.FC<LightboxProps> = ({
               </div>
             </div>
 
-            {/* Right navigation area */}
-            <div
-              className="absolute hidden right-0 z-40 h-full w-1/2 md:flex p-8 items-center justify-end"
-              onClick={() => navigate("next")}
-            >
-              <button className="mr-4 text-neutral-600 font-light p-2 hover:cursor-pointer hover:text-black transition-color duration-300">
-                <Icons icon="chevron-right" width="80" height="80"></Icons>
+            {/* Right arrow button */}
+            <div className="absolute hidden right-0 z-40 h-full w-1/2 md:flex p-8 items-center justify-end">
+              <button
+                onClick={() => navigate("next")}
+                className="mr-4 text-neutral-600 font-light p-2 hover:cursor-pointer hover:text-black transition-color duration-300"
+              >
+                <Icons icon="chevron-right" width="80" height="80" />
               </button>
             </div>
 
             {/* Close button */}
             <button
-              className="z-50 absolute top-2 md:top-10 right-2 md:right-8  text-black text-lg font-semibold p-2 hover:cursor-pointer hover:text-black transition-color duration-300"
+              className="z-50 absolute top-2 md:top-10 right-2 md:right-8 text-black text-lg font-semibold p-2 hover:cursor-pointer hover:text-black transition-color duration-300"
               onClick={onClose}
             >
-              <Icons icon="x" width="48" height="48" strokeWidth="1.5"></Icons>
+              <Icons icon="x" width="48" height="48" strokeWidth="1.5" />
             </button>
           </div>
         </motion.div>
