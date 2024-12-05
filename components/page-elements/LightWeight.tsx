@@ -143,7 +143,7 @@ const LightWeight: React.FC = () => {
         </div>
 
         <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between">
-          <div className="text-black text-center flex-1 max-w-lg mx-auto">
+          <div className="hidden lg:block marker:text-black text-center flex-1 max-w-lg mx-auto">
             <p className="text-lg md:text-4xl font-medium tracking-tighter">
               Industry Standard 0.8 mod gears <br />
               <span className="md:text-lg font-extralight tracking-normal">
@@ -185,7 +185,7 @@ const LightWeight: React.FC = () => {
           </div>
 
           {/* Text Section */}
-          <div className="text-black text-center flex-1 max-w-xl mx-auto">
+          <div className="hidden lg:block text-black text-center flex-1 max-w-xl mx-auto">
             <h3 className="text-lg md:text-4xl font-medium tracking-tighter">
               Machined with{" "}
               {isVisibleTolerance && (
@@ -216,7 +216,7 @@ const LightWeight: React.FC = () => {
         </div>
 
         <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between">
-          <div className="text-black text-center flex-1 max-w-lg mx-auto">
+          <div className="hidden lg:block text-black text-center flex-1 max-w-lg mx-auto">
             <p className="text-lg md:text-4xl font-medium tracking-tighter">
               Adding only{" "}
               {isVisibleWeight && (

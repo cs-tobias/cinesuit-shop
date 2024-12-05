@@ -172,11 +172,10 @@ const Product = ({
             </div>
 
             {/* Replace Mobile Product Image with EmblaCarousel */}
-            <div className={`lg:hidden px-6 md:px-0`}>
+            <div className={`lg:hidden px-6`}>
               <EmblaCarousel
                 slides={imagesForCarousel.map((url, index) => ({
                   url,
-                  onClick: () => openLightbox(index), // Pass the index on click
                 }))}
                 options={OPTIONS}
               />
