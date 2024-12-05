@@ -11,7 +11,7 @@ const ShopTitle = () => {
         <h1 className="text-5xl md:text-7xl tracking-tighter leading-11 font-semibold pt-6">
           Choose your Cinesuit
         </h1>
-        <h3 className="max-w-[295px] md:max-w-[650px] tracking-normal text-center mx-auto text-xl md:text-2xl font-medium leading-11 text-neutral-500">
+        <h3 className="max-w-[295px] md:max-w-[650px] tracking-tight text-center mx-auto text-xl md:text-2xl font-medium leading-11 text-neutral-500">
           <br /> Become a part of the cinema lens club, today.
         </h3>
       </div>

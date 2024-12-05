@@ -425,6 +425,207 @@ const Product = ({
         </div>
 
         <LightWeight />
+
+        <div className="bg-neutral-50 w-full h-full">
+          <div className="container mx-auto flex flex-col md:flex-row items-start md:items-stretch px-8 xl:px-0">
+            <div className="hidden lg:block ml-4 flex-1 mt-36 ">
+              <div
+                className={`
+                ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+                style={{ transition: "opacity 0.25s ease-in-out" }}
+              >
+                <EmblaCarousel
+                  slides={imagesForCarousel.map((url, index) => ({
+                    url,
+                    onClick: () => openLightbox(index), // Pass the index on click
+                  }))}
+                  options={OPTIONS}
+                />
+              </div>
+
+              {mainProduct.productType !== "tool" && (
+                <div className="mt-3 flex justify-center items-center space-x-4">
+                  <FreeShipping />
+                  <div className="h-6 w-[1px] bg-neutral-700"></div>
+                  <MoneyBack />
+                </div>
+              )}
+            </div>
+
+            <Lightbox
+              isOpen={isLightboxOpen}
+              images={imagesForCarousel}
+              onClose={closeLightbox}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex} // Sync with EmblaCarousel
+            />
+
+            <div className="flex-1 flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-28 ml-auto lg:max-w-1/2 md:px-16">
+              {mainProduct.productType === "new" && (
+                <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
+                  New
+                </div>
+              )}
+
+              <div className="text-5xl md:text-center lg:text-left md:text-7xl lg:text-7xl tracking-tighter leading-11 font-semibold lg:pt-4 lg:mb-8">
+                {mainProduct.title
+                  .split(" ")
+                  .slice(0, 5)
+                  .map((word, index) => (
+                    <React.Fragment key={index}>
+                      <span>{word}</span>
+                      {index === 1 && <br />}
+                      {index !== 1 && " "}
+                    </React.Fragment>
+                  ))}
+              </div>
+
+              {/* Replace Mobile Product Image with EmblaCarousel */}
+              <div className={`lg:hidden px-6`}>
+                <EmblaCarousel
+                  slides={imagesForCarousel.map((url, index) => ({
+                    url,
+                  }))}
+                  options={OPTIONS}
+                />
+              </div>
+
+              <p className="hidden md:block text-base lg:text-lg font-medium tracking-tight">
+                {mainProduct.description}
+              </p>
+
+              {mainProduct.productType !== "tool" && (
+                <p className="mt-8 mb-2 text-2xl font-semibold leading-11 text-neutral-900 tracking-tight">
+                  Configure your Cinesuit
+                </p>
+              )}
+
+              <div className="w-full">
+                {associatedProducts.map((associatedProduct) => (
+                  <div
+                    key={associatedProduct.id}
+                    onClick={() => handleProductSelection(associatedProduct)}
+                    className={`p-4 border-2 bg-neutral-50 rounded-xl my-2 cursor-pointer hover:border-blue-2 transition-colors duration-300 ${
+                      selectedProduct?.id === associatedProduct.id
+                        ? "border-blue-1 hover:border-blue-2"
+                        : "border-gray-300 hover:border-neutral-400"
+                    }`}
+                  >
+                    <div className="flex justify-between items-center text-lg">
+                      <h3 className="select-none">
+                        {associatedProduct.title.split(" ").slice(-1).join(" ")}
+                      </h3>
+
+                      <span className="select-none">
+                        $
+                        {associatedProduct.variants[0].price.amount
+                          .toString()
+                          .slice(0, -2)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                <div
+                  onClick={() => handleProductSelection(mainProduct)}
+                  className={`p-4 border-2 rounded-xl my-2 cursor-pointer hover:border-blue-2 transition-colors duration-300 ${
+                    selectedProduct?.id === mainProduct.id
+                      ? "border-blue-1 hover:border-blue-2"
+                      : "border-gray-300 hover:border-neutral-400"
+                  }`}
+                >
+                  <div className="flex justify-between items-center text-lg">
+                    <h3 className="select-none">
+                      {mainProduct.productType === "tool"
+                        ? mainProduct.title
+                        : associatedProducts.length > 0
+                        ? "Focus & Zoom"
+                        : "Focus"}
+                    </h3>
+                    <div>
+                      {mainProduct.variants[0].compareAtPrice && (
+                        <span className="text-gray-500 pr-1 text-[15px] line-through select-none">
+                          $
+                          {mainProduct.variants[0].compareAtPrice.amount
+                            .toString()
+                            .slice(0, -2)}
+                        </span>
+                      )}
+                      <span className="select-none">
+                        $
+                        {mainProduct.variants[0].price.amount
+                          .toString()
+                          .slice(0, -2)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="flex justify-center text-sm text-neutral-500 mt-4">
+                  Lens not included.
+                </p>
+
+                <div className="flex items-center justify-between py-2 px-1 mx-auto max-w-5xl">
+                  <div className="text-xl md:text-2xl font-medium tracking-tight">
+                    <p
+                      className={
+                        selectedProduct?.availableForSale
+                          ? "text-black select-none"
+                          : "text-neutral-700 text-lg md:text-xl select-none"
+                      }
+                    >
+                      {selectedProduct?.availableForSale ? "Total" : ""}
+                    </p>
+                  </div>
+                  {selectedProduct?.availableForSale ? (
+                    <div className="flex items-center gap-4">
+                      <div>
+                        {selectedProduct.variants[0].compareAtPrice && (
+                          <span className="text-gray-500 pr-1 text-[19px] line-through">
+                            $
+                            {selectedProduct.variants[0].compareAtPrice.amount
+                              .toString()
+                              .slice(0, -2)}
+                          </span>
+                        )}
+                        <span className="text-xl md:text-2xl font-medium text-black">
+                          $
+                          {selectedProduct.variants[0].price.amount
+                            .toString()
+                            .slice(0, -2)}
+                        </span>
+                      </div>
+
+                      <Button
+                        size="large"
+                        className="text-white bg-blue-1 hover:bg-blue-600 transition-colors duration-300 rounded-2xl px-12"
+                        onClick={handleAddToCart}
+                      >
+                        Pre-order
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col w-full items-center gap-2 mt-2">
+                      <p className="text-lg md:text-lg font-medium leading-11 text-neutral-500 mb-2">
+                        <span className="text-black">
+                          We&apos;re out of stock!
+                        </span>{" "}
+                        Sign up for notifications to get notified when it&apos;s
+                        back in stock and to help us learn how many people are
+                        interested!
+                      </p>
+                      <RestockNotificationForm />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h1 className="my-2 mb-32 text-base md:text-lg tracking-tight font-semibold text-center md:text-right mx-1">
+                    Pre-orders are expected to ship in 1-2 months
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <Footer />
     </>

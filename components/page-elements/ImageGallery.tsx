@@ -9,7 +9,7 @@ const MoveWrapper1 = dynamic(() => import("../animations/MoveWrapper1"), {
 const GalleryPage = () => {
   const images: ImageProps[] = [
     {
-      src: "/images/gallery/md/image15.jpg",
+      src: "/images/gallery/md/image15_new.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "square",
       bgColor: "#f2f2f2",
@@ -25,12 +25,12 @@ const GalleryPage = () => {
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image11.jpg",
+      src: "/images/gallery/md/new_image4.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image7.jpg",
+      src: "/images/gallery/md/new_image6.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
@@ -40,7 +40,17 @@ const GalleryPage = () => {
       aspectRatio: "wide",
     },
     {
-      src: "/images/gallery/md/image9.jpg",
+      src: "/images/gallery/md/image1_1.jpg",
+      alt: "Descriptive Alt Text",
+      aspectRatio: "wide",
+    },
+    {
+      src: "/images/gallery/md/new_image7.jpg",
+      alt: "Descriptive Alt Text",
+      aspectRatio: "wide",
+    },
+    {
+      src: "/images/gallery/md/new_image8.jpg",
       alt: "Descriptive Alt Text",
       aspectRatio: "wide",
     },
