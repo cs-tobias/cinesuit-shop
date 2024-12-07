@@ -60,8 +60,8 @@ const Instructions = () => {
                 influence a scene. <br />
                 <br /> From the unique swirl of a Helios 44-2&apos;s bokeh and
                 the warm colors of a Leica R, to the unmatched clarity offered
-                by modern glass like Sigma ART and ARRI Master Primes, each step
-                has deepened his understanding of cinematic imagery. <br />
+                by modern glass like Sigma ART, each step has deepened his
+                understanding of cinematic imagery. <br />
                 <br /> Cinesuit is more than just a brand. it&apos;s the
                 embodiment of a filmmaker dedicated to overcoming the obstacles
                 in our creative processes. This journey, from fascination to
@@ -100,10 +100,11 @@ const Instructions = () => {
             On the other side, you have 3D printed follow focus gears, which,
             while popular due to their low cost, feel like a compromise and lack
             the professional feel and reliability we need. <br />
-            <br /> This situation exposed{" "}
+            <br />
             <span className="text-white">
-              a gap in the market—a need for high-quality optics in a
-              cinema-friendly package that didn&apos;t break the bank.
+              This situation exposed a gap in the market—a need for high-quality
+              optics in a cinema-friendly package that didn&apos;t break the
+              bank.
             </span>
           </p>
 

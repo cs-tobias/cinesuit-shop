@@ -325,11 +325,11 @@ const Product = ({
                   <AccordionTrigger>How Cinesuit Works</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-2">
-                      Cinesuit rings feature an inner rubber lining. When the
-                      screws are tightened, the rubber makes contact with the
-                      barrel, generating friction that holds the ring firmly in
-                      place without slipping. This creates a seamless extension
-                      of your lens.
+                      Cinesuit rings are two half-rings featuring an inner
+                      rubber lining. When the screws are tightened, the rubber
+                      makes contact with the barrel, generating friction that
+                      holds the ring firmly in place without slipping. This
+                      creates a seamless extension of your lens.
                     </p>
                     <h4 className="font-medium mb-2">Key Features:</h4>
                     <ul className="list-disc list-inside pl-4">
@@ -340,9 +340,9 @@ const Product = ({
                       </li>
                       <li className="mb-2">
                         <strong>Matched Surface:</strong> Having studied Sigmas
-                        surface treatment, we have eumulated it, creating a
-                        seamless look, where Cinesuit merges visually with your
-                        lens.
+                        surface treatment, we have tried our best to eumulate
+                        it, creating a seamless look, where Cinesuit merges
+                        visually with your lens.
                       </li>
                       <li>
                         <strong>Precision Fit:</strong> The rubber lining grips

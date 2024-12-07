@@ -71,7 +71,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
 
         {/* Conditionally render the image gallery if allowed */}
         {shouldShowImages && images.length > 0 && (
-          <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 py-10">
+          <div className="md:px-32 container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 py-10">
             {images.map((img, index) => (
               <div
                 key={index}
@@ -84,7 +84,8 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
                 <Image
                   src={img.src}
                   alt={img.alt}
-                  layout="fill"
+                  width={550}
+                  height={300}
                   objectFit="cover"
                   className="cursor-pointer"
                 />

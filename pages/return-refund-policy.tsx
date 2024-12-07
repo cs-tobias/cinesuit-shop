@@ -22,8 +22,8 @@ const Privacy = () => {
               <h5 className="section-title">1. Return Eligibility</h5>
               <ul>
                 <li>
-                  Time Frame: Products can be returned within 30 days of
-                  receipt.
+                  Time Frame: Products can be returned within 14 days of
+                  receiving the product.
                 </li>
                 <li>
                   Condition: To be eligible for a return, items must be in the
@@ -53,7 +53,7 @@ const Privacy = () => {
                 Shopify&apos;s platform.
               </p>
               <p>
-                Pricing: $99 for a single focus ring and $169 for a set,
+                Pricing: $129 for a single focus ring and $189 for a set,
                 excluding taxes and additional fees.
               </p>
             </section>

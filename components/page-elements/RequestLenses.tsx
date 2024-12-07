@@ -9,7 +9,7 @@ const RequestLenses: React.FC = () => {
           <h1 className="text-5xl md:text-7xl tracking-tighter leading-11 font-semibold pt-6">
             Request Lenses
           </h1>
-          <h3 className="md:text-center mt-6 md:max-w-[650px] tracking-normal mx-auto text-xl md:text-2xl font-medium leading-11 text-neutral-500">
+          <h3 className="md:text-center mt-6 md:max-w-[650px] tracking-tight mx-auto text-xl md:text-2xl font-medium leading-11 text-neutral-500">
             Is your preferred lens not featured in our store?{" "}
             <span className="text-black">
               We&apos;re always looking to expand our range.

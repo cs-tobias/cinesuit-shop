@@ -165,20 +165,12 @@ const LightWeight: React.FC = () => {
           </h1>
         </div>
 
-        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between">
-          {/* Move the Image div first */}
-          <div className="relative">
-            <Image
-              src="/images/magsafe.png" // Replace with your actual image path
-              width={650}
-              height={500}
-              alt="Precision Reliable Solid"
-              className="object-contain"
-            />
-          </div>
+        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm.jpg')] lg:bg-[url('/images/001_photo-1.jpg')]">
+          {/* Placeholder to maintain layout */}
+          <div className="w-[250px] md:w-[450px] lg:w-[500px] xl:w-[650px] h-[500px] flex-shrink-0"></div>
 
           {/* Text Section */}
-          <div className="hidden lg:block text-black text-center flex-1 max-w-xl mx-auto">
+          <div className="hidden lg:block text-white text-center flex-1 max-w-xl mx-auto">
             <h3 className="text-lg md:text-4xl font-medium tracking-tighter">
               Machined with{" "}
               {isVisibleTolerance && (
@@ -208,8 +200,8 @@ const LightWeight: React.FC = () => {
           </h1>
         </div>
 
-        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between">
-          <div className="hidden lg:block text-black text-center flex-1 max-w-lg mx-auto">
+        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm.jpg')] lg:bg-[url('/images/001_photo-1.jpg')]">
+          <div className="hidden lg:block text-white text-center flex-1 max-w-lg mx-auto">
             <p className="text-lg md:text-4xl font-medium tracking-tighter">
               Adding only{" "}
               {isVisibleWeight && (
@@ -223,15 +215,8 @@ const LightWeight: React.FC = () => {
             </p>
           </div>
 
-          <div className="relative">
-            <Image
-              src="/images/magsafe.png" // Replace with your actual image path
-              width={650}
-              height={500}
-              alt="Ultra Lightweight"
-              className="object-contain"
-            />
-          </div>
+          {/* Placeholder to maintain layout */}
+          <div className="w-[250px] md:w-[450px] lg:w-[500px] xl:w-[650px] h-[500px] flex-shrink-0"></div>
         </div>
       </div>
 
