@@ -144,7 +144,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   // Define the folder path
-  const folderPath = path.join(process.cwd(), `public/images/${handle}/dark`);
+  const folderPath = path.join(process.cwd(), `/images/${handle}/dark`);
 
   // Check if the directory exists and load images
   let images: ImageProps[] = [];
