@@ -45,16 +45,19 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
       <Navbar />
       <div
         className={`bg-black w-full min-h-screen text-white ${
-          images.length === 0 ? "flex items-center justify-center" : "pt-10"
+          images.length === 0 ? "flex items-center justify-center" : "py-10"
         }`}
       >
-        <div className="max-w-[295px] md:max-w-[650px] mx-auto py-4 md:py-10 text-center">
+        <div className="max-w-[295px] md:max-w-[650px] lg:max-w-[750px] mx-auto py-4 md:py-10 text-center">
           <h1 className="text-6xl md:text-7xl font-semibold tracking-tight leading-11 pt-7 mb-8">
             {product.title}
           </h1>
           <p className="text-xl md:text-2xl font-medium leading-11 text-neutral-400 mb-4">
-            Influence and Save: Secure your spot on our waiting list and get a
-            20% discount on the {product.title}. Limited spots available!
+            Enter your email to let us know which lenses you want. This way we
+            know which ones to prioritize! <br />{" "}
+            <span className="font-semibold text-white">
+              Your engagement directly influence which lenses we focus on.
+            </span>
           </p>
           <div className="mt-4">
             <ConvertkitEmailForm productTitle={product.title} />
@@ -63,7 +66,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
 
         {/* Conditionally render the image gallery if images exist */}
         {images.length > 0 && (
-          <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 py-10">
             {images.map((img, index) => (
               <div
                 key={index}
@@ -101,11 +104,37 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
   );
 };
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  // Fetch all products from Shopify
+  const products: ShopifyBuy.Product[] = await client.product.fetchAll();
+
+  // Filter products to include only "unreleased" types
+  const unreleasedProducts = products.filter(
+    (product) =>
+      product.productType && product.productType.toLowerCase() === "unreleased"
+  );
+
+  // Generate paths for each product
+  const paths = unreleasedProducts.map((product) => ({
+    params: { handle: product.handle },
+  }));
+
+  return {
+    paths, // Pre-generate these paths
+    fallback: "blocking", // Generate new paths on demand
+  };
+};
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const handle = params?.handle as string;
-  const product = await client.product.fetchByHandle(handle);
 
-  if (product.productType !== "unreleased") {
+  // Fetch the product by handle
+  const product: ShopifyBuy.Product = await client.product.fetchByHandle(
+    handle
+  );
+
+  // Redirect if the product type is not "unreleased"
+  if (!product || product.productType?.toLowerCase() !== "unreleased") {
     return {
       redirect: {
         destination: `/shop/${handle}`,
@@ -114,34 +143,33 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
 
+  // Define the folder path
   const folderPath = path.join(process.cwd(), `public/images/${handle}/dark`);
-  const imageFiles = fs
-    .readdirSync(folderPath)
-    .filter((file) => file.endsWith(".png"))
-    .sort((a, b) => {
-      const indexA = parseInt(a.match(/image(\d+)/)?.[1] || "0", 10);
-      const indexB = parseInt(b.match(/image(\d+)/)?.[1] || "0", 10);
-      return indexA - indexB;
-    });
 
-  const images = imageFiles.map((file) => ({
-    src: `/images/${handle}/dark/${file}`,
-    alt: `Image from ${file}`,
-  }));
+  // Check if the directory exists and load images
+  let images: ImageProps[] = [];
+  if (fs.existsSync(folderPath)) {
+    const imageFiles = fs
+      .readdirSync(folderPath)
+      .filter((file) => file.endsWith(".png"))
+      .sort((a, b) => {
+        const indexA = parseInt(a.match(/image(\d+)/)?.[1] || "0", 10);
+        const indexB = parseInt(b.match(/image(\d+)/)?.[1] || "0", 10);
+        return indexA - indexB;
+      });
+
+    images = imageFiles.map((file) => ({
+      src: `/images/${handle}/dark/${file}`,
+      alt: `Image from ${file}`,
+    }));
+  }
 
   return {
     props: {
-      product: JSON.parse(JSON.stringify(product)),
-      images,
+      product: JSON.parse(JSON.stringify(product)), // Serialize product to match custom `Product` type
+      images, // Pass empty array if no images
     },
-    revalidate: 10,
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
+    revalidate: 10, // Revalidate every 10 seconds
   };
 };
 

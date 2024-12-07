@@ -251,11 +251,13 @@ const LightWeight: React.FC = () => {
                 width={400}
                 height={300}
                 alt="Cinesuit image"
-                className="object-contain"
+                className="object-contain my-6"
               />
-              <p className="text-md md:text-lg font-light">
+              <p className="text-md md:text-lg font-light tracking-tight">
                 Cinesuit geared rings <br />{" "}
-                <span className="text-sm font-bold">(Two half rings)</span>
+                <span className="text-sm font-bold tracking-normal">
+                  (Two half rings)
+                </span>
               </p>
             </div>
 
@@ -265,11 +267,11 @@ const LightWeight: React.FC = () => {
                 width={400}
                 height={300}
                 alt="Cinesuit image"
-                className="object-contain"
+                className="object-contain my-6"
               />
-              <p className="text-md md:text-lg font-light">
+              <p className="text-md md:text-lg font-light tracking-tight">
                 Screws <br />{" "}
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold tracking-normal">
                   2 screws (+2 backups screws)
                 </span>
               </p>
