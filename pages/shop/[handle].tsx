@@ -122,8 +122,8 @@ const Product = ({
           <div className="hidden lg:block ml-4 flex-1 mt-36 ">
             <div
               className={`
-                ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-              style={{ transition: "opacity 0.25s ease-in-out" }}
+                ${isTransitioning ? "opacity-100" : "opacity-100"}`}
+              style={{ transition: "" }}
             >
               <EmblaCarousel
                 slides={imagesForCarousel.map((url, index) => ({
@@ -172,7 +172,7 @@ const Product = ({
             </div>
 
             {/* Replace Mobile Product Image with EmblaCarousel */}
-            <div className={`lg:hidden px-6`}>
+            <div className={`lg:hidden px-6 mt-6`}>
               <EmblaCarousel
                 slides={imagesForCarousel.map((url, index) => ({
                   url,
@@ -431,8 +431,8 @@ const Product = ({
             <div className="hidden lg:block ml-4 flex-1 mt-36 ">
               <div
                 className={`
-                ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-                style={{ transition: "opacity 0.25s ease-in-out" }}
+                ${isTransitioning ? "opacity-100" : "opacity-100"}`}
+                style={{ transition: "" }}
               >
                 <EmblaCarousel
                   slides={imagesForCarousel.map((url, index) => ({

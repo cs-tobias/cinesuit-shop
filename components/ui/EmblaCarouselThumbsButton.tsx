@@ -24,7 +24,7 @@ export const Thumb: React.FC<PropType> = (props) => {
         <img
           src={imageUrl}
           alt={`Thumbnail ${index + 1}`}
-          className="embla-thumbs__slide__img object-cover w-full h-full"
+          className="embla-thumbs__slide__img object-cover w-full h-full rounded-lg"
         />
       </button>
     </div>

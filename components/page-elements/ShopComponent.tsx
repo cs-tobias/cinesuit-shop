@@ -23,7 +23,7 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                 className="cursor-pointer hover:opacity-95 transition-opacity duration-300 justify-center"
               >
                 <Image
-                  src={`/images/${product.handle}/sm/image0.png`}
+                  src={`/images/${product.handle}/image0.png`}
                   alt="Product Image"
                   width={400}
                   height={300}

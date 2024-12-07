@@ -50,13 +50,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaMainRef}>
-        <div className="embla__container hover:cursor-pointer">
+        <div className="embla__container hover:cursor-pointer rounded-full">
           {slides.map((slide, index) => (
             <div className="embla__slide" key={index}>
               <img
                 src={slide.url}
                 alt={slide.alt || `Slide ${index + 1}`}
-                className="embla__slide__img object-contain max-w-full h-auto mx-auto"
+                className="embla__slide__img object-contain max-w-full h-auto mx-auto rounded-3xl"
                 onClick={slide.onClick} // Trigger the onClick handler if provided
               />
             </div>

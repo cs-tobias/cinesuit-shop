@@ -50,7 +50,7 @@ const MoneyBack = () => {
               <AlertDialogDescription className="text-left text-sm md:text-base lg:text-lg text-gray-700 leading-6 md:leading-7">
                 We stand by the quality of our products. If you&apos;re not
                 satisfied with your Cinesuit purchase, you can return it within
-                14 days for a full refund.
+                14 days after receiving the product for a full refund.
                 <br />
                 <br />
                 As a new company, your feedback is invaluable to us. If
