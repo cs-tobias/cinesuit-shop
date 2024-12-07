@@ -4,11 +4,9 @@ import LightboxDark from "@/components/ui/LightboxDark";
 import Navbar from "@/components/ui/Navbar";
 import { Product } from "@/types/Types";
 import { client } from "@/utils/shopifyClient";
-import fs from "fs";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
-import path from "path";
 import React, { useState } from "react";
 
 interface ImageProps {
@@ -35,6 +33,13 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
 
   const closeLightbox = () => setIsLightboxOpen(false);
 
+  // Logic to determine if images should be displayed
+  const shouldShowImages =
+    !product.handle.includes("24") &&
+    !product.handle.includes("35") &&
+    !product.handle.includes("50") &&
+    !product.handle.includes("100");
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -45,7 +50,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
       <Navbar />
       <div
         className={`bg-black w-full min-h-screen text-white ${
-          images.length === 0 ? "flex items-center justify-center" : "py-10"
+          !shouldShowImages ? "flex items-center justify-center" : "py-10"
         }`}
       >
         <div className="max-w-[295px] md:max-w-[650px] lg:max-w-[750px] mx-auto py-4 md:py-10 text-center">
@@ -56,7 +61,7 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
             Enter your email to let us know which lenses you want. This way we
             know which ones to prioritize! <br />{" "}
             <span className="font-semibold text-white">
-              Your engagement directly influence which lenses we focus on.
+              Your engagement directly influences which lenses we focus on.
             </span>
           </p>
           <div className="mt-4">
@@ -64,8 +69,8 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
           </div>
         </div>
 
-        {/* Conditionally render the image gallery if images exist */}
-        {images.length > 0 && (
+        {/* Conditionally render the image gallery if allowed */}
+        {shouldShowImages && images.length > 0 && (
           <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 py-10">
             {images.map((img, index) => (
               <div
@@ -88,8 +93,8 @@ const UnreleasedProductPage: React.FC<UnreleasedProductPageProps> = ({
           </div>
         )}
 
-        {/* Conditionally render the Lightbox if images exist */}
-        {images.length > 0 && isLightboxOpen && (
+        {/* Conditionally render the Lightbox if allowed */}
+        {shouldShowImages && images.length > 0 && isLightboxOpen && (
           <LightboxDark
             isOpen={isLightboxOpen}
             images={images.map((img) => img.src)}
@@ -143,31 +148,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
 
-  // Define the folder path
-  const folderPath = path.join(process.cwd(), `/images/${handle}/dark`);
-
-  // Check if the directory exists and load images
-  let images: ImageProps[] = [];
-  if (fs.existsSync(folderPath)) {
-    const imageFiles = fs
-      .readdirSync(folderPath)
-      .filter((file) => file.endsWith(".png"))
-      .sort((a, b) => {
-        const indexA = parseInt(a.match(/image(\d+)/)?.[1] || "0", 10);
-        const indexB = parseInt(b.match(/image(\d+)/)?.[1] || "0", 10);
-        return indexA - indexB;
-      });
-
-    images = imageFiles.map((file) => ({
-      src: `/images/${handle}/dark/${file}`,
-      alt: `Image from ${file}`,
-    }));
-  }
+  // Predefine image paths based on naming convention
+  const images: ImageProps[] = Array.from(
+    { length: 3 }, // Adjust the number based on how many images you expect
+    (_, index) => ({
+      src: `/images/${handle}/dark/image${index}.png`,
+      alt: `Image ${index}`,
+    })
+  );
 
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)), // Serialize product to match custom `Product` type
-      images, // Pass empty array if no images
+      images,
     },
     revalidate: 10, // Revalidate every 10 seconds
   };
