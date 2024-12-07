@@ -211,6 +211,7 @@ const CartPage = () => {
               Standard customs duties, taxes and VAT for your local country
               applies.
             </p>
+            <p className="font-semibold">Note: The lens is not included.</p>
 
             <div className="mt-3 flex items-center space-x-4 text-base">
               <FreeShipping />
@@ -235,10 +236,10 @@ const CartPage = () => {
               <div key={`cart-item-${item.product.id}-${index}`}>
                 <div className="md:hidden w-full">
                   <Image
-                    src={`/images/${item.product.handle}/sm/image2.png`}
+                    src={`/images/${item.product.handle}/image0.png`}
                     alt={item.product.title}
-                    width={1000}
-                    height={120}
+                    width={640}
+                    height={320}
                     className="mx-auto pb-8"
                     priority
                   />
@@ -258,7 +259,7 @@ const CartPage = () => {
 
                   <div className="absolute -translate-y-3 hidden md:block">
                     <Image
-                      src={`/images/${item.product.handle}/sm/image0.png`}
+                      src={`/images/${item.product.handle}/image0.png`}
                       alt={item.product.title}
                       width={185}
                       height={120}
@@ -352,9 +353,9 @@ const CartPage = () => {
                     <div className="flex items-center w-full">
                       <div className="mr-4">
                         <Image
-                          src={`/images/${product.handle}/sm/image0.png`}
+                          src={`/images/${product.handle}/image0.png`}
                           alt={`${product.title} Image`}
-                          width={80}
+                          width={120}
                           height={80}
                           className="rounded"
                           priority

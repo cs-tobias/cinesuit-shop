@@ -247,7 +247,7 @@ const LightWeight: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col items-center text-center">
               <Image
-                src="/images/magsafe.png" // Replace with your actual image path
+                src="/images/cinesuit-for-sigma-1835/image0.png" // Replace with your actual image path
                 width={400}
                 height={300}
                 alt="Cinesuit image"
@@ -261,7 +261,7 @@ const LightWeight: React.FC = () => {
 
             <div className="flex flex-col items-center text-center">
               <Image
-                src="/images/magsafe.png" // Replace with your actual image path
+                src="/images/cinesuit-for-sigma-1835/image0.png" // Replace with your actual image path
                 width={400}
                 height={300}
                 alt="Cinesuit image"
@@ -327,7 +327,7 @@ const LightWeight: React.FC = () => {
                     </h3>
                   </div>
                   <Image
-                    src={`/images/${product.handle}/sm/image0.png`} // Replace with the correct image path
+                    src={`/images/${product.handle}/image0.png`} // Replace with the correct image path
                     width={300}
                     height={200}
                     alt={product.title}

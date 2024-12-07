@@ -1,15 +1,18 @@
-// ShopComponent.js
 import { Product } from "@/types/Types";
 import Image from "next/image";
 import Link from "next/link";
 
-// Accept products as props
 const ShopComponent = ({ products }: { products: Product[] }) => {
+  // Filter out products with productType "tool"
+  const filteredProducts = products.filter(
+    (product) => product.productType !== "tool"
+  );
+
   return (
     <>
       <div className="bg-neutral-50 text-black flex flex-col pt-6 pb-6">
         <div className="container max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="bg-neutral-150 text-black flex flex-col p-6 rounded-xl"
@@ -34,7 +37,6 @@ const ShopComponent = ({ products }: { products: Product[] }) => {
                 />
               </Link>
 
-              {/* Product label based on productType */}
               {product.productType === "new" && (
                 <div className="text-red-700 px-1 text-xl mt-3 -mb-2">New</div>
               )}

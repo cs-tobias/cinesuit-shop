@@ -56,7 +56,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               <img
                 src={slide.url}
                 alt={slide.alt || `Slide ${index + 1}`}
-                className="embla__slide__img object-contain max-w-full h-auto mx-auto rounded-3xl"
+                className="embla__slide__img object-contain max-w-full h-auto mx-auto rounded-3xl mb-4"
                 onClick={slide.onClick} // Trigger the onClick handler if provided
               />
             </div>
