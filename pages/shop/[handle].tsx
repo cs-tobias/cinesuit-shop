@@ -181,7 +181,7 @@ const Product = ({
               />
             </div>
 
-            <p className="hidden md:block text-base lg:text-lg font-medium tracking-tight">
+            <p className="mt-6 text-center lg:text-left hidden md:block text-base lg:text-lg font-medium tracking-tight">
               {mainProduct.description}
             </p>
 
@@ -490,7 +490,7 @@ const Product = ({
                 />
               </div>
 
-              <p className="hidden md:block text-base lg:text-lg font-medium tracking-tight">
+              <p className="mt-6 text-center lg:text-left hidden md:block text-base lg:text-lg font-medium tracking-tight">
                 {mainProduct.description}
               </p>
 

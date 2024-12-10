@@ -299,9 +299,7 @@ const LightWeight: React.FC = () => {
                     {product.description}
                   </p>
                   <div className="flex flex-col items-center mt-2">
-                    <p className="text-lg font-medium mb-1">
-                      ${product.variants[0].price.amount.toFixed(2)}
-                    </p>
+                    <p className="text-lg font-medium mb-4">FREE</p>
                     <h3
                       className={`text-blue-1 text-sm font-medium ${
                         alreadyInCart

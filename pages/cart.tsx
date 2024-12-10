@@ -366,12 +366,7 @@ const CartPage = () => {
                         <p className="text-lg font-semibold">{product.title}</p>
 
                         {product.variants && product.variants.length > 0 && (
-                          <p className="text-base text-gray-500">
-                            $
-                            {parseFloat(
-                              product.variants[0].price.amount.toString()
-                            ).toFixed(2)}
-                          </p>
+                          <p className="text-base text-gray-500">FREE</p>
                         )}
                         <Accordion type="single" collapsible className="w-full">
                           <AccordionItem value="item-1">
