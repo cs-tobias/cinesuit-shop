@@ -424,7 +424,7 @@ const Product = ({
           </div>
         </div>
 
-        <LightWeight />
+        <LightWeight selectedProduct={selectedProduct} />
 
         <div className="bg-neutral-50 w-full h-full">
           <div className="container mx-auto flex flex-col md:flex-row items-start md:items-stretch px-8 xl:px-0">

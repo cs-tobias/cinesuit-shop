@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import type { ProductProps, Product as ProductType } from "@/types/Types";
 import Button from "../Button";
 import { useCart } from "../contexts/CartContext";
 import { client } from "@/utils/shopifyClient";
@@ -9,7 +10,11 @@ import { Product } from "@/types/Types"; // Use your custom Product type
 import Counter from "../animations/Counter";
 import Countdown from "../animations/Countdown";
 
-const LightWeight: React.FC = () => {
+interface LightWeightProps {
+  selectedProduct: ProductType | null;
+}
+
+const LightWeight: React.FC<LightWeightProps> = ({ selectedProduct }) => {
   const [toolProducts, setToolProducts] = useState<Product[]>([]);
   const [isVisibleWeight, setIsVisibleWeight] = useState(false);
   const [isVisibleTolerance, setIsVisibleTolerance] = useState(false);
@@ -220,50 +225,81 @@ const LightWeight: React.FC = () => {
         </div>
       </div>
 
-      {/* Whats in the box */}
-      <div className="py-10">
-        <div className="container pl-0 mx-auto py-10">
-          <h1 className="text-center py-6 text-4xl md:text-5xl font-medium tracking-tighter">
-            Whats in the box
-          </h1>
-        </div>
+      {selectedProduct ? (
+        <div className="py-10">
+          <div className="container pl-0 mx-auto py-10">
+            <h1 className="text-center py-6 text-4xl md:text-5xl font-medium tracking-tighter">
+              Whats in the box
+            </h1>
+          </div>
 
-        <div className="container max-w-6xl mx-auto bg-neutral-100 rounded-3xl px-10 py-10">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="flex flex-col items-center text-center">
-              <Image
-                src="/images/cinesuit-for-sigma-1835/image0.png" // Replace with your actual image path
-                width={400}
-                height={300}
-                alt="Cinesuit image"
-                className="object-contain my-6"
-              />
-              <p className="text-md md:text-lg font-light tracking-tight">
-                Cinesuit geared rings <br />{" "}
-                <span className="text-sm font-bold tracking-normal">
-                  (Two half rings)
-                </span>
-              </p>
-            </div>
+          <div className="container max-w-6xl mx-auto bg-neutral-100 rounded-3xl px-10 py-10">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {/* Determine if we have Focus & Zoom or not */}
+              {/*
+          Depending on how you identify "Focus & Zoom" products, 
+          you might check `selectedProduct.title` or some other attribute.
+          For example, if Focus & Zoom is represented by a certain title:
+        */}
+              {/*
+          This is just an example. Adjust the condition according to your actual logic.
+        */}
+              {(() => {
+                const isFocusZoom = selectedProduct.title
+                  .toLowerCase()
+                  .includes("zoom");
+                const halfRingsText = isFocusZoom
+                  ? "(4 half rings)"
+                  : "(2 half rings)";
+                const screwsText = isFocusZoom
+                  ? "4 screws (+4 backup screws)"
+                  : "2 screws (+2 backup screws)";
 
-            <div className="flex flex-col items-center text-center">
-              <Image
-                src="/images/cinesuit-for-sigma-1835/image0.png" // Replace with your actual image path
-                width={400}
-                height={300}
-                alt="Cinesuit image"
-                className="object-contain my-6"
-              />
-              <p className="text-md md:text-lg font-light tracking-tight">
-                Screws <br />{" "}
-                <span className="text-sm font-bold tracking-normal">
-                  2 screws (+2 backups screws)
-                </span>
-              </p>
+                return (
+                  <>
+                    {/* First Item */}
+                    <div className="flex flex-col items-center text-center">
+                      <Image
+                        src={`/images/${selectedProduct.handle}/image1.png`}
+                        width={400}
+                        height={300}
+                        alt={selectedProduct.title}
+                        className="object-contain my-6"
+                      />
+                      <p className="text-md md:text-lg font-light tracking-tight">
+                        {selectedProduct.title} <br />
+                        <span className="text-sm font-bold tracking-normal">
+                          {halfRingsText}
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Second Item */}
+                    <div className="flex flex-col items-center text-center">
+                      <Image
+                        src={`/images/${selectedProduct.handle}/screws/image.png`}
+                        width={400}
+                        height={300}
+                        alt={`${selectedProduct.title} screws`}
+                        className="object-contain my-6"
+                      />
+                      <p className="text-md md:text-lg font-light tracking-tight">
+                        Screws <br />
+                        <span className="text-sm font-bold tracking-normal">
+                          {screwsText}
+                        </span>
+                      </p>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        // If no product is selected yet, you can show a placeholder or nothing
+        <div>Loading...</div>
+      )}
 
       {/* Installation essentials */}
       <div className="my-16">
