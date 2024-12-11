@@ -135,7 +135,7 @@ const Product = ({
             </div>
 
             {mainProduct.productType !== "tool" && (
-              <div className="mt-3 flex justify-center items-center space-x-4">
+              <div className="mt-8 flex justify-center items-center space-x-4">
                 <FreeShipping />
                 <div className="h-6 w-[1px] bg-neutral-700"></div>
                 <MoneyBack />
@@ -648,7 +648,7 @@ export async function getStaticProps({ params }: StaticPropsParams) {
     (product) => product.id !== fetchedMainProduct.id
   );
 
-  const numberOfImages = 5;
+  const numberOfImages = 6;
   const mainImagePaths = Array.from(
     { length: numberOfImages },
     (_, index) => `/images/${handle}/image${index}.png`
