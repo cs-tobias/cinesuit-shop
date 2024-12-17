@@ -12,11 +12,9 @@ import {
 import fs from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
-import { useState } from "react";
-import Lightbox from "@/components/ui/Lightbox"; // Adjust path if needed
+import { useState, useEffect } from "react";
 import LightboxDark from "@/components/ui/LightboxDark";
 
-// Dynamic imports
 const TextWrapper = dynamic(
   () => import("../components/animations/TextWrapper"),
   {
@@ -35,7 +33,6 @@ interface InstructionsProps {
 }
 
 export const getStaticProps: GetStaticProps<InstructionsProps> = async () => {
-  // Dynamically fetch images from the public folder
   const imagesDir = path.join(process.cwd(), "public/images/bts/journey");
   const filenames = fs.readdirSync(imagesDir);
 
@@ -53,13 +50,25 @@ export const getStaticProps: GetStaticProps<InstructionsProps> = async () => {
 const Instructions = ({ imageFiles }: InstructionsProps) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check screen size on mount and on resize
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Convert filenames to full URLs
   const imageUrls = imageFiles.map((file) => `/images/bts/journey/${file}`);
 
   const openLightbox = (index: number) => {
-    setSelectedIndex(index);
-    setIsLightboxOpen(true);
+    // Only open if not mobile
+    if (!isMobile) {
+      setSelectedIndex(index);
+      setIsLightboxOpen(true);
+    }
   };
 
   const closeLightbox = () => setIsLightboxOpen(false);
@@ -256,7 +265,8 @@ const Instructions = ({ imageFiles }: InstructionsProps) => {
                 alt="Descriptive Alt Text"
                 fill
                 className="object-cover rounded-xl cursor-pointer"
-                onClick={() => openLightbox(index)}
+                // Only trigger Lightbox on larger screens:
+                onClick={() => !isMobile && openLightbox(index)}
               />
             </div>
           ))}
