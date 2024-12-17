@@ -1,31 +1,28 @@
-// pages/about.tsx
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import FooterDark from "../components/page-elements/FooterDark";
 import Navbar from "../components/ui/Navbar";
-import fs from "fs";
-import path from "path";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import fs from "fs";
+import path from "path";
+import { GetStaticProps } from "next";
+import { useState } from "react";
+import Lightbox from "@/components/ui/Lightbox"; // Adjust path if needed
+import LightboxDark from "@/components/ui/LightboxDark";
 
+// Dynamic imports
 const TextWrapper = dynamic(
   () => import("../components/animations/TextWrapper"),
   {
     ssr: false,
   }
 );
-const PosLtoR = dynamic(() => import("../components/animations/PosLtoR"), {
-  ssr: false,
-});
-const PosRtoL = dynamic(() => import("../components/animations/PosRtoL"), {
-  ssr: false,
-});
 const RotWrapper = dynamic(
   () => import("../components/animations/RotWrapper"),
   {
@@ -37,9 +34,8 @@ interface InstructionsProps {
   imageFiles: string[];
 }
 
-export const getStaticProps: GetStaticProps<{
-  imageFiles: string[];
-}> = async () => {
+export const getStaticProps: GetStaticProps<InstructionsProps> = async () => {
+  // Dynamically fetch images from the public folder
   const imagesDir = path.join(process.cwd(), "public/images/bts/journey");
   const filenames = fs.readdirSync(imagesDir);
 
@@ -55,6 +51,19 @@ export const getStaticProps: GetStaticProps<{
 };
 
 const Instructions = ({ imageFiles }: InstructionsProps) => {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Convert filenames to full URLs
+  const imageUrls = imageFiles.map((file) => `/images/bts/journey/${file}`);
+
+  const openLightbox = (index: number) => {
+    setSelectedIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const closeLightbox = () => setIsLightboxOpen(false);
+
   return (
     <>
       <NextSeo title="Cinesuit - About" />
@@ -87,7 +96,7 @@ const Instructions = ({ imageFiles }: InstructionsProps) => {
                 the warm colors of a Leica R, to the unmatched clarity offered
                 by modern glass like Sigma ART, each step has deepened his
                 understanding of cinematic imagery. <br />
-                <br /> Cinesuit is more than just a brand. it&apos;s the
+                <br /> Cinesuit is more than just a brand. It&apos;s the
                 embodiment of a filmmaker dedicated to overcoming the obstacles
                 in our creative processes. This journey, from fascination to
                 invention, highlights Cinesuit&apos;s foundational principle:
@@ -235,25 +244,34 @@ const Instructions = ({ imageFiles }: InstructionsProps) => {
             The Journey
           </h3>
         </div>
+
         <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {imageFiles.map((image: string) => (
+          {imageFiles.map((image: string, index: number) => (
             <div
               key={image}
               className="relative aspect-square rounded-xl overflow-hidden"
             >
               <Image
-                src={`/images/bts/sm/${image}`}
-                alt="BTS Image"
+                src={`/images/bts/journey/${image}`}
+                alt="Descriptive Alt Text"
                 fill
-                className="object-cover rounded-xl"
-                sizes="(max-width: 768px) 100vw,
-                       (max-width: 1200px) 33vw,
-                       25vw"
+                className="object-cover rounded-xl cursor-pointer"
+                onClick={() => openLightbox(index)}
               />
             </div>
           ))}
         </div>
+
+        {/* Lightbox Implementation */}
+        <LightboxDark
+          isOpen={isLightboxOpen}
+          images={imageUrls}
+          onClose={closeLightbox}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+        />
       </div>
+
       <FooterDark />
     </>
   );
