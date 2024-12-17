@@ -1,8 +1,12 @@
+// pages/about.tsx
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import FooterDark from "../components/page-elements/FooterDark";
 import Navbar from "../components/ui/Navbar";
+import fs from "fs";
+import path from "path";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import {
   Tooltip,
   TooltipContent,
@@ -29,7 +33,28 @@ const RotWrapper = dynamic(
   }
 );
 
-const Instructions = () => {
+interface InstructionsProps {
+  imageFiles: string[];
+}
+
+export const getStaticProps: GetStaticProps<{
+  imageFiles: string[];
+}> = async () => {
+  const imagesDir = path.join(process.cwd(), "public/images/bts/journey");
+  const filenames = fs.readdirSync(imagesDir);
+
+  const imageFiles = filenames.filter((file) =>
+    file.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+  );
+
+  return {
+    props: {
+      imageFiles,
+    },
+  };
+};
+
+const Instructions = ({ imageFiles }: InstructionsProps) => {
   return (
     <>
       <NextSeo title="Cinesuit - About" />
@@ -76,7 +101,7 @@ const Instructions = () => {
             <RotWrapper>
               <Image
                 src="/images/bts/sm/cs-eek-1.jpg"
-                className="rounded-xl mt-14 mb-10 mx-auto w-full"
+                className="rounded-xl mt-14 mb-10 mx-auto w-full h-auto object-cover"
                 width={800}
                 height={1000}
                 alt="Descriptive Alt Text"
@@ -112,7 +137,7 @@ const Instructions = () => {
             <RotWrapper>
               <Image
                 src="/images/bts/sm/cs1835-bts4.jpg"
-                className="rounded-xl mt-14 mb-10 mx-auto w-full"
+                className="rounded-xl mt-14 mb-10 mx-auto w-full h-auto object-cover"
                 width={800}
                 height={1000}
                 alt="Descriptive Alt Text"
@@ -141,8 +166,8 @@ const Instructions = () => {
           <TextWrapper>
             <RotWrapper>
               <Image
-                src="/images/bts/sm/cs40-bts1-1.jpg"
-                className="rounded-xl mt-14 mb-10 mx-auto w-full"
+                src="/images/bts/sm/imagebts_2_1.jpg"
+                className="rounded-xl mt-14 mb-10 mx-auto w-full h-auto object-cover"
                 width={800}
                 height={1000}
                 alt="Descriptive Alt Text"
@@ -167,8 +192,8 @@ const Instructions = () => {
           <TextWrapper>
             <RotWrapper>
               <Image
-                src="/images/bts/sm/cs40-bts3.jpg"
-                className="rounded-xl mt-14 mb-10 mx-auto w-full"
+                src="/images/bts/sm/imagebts_2_2.jpg"
+                className="rounded-xl mt-14 mb-10 mx-auto w-full h-auto object-cover"
                 width={800}
                 height={1000}
                 alt="Descriptive Alt Text"
@@ -195,8 +220,8 @@ const Instructions = () => {
           <TextWrapper>
             <RotWrapper>
               <Image
-                src="/images/bts/sm/cs40-bts3.jpg"
-                className="rounded-xl mt-14 mb-10 mx-auto w-full"
+                src="/images/bts/sm/imagebts_2_3.jpg"
+                className="rounded-xl mt-14 mb-10 mx-auto w-full h-auto object-cover"
                 width={800}
                 height={1000}
                 alt="Descriptive Alt Text"
@@ -211,93 +236,24 @@ const Instructions = () => {
           </h3>
         </div>
         <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Image
-            src="/images/bts/sm/cs24-bts1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts2-1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts01.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs24-bts1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts2-1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts01.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs24-bts1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts2-1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts01.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs24-bts1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts2-1.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
-          <Image
-            src="/images/bts/sm/cs1835-bts01.jpg"
-            className="rounded-xl mt-8"
-            width={800}
-            height={1000}
-            alt="Descriptive Alt Text"
-          />
+          {imageFiles.map((image: string) => (
+            <div
+              key={image}
+              className="relative aspect-square rounded-xl overflow-hidden"
+            >
+              <Image
+                src={`/images/bts/sm/${image}`}
+                alt="BTS Image"
+                fill
+                className="object-cover rounded-xl"
+                sizes="(max-width: 768px) 100vw,
+                       (max-width: 1200px) 33vw,
+                       25vw"
+              />
+            </div>
+          ))}
         </div>
       </div>
-
       <FooterDark />
     </>
   );

@@ -452,7 +452,7 @@ const CartPage = () => {
 
             <div className="flex flex-col items-end">
               <h1 className="my-2 -mt-2 text-base md:text-lg tracking-tight font-semibold md:text-right mx-1">
-                Pre-orders are expected to ship in 1-2 months
+                Pre-orders are expected to ship in 2 months
               </h1>
 
               <div className="flex items-center justify-end mb-4">

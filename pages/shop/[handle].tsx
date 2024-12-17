@@ -310,7 +310,7 @@ const Product = ({
               </div>
               <div>
                 <h1 className="my-2 text-base md:text-lg tracking-tight font-semibold md:text-right mx-1">
-                  Pre-orders are expected to ship in 1-2 months
+                  Pre-orders are expected to ship in 2 months
                 </h1>
               </div>
 
@@ -444,7 +444,7 @@ const Product = ({
               </div>
 
               {mainProduct.productType !== "tool" && (
-                <div className="mt-3 flex justify-center items-center space-x-4">
+                <div className="mt-8 flex justify-center items-center space-x-4">
                   <FreeShipping />
                   <div className="h-6 w-[1px] bg-neutral-700"></div>
                   <MoneyBack />
@@ -619,7 +619,7 @@ const Product = ({
                 </div>
                 <div>
                   <h1 className="my-2 mb-32 text-base md:text-lg tracking-tight font-semibold text-center md:text-right mx-1">
-                    Pre-orders are expected to ship in 1-2 months
+                    Pre-orders are expected to ship in 2 months
                   </h1>
                 </div>
               </div>

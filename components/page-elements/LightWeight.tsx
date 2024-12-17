@@ -163,19 +163,44 @@ const LightWeight: React.FC<LightWeightProps> = ({ selectedProduct }) => {
       </div>
 
       {/* Materials */}
-      <div className="py-10" ref={refTolerance}>
+      <div className="py-10" ref={refWeight}>
         <div className="container pl-0 mx-auto py-10">
           <h1 className="text-right py-6 text-5xl md:text-6xl font-medium tracking-tighter">
-            Solid. Reliable.
+            Ultra Lightweight.
           </h1>
         </div>
 
-        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm.jpg')] lg:bg-[url('/images/001_photo-1.jpg')]">
+        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm_2.jpg')] lg:bg-[url('/images/002_photo-1.jpg')]">
           {/* Placeholder to maintain layout */}
           <div className="w-[250px] md:w-[450px] lg:w-[500px] xl:w-[650px] h-[500px] flex-shrink-0"></div>
 
           {/* Text Section */}
-          <div className="hidden lg:block text-white text-center flex-1 max-w-xl mx-auto">
+          <div className="hidden lg:block text-black text-center flex-1 max-w-xl mx-auto">
+            <p className="text-lg md:text-4xl font-medium tracking-tighter">
+              Adding only{" "}
+              {isVisibleWeight && (
+                <Counter startValue={240} endValue={273} duration={1500} />
+              )}
+              g to your lens
+              <br />{" "}
+              <span className="md:text-lg font-extralight tracking-normal">
+                More text about the weight, useful for setups.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Ultra Lightweight */}
+      <div className="py-10" ref={refTolerance}>
+        <div className="container pl-0 mx-auto py-10">
+          <h1 className="py-6 text-5xl md:text-6xl font-medium tracking-tighter">
+            Solid. Reliable.
+          </h1>
+        </div>
+
+        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm_3.jpg')] lg:bg-[url('/images/003_photo-1.jpg')]">
+          <div className="hidden lg:block text-black text-center flex-1 max-w-lg mx-auto">
             <h3 className="text-lg md:text-4xl font-medium tracking-tighter">
               Machined with{" "}
               {isVisibleTolerance && (
@@ -194,31 +219,6 @@ const LightWeight: React.FC<LightWeightProps> = ({ selectedProduct }) => {
               installed, but easily removed if you want.
             </h5>
           </div>
-        </div>
-      </div>
-
-      {/* Ultra Lightweight */}
-      <div className="py-10" ref={refWeight}>
-        <div className="container pl-0 mx-auto py-10">
-          <h1 className="py-6 text-5xl md:text-6xl font-medium tracking-tighter">
-            Ultra Lightweight.
-          </h1>
-        </div>
-
-        <div className="container mx-auto bg-neutral-150 rounded-3xl flex items-center px-10 justify-between lg:bg-cover bg-center bg-[url('/images/cs-013-sm.jpg')] lg:bg-[url('/images/001_photo-1.jpg')]">
-          <div className="hidden lg:block text-white text-center flex-1 max-w-lg mx-auto">
-            <p className="text-lg md:text-4xl font-medium tracking-tighter">
-              Adding only{" "}
-              {isVisibleWeight && (
-                <Counter startValue={240} endValue={273} duration={1500} />
-              )}
-              g to your lens
-              <br />{" "}
-              <span className="md:text-lg font-extralight tracking-normal">
-                More text about the weight, useful for setups.
-              </span>
-            </p>
-          </div>
 
           {/* Placeholder to maintain layout */}
           <div className="w-[250px] md:w-[450px] lg:w-[500px] xl:w-[650px] h-[500px] flex-shrink-0"></div>
@@ -235,19 +235,10 @@ const LightWeight: React.FC<LightWeightProps> = ({ selectedProduct }) => {
 
           <div className="container max-w-6xl mx-auto bg-neutral-100 rounded-3xl px-10 py-10">
             <div className="grid grid-cols-1 md:grid-cols-2">
-              {/* Determine if we have Focus & Zoom or not */}
-              {/*
-          Depending on how you identify "Focus & Zoom" products, 
-          you might check `selectedProduct.title` or some other attribute.
-          For example, if Focus & Zoom is represented by a certain title:
-        */}
-              {/*
-          This is just an example. Adjust the condition according to your actual logic.
-        */}
               {(() => {
                 const isFocusZoom = selectedProduct.title
                   .toLowerCase()
-                  .includes("zoom");
+                  .includes("&");
                 const halfRingsText = isFocusZoom
                   ? "(4 half rings)"
                   : "(2 half rings)";
@@ -277,7 +268,7 @@ const LightWeight: React.FC<LightWeightProps> = ({ selectedProduct }) => {
                     {/* Second Item */}
                     <div className="flex flex-col items-center text-center">
                       <Image
-                        src={`/images/${selectedProduct.handle}/screws/image.png`}
+                        src={`/images/${selectedProduct.handle}/screws/screws.png`}
                         width={400}
                         height={300}
                         alt={`${selectedProduct.title} screws`}
