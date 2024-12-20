@@ -72,7 +72,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
                         width: "100%",
                         height: "100%",
                       }}
-                      src="https://www.youtube.com/embed/ZWTzXrTRhE8"
+                      src="https://www.youtube.com/embed/YwF0ZCaCNyA"
                       frameBorder="0"
                       allowFullScreen
                       title="Embedded youtube"
@@ -110,20 +110,21 @@ const Instructions: React.FC = (products, featuredProduct) => {
               <li className="licustom">
                 <span className="text-neutral-200">
                   Locate the rubber ring on your lens.
-                </span>{" "}
-                Gently lift the edge with your finger/nail.
+                </span>
+              </li>
+              <li className="licustom">
+                <h3 className="text-neutral-200">
+                  Push the pointy end of the rubber removal tool down at the
+                  edge of the rubber ring. Then turn the rubber removal tool to
+                  the side, to get the it underneath the rubber ring.
+                </h3>
               </li>
               <li className="licustom">
                 <span className="text-neutral-200">
-                  Use the rubber removal tool
+                  Peel the ring off gradually.
                 </span>{" "}
-                to slide under the lifted edge. This makes space for your
-                fingers.
-              </li>
-              <li className="licustom">
-                <span className="text-neutral-200">Peel the ring off</span>{" "}
-                gradually, working around the lens. Go bit by bit until
-                it&apos;s completely removed.
+                Working around the lens. Go bit by bit until it&apos;s
+                completely removed.
               </li>
               <li className="licustom">
                 <span className="text-neutral-200">Keep the ring safe</span> in
@@ -163,15 +164,27 @@ const Instructions: React.FC = (products, featuredProduct) => {
           <TextWrapper>
             <ul className="ulcustom">
               <li className="licustom">
-                <span className="text-neutral-200">Start with one screw</span>,
-                fitting and tightening it first.
+                <span className="text-neutral-200">
+                  The screws are inserted at a 45 degree angle .
+                </span>
               </li>
               <li className="licustom">
                 <span className="text-neutral-200">
-                  Gently bring the two halves together
+                  Insert and partially tighten the first screw.
+                </span>
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Then insert and tighten the other screw.
                 </span>{" "}
-                to fit the next screw. A bit of pressure is needed, but be
-                gentle to avoid lens damage.
+                You may need to use a little force to push the two half rings
+                together.
+              </li>
+              <li className="licustom">
+                <span className="text-neutral-200">
+                  Now make sure each screw is fully secured, but make sure not
+                  to overtighten!
+                </span>{" "}
               </li>
             </ul>
           </TextWrapper>
