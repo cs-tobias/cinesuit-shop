@@ -74,12 +74,10 @@ const CartPage = () => {
 
   const total = useMemo(() => {
     return cart.reduce((acc, item) => {
-      // Sum quantities of all variants within the item
       const itemTotalQuantity = item.variants.reduce(
         (variantAcc, variant) => variantAcc + variant.quantity,
         0
       );
-      // Assume item.product.variants[0].price.amount is the price for simplicity
       return (
         acc +
         itemTotalQuantity * parseFloat(item.product.variants[0].price.amount)
@@ -89,12 +87,10 @@ const CartPage = () => {
 
   const compareAtTotal = useMemo(() => {
     return cart.reduce((acc, item) => {
-      // Sum quantities of all variants within the item
       const itemTotalQuantity = item.variants.reduce(
         (variantAcc, variant) => variantAcc + variant.quantity,
         0
       );
-      // Assume item.product.variants[0].compareAtPrice.amount is the compare at price for simplicity
       return (
         acc +
         itemTotalQuantity *
@@ -114,18 +110,14 @@ const CartPage = () => {
   ) => {
     console.log(`Updating product ${productId} to quantity ${newQuantity}`);
     await updateQuantity(productId, newQuantity);
-    // No need to manually update cart state here if updateQuantity does it
   };
 
   const handleRemoveItem = (productId: string) => {
     removeFromCart(productId);
-
-    // Check if the removed product is a tool and add it back to the toolProducts list
     const removedProduct = cart.find(
       (item) => item.product.id === productId
     )?.product;
     if (removedProduct && removedProduct.productType === "tool") {
-      // Ensure price.amount is a number
       const completeRemovedProduct = {
         ...removedProduct,
         variants: removedProduct.variants.map((variant) => ({
@@ -146,11 +138,10 @@ const CartPage = () => {
       return;
     }
 
-    // Ensure price.amount is a string and adjust the image id type
     const completeProduct = {
       ...product,
       images: product.images.map((image) => ({
-        id: image.id || "", // Ensure id is a string
+        id: image.id || "",
         src: image.src,
       })),
       variants: product.variants.map((variant) => ({
@@ -165,11 +156,25 @@ const CartPage = () => {
     const quantity = 1;
     originalAddToCart(completeProduct, variantId, quantity);
 
-    // Update the toolProducts state to remove the added product
     setToolProducts((prevTools) => prevTools.filter((p) => p.id !== productId));
   };
 
+  // Check if the cart is empty or if all items are tools
+  const onlyToolsInCart =
+    cart.length > 0 &&
+    cart.every((item) => item.product.productType.toLowerCase() === "tool");
+
+  // Compute whether checkout should be disabled
+  const isCheckoutDisabled =
+    !isTermsChecked || isLoading || cart.length === 0 || onlyToolsInCart;
+
   const handleCheckout = async () => {
+    // If conditions aren't met, don't proceed
+    if (isCheckoutDisabled) {
+      console.warn("Checkout is disabled due to conditions not met.");
+      return;
+    }
+
     try {
       setIsLoading(true);
       await redirectToCheckout();
@@ -206,13 +211,11 @@ const CartPage = () => {
             <h1 className="text-5xl tracking-tighter font-semibold mb-4 text-left">
               Review your bag
             </h1>
-
             <p>
               Standard customs duties, taxes and VAT for your local country
               applies.
             </p>
             <p className="font-semibold">Note: The lens is not included.</p>
-
             <div className="mt-3 flex items-center space-x-4 text-base">
               <FreeShipping />
               <div className="h-6 w-[1px] bg-neutral-700"></div>
@@ -244,19 +247,16 @@ const CartPage = () => {
                     priority
                   />
                 </div>
-                {/* Product name without link */}
                 <p className="md:hidden text-2xl md:text-3xl font-medium tracking-tight">
                   {item.product.title}
                 </p>
                 <section className="flex w-full pt-4">
                   <div className="md:w-56"></div>
                   <div className="lg:w-3/5 max-w-sm">
-                    {/* Product name without link */}
                     <p className="hidden md:block text-2xl md:text-3xl font-medium tracking-tight">
                       {item.product.title}
                     </p>
                   </div>
-
                   <div className="absolute -translate-y-3 hidden md:block">
                     <Image
                       src={`/images/${item.product.handle}/image0.png`}
@@ -270,7 +270,7 @@ const CartPage = () => {
 
                   <div className="text-2xl mx-auto w-full md:w-16">
                     <QuantitySelector
-                      initialQuantity={item.variants[0].quantity} // Assuming each item has at least one variant
+                      initialQuantity={item.variants[0].quantity}
                       maxQuantity={10}
                       onQuantityChange={(newQuantity) =>
                         handleQuantityChange(item.product.id, newQuantity)
@@ -362,7 +362,6 @@ const CartPage = () => {
                         />
                       </div>
                       <div className="flex-1">
-                        {/* Tool product name without link */}
                         <p className="text-lg font-semibold">{product.title}</p>
 
                         {product.variants && product.variants.length > 0 && (
@@ -456,23 +455,18 @@ const CartPage = () => {
               </h1>
 
               <div className="flex items-center justify-end mb-4">
-                {/* Separate span for the text to open the AlertDialog */}
                 <span
                   className="text-sm font-medium leading-none cursor-pointer mr-2 hover:underline "
                   onClick={handleLabelClick}
                 >
                   Accept terms and conditions
                 </span>
-
-                {/* Checkbox for toggling its state */}
                 <Checkbox
                   id="terms1"
                   checked={isTermsChecked}
                   onCheckedChange={(checked) => {
-                    // Handle the case where checked might be "indeterminate"
                     if (checked === "indeterminate") {
-                      // Decide how you want to handle the "indeterminate" state
-                      setIsTermsChecked(false); // or true, based on your needs
+                      setIsTermsChecked(false);
                     } else {
                       setIsTermsChecked(checked);
                     }
@@ -483,9 +477,10 @@ const CartPage = () => {
                 <Button
                   size="large"
                   onClick={handleCheckout}
-                  disabled={!isTermsChecked || isLoading}
+                  // Use our computed isCheckoutDisabled
+                  disabled={isCheckoutDisabled}
                   className={`bg-blue-1 text-white hover:bg-blue-500 transition-colors duration-300 py-2 px-4 w-full rounded-2xl ${
-                    !isTermsChecked || isLoading ? "disabled-button" : ""
+                    isCheckoutDisabled ? "disabled-button" : ""
                   }`}
                 >
                   {isLoading ? (
@@ -502,7 +497,7 @@ const CartPage = () => {
 
               <AlertDialog
                 open={isAlertDialogOpen}
-                onOpenChange={() => setIsAlertDialogOpen(!isAlertDialogOpen)} // Assuming a prop like this exists for handling open state changes
+                onOpenChange={() => setIsAlertDialogOpen(!isAlertDialogOpen)}
               >
                 {/* Dialog content */}
               </AlertDialog>
@@ -515,7 +510,6 @@ const CartPage = () => {
           onOpenChange={setIsAlertDialogOpen}
         >
           <AlertDialogContent className="bg-white rounded-2xl p-8 lg:p-12 text-center custom-dialogbox-style">
-            {/* Header with Flexbox for Title and Close Button */}
             <div className="flex justify-between items-center">
               <button
                 className="absolute top-4 right-4 md:top-6 md:right-6 rounded-full bg-neutral-200 text-black text-xl md:text-2xl font-bold p-2 hover:cursor-pointer hover:text-black transition-color duration-300"
