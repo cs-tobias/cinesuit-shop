@@ -165,7 +165,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
             <ul className="ulcustom">
               <li className="licustom">
                 <span className="text-neutral-200">
-                  The screws are inserted at a 45 degree angle .
+                  The screws are inserted at a 45 degree angle.
                 </span>
               </li>
               <li className="licustom">
