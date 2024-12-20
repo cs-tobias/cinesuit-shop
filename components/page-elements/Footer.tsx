@@ -52,7 +52,7 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
                     href={`mailto:${contactEmail}`}
                     className="underline hover:cursor-pointer hover:text-black transition-colors"
                   >
-                    support@cinesuit.com
+                    post@cinesuit.com
                   </a>{" "}
                   <span>for personalized assistance.</span>
                 </p>

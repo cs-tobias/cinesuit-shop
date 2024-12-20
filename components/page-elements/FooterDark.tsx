@@ -17,7 +17,7 @@ const FooterDark: React.FC<{ className?: string }> = ({ className }) => {
                   href={`mailto:${contactEmail}`}
                   className="underline hover:cursor-pointer hover:text-white transition-colors"
                 >
-                  support@cinesuit.com
+                  post@cinesuit.com
                 </a>
               </p>
             </div>

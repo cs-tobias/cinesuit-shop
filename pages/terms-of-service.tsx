@@ -50,7 +50,7 @@ const Privacy = () => {
                 Shopify&apos;s platform.
               </p>
               <p>
-                Pricing: $99 for a single focus ring and $169 for a set,
+                Pricing: $129 for a single focus ring and $189 for a set,
                 excluding taxes and additional fees.
               </p>
             </section>
