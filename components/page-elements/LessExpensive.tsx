@@ -25,7 +25,7 @@ const LessExpensive = () => {
           <p className="mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-400">
             Cinema lenses with good optics cost thousands of dollars. With
             Cinesuit, you can transform your existing lenses into professional
-            tools for just $129,{" "}
+            tools for just $99,{" "}
             <span className="title-gradient-steel">
               making high quality cinematography accessible to everyone.
             </span>

@@ -108,6 +108,18 @@ const CartPage = () => {
     productId: string,
     newQuantity: number
   ) => {
+    // Find the item in the cart
+    const cartItem = cart.find((item) => item.product.id === productId);
+
+    // If it's a tool and the user tries to set quantity above 1, clamp it to 1
+    if (
+      cartItem &&
+      cartItem.product.productType.toLowerCase() === "tool" &&
+      newQuantity > 1
+    ) {
+      newQuantity = 1;
+    }
+
     console.log(`Updating product ${productId} to quantity ${newQuantity}`);
     await updateQuantity(productId, newQuantity);
   };
@@ -132,6 +144,20 @@ const CartPage = () => {
   };
 
   const handleAddToCart = (productId: string) => {
+    // Check if the cart already has this tool
+    const existingToolInCart = cart.find(
+      (item) =>
+        item.product.id === productId &&
+        item.product.productType.toLowerCase() === "tool"
+    );
+
+    // If the user already has this tool, don't add more
+    // or optionally throw an alert, toast, etc.
+    if (existingToolInCart) {
+      console.warn("You can only have one of this tool in your cart.");
+      return;
+    }
+
     const product = toolProducts.find((p) => p.id === productId);
     if (!product || !product.variants || product.variants.length === 0) {
       console.error("Product variants are not defined or empty.");
@@ -154,8 +180,11 @@ const CartPage = () => {
 
     const variantId = completeProduct.variants[0].id;
     const quantity = 1;
+
+    // Add the tool with quantity = 1
     originalAddToCart(completeProduct, variantId, quantity);
 
+    // Remove from the toolProducts array so user can't add it again
     setToolProducts((prevTools) => prevTools.filter((p) => p.id !== productId));
   };
 
@@ -271,10 +300,17 @@ const CartPage = () => {
                   <div className="text-2xl mx-auto w-full md:w-16">
                     <QuantitySelector
                       initialQuantity={item.variants[0].quantity}
-                      maxQuantity={10}
+                      maxQuantity={
+                        item.product.productType.toLowerCase() === "tool"
+                          ? 1
+                          : 10
+                      }
                       onQuantityChange={(newQuantity) =>
                         handleQuantityChange(item.product.id, newQuantity)
                       }
+                      isToolProduct={
+                        item.product.productType.toLowerCase() === "tool"
+                      } // <-- pass the boolean
                     />
                   </div>
 
