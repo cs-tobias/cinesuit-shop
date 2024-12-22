@@ -530,15 +530,27 @@ const Product = ({
                         {associatedProduct.title.split(" ").slice(-1).join(" ")}
                       </h3>
 
-                      <span className="select-none">
-                        $
-                        {associatedProduct.variants[0].price.amount
-                          .toString()
-                          .slice(0, -2)}
-                      </span>
+                      {/* Compare-at Price Display */}
+                      <div>
+                        {associatedProduct.variants[0].compareAtPrice && (
+                          <span className="text-gray-500 pr-1 text-[15px] line-through select-none">
+                            $
+                            {associatedProduct.variants[0].compareAtPrice.amount
+                              .toString()
+                              .slice(0, -2)}
+                          </span>
+                        )}
+                        <span className="select-none">
+                          $
+                          {associatedProduct.variants[0].price.amount
+                            .toString()
+                            .slice(0, -2)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))}
+
                 <div
                   onClick={() => handleProductSelection(mainProduct)}
                   className={`p-4 border-2 rounded-xl my-2 cursor-pointer hover:border-blue-2 transition-colors duration-300 ${
@@ -555,6 +567,8 @@ const Product = ({
                         ? "Focus & Zoom"
                         : "Focus"}
                     </h3>
+
+                    {/* Compare-at Price Display for mainProduct */}
                     <div>
                       {mainProduct.variants[0].compareAtPrice && (
                         <span className="text-gray-500 pr-1 text-[15px] line-through select-none">
