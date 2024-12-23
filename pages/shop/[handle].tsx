@@ -154,7 +154,7 @@ const Product = ({
           <div className="flex-1 flex-col text-3xl lg:px-10 lg:pl-16 mt-20 lg:mt-28 ml-auto lg:max-w-1/2 md:px-16">
             {mainProduct.productType === "new" && (
               <div className="text-red-700 pl-2 text-xl md:text-center lg:text-left">
-                New
+                Pre-order Sale!
               </div>
             )}
 
