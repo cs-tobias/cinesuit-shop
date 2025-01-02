@@ -84,7 +84,7 @@ const ComingSoon = () => {
           />
         </div>
       </div>
-      <div className="absolute bottom-14 w-full text-center text-neutral-600 font-semibold text-lg">
+      <div className="absolute bottom-16 w-full text-center text-neutral-600 font-semibold text-lg">
         <p>Coming soon</p>
       </div>
     </div>
