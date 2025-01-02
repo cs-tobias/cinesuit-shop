@@ -72,7 +72,7 @@ const Instructions: React.FC = (products, featuredProduct) => {
                         width: "100%",
                         height: "100%",
                       }}
-                      src="https://www.youtube.com/embed/YwF0ZCaCNyA"
+                      src="https://www.youtube.com/embed/Bj4v1Mgpb2E"
                       frameBorder="0"
                       allowFullScreen
                       title="Embedded youtube"

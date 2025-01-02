@@ -400,11 +400,30 @@ const Product = ({
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How to Install</AccordionTrigger>
                   <AccordionContent>
-                    <a href="/instructions" target="_blank">
-                      <p className="text-blue-1 font-medium hover:underline hover:cursor-pointer">
-                        Click to watch the Installation Video
-                      </p>
-                    </a>
+                    <div className="mx-auto my-2 mb-6">
+                      <div
+                        className="w-full mx-auto rounded-5xl"
+                        style={{
+                          position: "relative",
+                          paddingBottom: "56.25%",
+                        }}
+                      >
+                        <iframe
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                          }}
+                          src="https://www.youtube.com/embed/Bj4v1Mgpb2E"
+                          frameBorder="0"
+                          allowFullScreen
+                          title="Embedded youtube"
+                          className="rounded-3xl"
+                        />
+                      </div>
+                    </div>
                     <ol className="list-decimal list-inside pl-4 mt-2">
                       <li className="mb-2">
                         <strong>Remove the Rubber Ring:</strong> Use the Rubber
