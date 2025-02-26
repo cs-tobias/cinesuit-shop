@@ -19,6 +19,8 @@ import { useEffect } from "react";
 import SEO from "../next-seo.config"; // Adjust the path as necessary
 
 import "@/styles/globals.css";
+import ComingSoon from "@/components/page-elements/ComingSoon";
+import FullPageAlert from "@/components/page-elements/FullPageAlert";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,6 +62,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 <GoogleAnalyticsInitializer />
                 <CookieBanner />
                 <Component {...pageProps} />
+                <FullPageAlert />
                 <Toaster />
                 <SpeedInsights />
               </CartProvider>

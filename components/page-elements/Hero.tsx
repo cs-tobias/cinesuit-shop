@@ -80,7 +80,7 @@ const Hero = ({ scrollRef }: HeroProps) => {
             Cinesuit
           </h1>
           <p className="ml-4 text-2xl font-medium leading-11 text-neutral-500">
-            High-end accessible cinematography.
+            Metal Lens Gears with Hard-Stops
           </p>
         </div>
 
@@ -94,7 +94,7 @@ const Hero = ({ scrollRef }: HeroProps) => {
           }}
         >
           <Image
-            src="/images/cs-hero-lg-1_03.jpg"
+            src="/images/landing page/cs-hero-lg-1_04.jpg"
             alt="Hero Image"
             layout="responsive"
             width={imageDimensions.width}

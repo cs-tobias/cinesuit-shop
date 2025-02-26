@@ -29,7 +29,7 @@ const NextStep = forwardRef<HTMLDivElement>((props, ref) => {
           <TextWrapper>
             <p className="mb-4 text-xl md:text-2xl font-medium leading-11 text-neutral-400">
               <span className="title-gradient-steel">
-                Cinesuit takes Sigma ART lenses closer to cinema lenses.{" "}
+                Cinesuit adds metal gears and hard-stops to Sigma ART lenses.{" "}
               </span>
               Experience precision engineering and superior design that deliver
               professional-grade results without the hefty price tag. Taking the

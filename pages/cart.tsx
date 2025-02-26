@@ -362,8 +362,8 @@ const CartPage = () => {
             );
           })}
 
-          {toolProducts.length > 0 && (
-            <section className="flex w-full pb-6">
+          {/* {toolProducts.length > 0 && (
+            <section className="flex w-full pb-6 ">
               <div className="w-56 hidden md:block"></div>
               <div className="flex-1 max-w-5xl mx-auto md:px-6">
                 <h2 className="ml-4 text-2xl font-semibold mt-4">
@@ -427,7 +427,7 @@ const CartPage = () => {
                 ))}
               </div>
             </section>
-          )}
+          )}*/}
 
           <section className="flex w-full pb-6 mt-2">
             <div className="w-56"></div>
