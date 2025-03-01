@@ -163,7 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       product: JSON.parse(JSON.stringify(product)), // Serialize product to match custom `Product` type
       images,
     },
-    revalidate: 10, // Revalidate every 10 seconds
+    //revalidate: 10, // Revalidate every 10 seconds
   };
 };
 
