@@ -1,5 +1,5 @@
 import React from "react";
-import ConvertkitCustomMessage from "@/components/page-elements/ConvertkitCustomMessage";
+import ConvertkitCustomMessage from "@/pages/api/ConvertkitCustomMessage";
 
 const RequestLenses: React.FC = () => {
   return (
